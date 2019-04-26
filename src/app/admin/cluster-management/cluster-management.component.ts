@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ClusterService } from 'src/app/services/cluster.service' 
-import { error } from '@angular/compiler/src/util';
+import { ClusterService } from 'src/app/services/cluster.service';
+import { SystemService } from 'src/app/services/system.service';
 
 @Component({
   selector: 'app-cluster-management',
@@ -11,24 +11,43 @@ export class ClusterManagementComponent implements OnInit {
 
   clustersData: Array<any>;
 
+  systemsData: Array<any>;
+
   ct_sequence: Number;
   ct_name_th: String;
   ct_name_en: String;
   ct_img: File;
   ct_color: String = "#";
+  sm_sys_id: any;
 
   imgURL: String = "http://localhost:3000/images/cluster/";
 
-  constructor(private clusterService: ClusterService) { }
+  constructor(
+    private clusterService: ClusterService,
+    private systemService: SystemService
+  ) { }
 
   ngOnInit() {
     this.fetchCluster();
+    this.fetchSystem();
   }
 
   fetchCluster(){
     this.clusterService.getAll().subscribe(
       (res) => {
         this.clustersData = res['data'];
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  fetchSystem(){
+    this.systemService.getAll().subscribe(
+      (res) => {
+        this.systemsData = res['data'];
+        this.sm_sys_id = this.systemsData[0].sys_id;
       },
       (error) => {
         console.error(error);
@@ -50,6 +69,8 @@ export class ClusterManagementComponent implements OnInit {
           this.clusterService.ct_name_en = this.ct_name_en;
           this.clusterService.ct_img = res[0].filename;
           this.clusterService.ct_color_code = this.ct_color;
+
+          this.clusterService.sm_sys_id = this.sm_sys_id;
 
           this.clusterService.insert().subscribe(
             res => {
@@ -91,6 +112,25 @@ export class ClusterManagementComponent implements OnInit {
       this.ct_color = this.ct_color.substring(0, 7);
     }
     element.style.color = this.ct_color.toString();
+  }
+
+  editCluster(ct_id){
+    this.clusterService.ct_id = ct_id;
+    this.clusterService.getByKey().subscribe(
+      res => {
+        console.log(res['data'][0]);
+      }, err => console.log(err)
+    );
+  }
+
+  deleteCluster(index, ct_id){
+    this.clusterService.ct_id = ct_id;
+    this.clusterService.delete().subscribe(
+      res => {
+        this.clustersData.splice(index, 1);
+        console.log(`${ct_id} is deleted!`);
+      }, err => console.log(err)
+    );
   }
 
 }

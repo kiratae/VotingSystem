@@ -26,6 +26,11 @@ export class VoteComponent implements OnInit {
 
   imgURL: String;
 
+  voteHeaderText;
+  voteText;
+  pointText;
+  multiPointText;
+
   @Output() hasScoreOutput = new EventEmitter<any>();
 
   hasScore: any  = 0;
@@ -44,6 +49,23 @@ export class VoteComponent implements OnInit {
     
     this.fetchCluster();
     this.fetchScore();
+
+    switch(this.appSetting.lang){
+      case "EN":
+        this.appSetting.getEN().subscribe(
+          res => {
+            this.setText(res.main_section);
+          }, error => console.log(error)
+        );
+      break;
+      case "TH":
+      this.appSetting.getTH().subscribe(
+        res => {
+          this.setText(res.main_section);
+        }, error => console.log(error)
+      );
+      break; 
+    }
 
     if(this.clusterNameToVote == null){
      this.clusterNameToVote = "NULL";
@@ -91,6 +113,14 @@ export class VoteComponent implements OnInit {
       }
     );
   }
+
+  setText(langData){
+    this.voteHeaderText = langData.vote_header;
+    this.voteText = langData.vote;
+    this.pointText = langData.point;
+    this.multiPointText = langData.multi_point;
+  }
+
 
   sentHasScore(){
     this.hasScoreOutput.emit(this.hasScore);

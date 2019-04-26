@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service'
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +17,21 @@ export class LoginComponent implements OnInit {
   isSubmitted = false
   isLogin = 0
 
+  //String
+  loginText;
+  usernameText;
+  passowrdText;
+  errorUsernamePasswordRequireText;
+  errorUsernameRequire;
+  errorPasswordRequire;
+  errorIncorrectLogin;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private formBuilder: FormBuilder,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
@@ -28,10 +39,37 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['home'])
     }
 
+    switch(this.appSetting.lang){
+      case "EN":
+        this.appSetting.getEN().subscribe(
+          res => {
+            this.setText(res.login_section);
+          }, error => console.log(error)
+        );
+      break;
+      case "TH":
+      this.appSetting.getTH().subscribe(
+        res => {
+          this.setText(res.login_section);
+        }, error => console.log(error)
+      );
+      break; 
+    }
+
     this.loginForm  =  this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  setText(langData){
+    this.loginText = langData.login;
+    this.usernameText = langData.username;
+    this.passowrdText = langData.password;
+    this.errorUsernamePasswordRequireText = langData.error_username_password_require;
+    this.errorUsernameRequire = langData.error_username_require;
+    this.errorPasswordRequire = langData.error_password_require;
+    this.errorIncorrectLogin = langData.error_incorrect_login;
   }
 
   get formControls() { return this.loginForm.controls; }
@@ -89,7 +127,10 @@ export class LoginComponent implements OnInit {
         }
 
       },
-      err => console.log(err)
+      err => {
+        alert("Conection Error!");
+        console.log(err);
+      }
     )
 
   }

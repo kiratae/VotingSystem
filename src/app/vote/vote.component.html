@@ -13,9 +13,9 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Vote to {{ clusterNameToVote }}</h5>
+            <h5 class="modal-title">{{ voteHeaderText }} {{ clusterNameToVote }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true"><i class="fas fa-times"></i></span>
             </button>
         </div>
         <div class="modal-body">
@@ -33,16 +33,16 @@
 
             <div class="row mb-3 mx-md-0">
                 <div class="col-3 px-2">
-                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(1)" [disabled]="onePointBtn">1 Point</button>
+                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(1)" [disabled]="onePointBtn">1 {{ pointText }}</button>
                 </div>
                 <div class="col-3 px-2">
-                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(2)" [disabled]="twoPointBtn">2 Points</button>
+                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(2)" [disabled]="twoPointBtn">2 {{ multiPointText }}</button>
                 </div>
                 <div class="col-3 px-2">
-                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(5)" [disabled]="fivePointBtn">5 Points</button>
+                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(5)" [disabled]="fivePointBtn">5 {{ multiPointText }}</button>
                 </div>
                 <div class="col-3 px-2">
-                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(10)" [disabled]="tenPointBtn">10 Points</button>
+                    <button type="button" class="btn btn-outline-secondary btn-block px-md-0" (click)="setScore(10)" [disabled]="tenPointBtn">10 {{ multiPointText }}</button>
                 </div>
             </div>
             <div class="row">
@@ -63,7 +63,7 @@
 
         </div>
         <div class="modal-footer text-center">
-            <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="onePointBtn">Vote</button>
+            <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="onePointBtn">{{ voteText }}</button>
         </div>
         </div>
     </div>

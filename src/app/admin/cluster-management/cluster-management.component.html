@@ -10,15 +10,18 @@
         <ul class="list-group">
           <li *ngFor="let cluster of clustersData; let i = index;" class="list-group-item">
             <span class="row">
-              <div class="col-md-1 text-center">{{ i+1 }}</div>
-              <div class="col-md-2 text-center">
+              <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
+              <div class="col-md-2 col-12 text-center mb-1">
                 <img src="{{ imgURL+cluster?.ct_img }}" width="64px" height="64px">
               </div>
-              <div class="col-md-3">{{ cluster.ct_name_th }}</div>
-              <div class="col-md-3">{{ cluster.ct_name_en }}</div>
-              <div class="col-md-2 text-center" [style.color]="cluster.ct_color_code">{{ cluster.ct_color_code }}</div>
-              <div class="col-md-1 text-center">
-                <button (click)="deleteUser(user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
+              <div class="col-md-3 col-12 text-center">{{ cluster.ct_name_th }} ({{ cluster.ct_name_en }})</div>
+              <div class="col-md-2 col-12 text-center">{{ cluster.sys_name_th }} ({{ cluster.sys_name_en }})</div>
+              <div class="col-md-2 col-12 text-center mb-1" [style.color]="cluster.ct_color_code">{{ cluster.ct_color_code }}</div>
+              <div class="col-md-1 col-6 text-center">
+                  <button (click)="editCluster(cluster.ct_id)" data-toggle="modal" data-target="#insert_cluster" class="btn btn-warning"><i class="fas fa-pen"></i></button>
+                </div>
+              <div class="col-md-1 col-6 text-center">
+                <button (click)="deleteCluster(i, cluster.ct_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
               </div>
             </span>
           </li>
@@ -52,6 +55,12 @@
             <div class="form-group">
               <label>Name EN</label>
               <input type="text" class="form-control" [(ngModel)]="ct_name_en">
+            </div>
+            <div class="form-group">
+              <label>System</label>
+              <select class="form-control" [(ngModel)]="sm_sys_id">
+                <option *ngFor="let system of systemsData; let i = index;" value="{{ system.sys_id }}" [selected]="i == 0">{{ system.sys_name_th }} {{ system.sys_name_en }}</option>
+              </select>
             </div>
             <div class="form-group">
               <label>Logo Image</label>

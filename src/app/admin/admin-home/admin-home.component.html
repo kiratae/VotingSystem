@@ -21,16 +21,16 @@
                 <a class="nav-link" href="chart"><i class="fas fa-chart-bar"></i>&ensp;Score Bar Chart</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='user')?'active':''">
-                <a class="nav-link" (click)="changeTab('user')"><i class="fas fa-cog"></i>&ensp;user management</a>
+                <a class="nav-link" (click)="changeTab('user')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user management</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
-                <a class="nav-link" (click)="changeTab('userView')"><i class="fas fa-cog"></i>&ensp;user view</a>
+                <a class="nav-link" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user view</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='cluster')?'active':''">
-                <a class="nav-link" (click)="changeTab('cluster')"><i class="fas fa-cog"></i>&ensp;cluster management</a>
+                <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;cluster management</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='system')?'active':''">
-                <a class="nav-link" (click)="changeTab('system')"><i class="fas fa-cog"></i>&ensp;system management</a>
+                <a class="nav-link" (click)="changeTab('system')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;system management</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>

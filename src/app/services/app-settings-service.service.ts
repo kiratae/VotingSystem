@@ -5,15 +5,20 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AppSettingsServiceService {
+export class AppSettingsServiceService{
 
-  apiURL: String = "http://10.80.84.38:3000";
+  apiURL: String = "http://127.0.0.1:3000";
 
-  constructor(private http: HttpClient) {
+  lang = "TH";
+
+  constructor(private http: HttpClient) {}
+
+  public getTH(): Observable<any> {
+    return this.http.get("./assets/lang/th.json");
   }
 
-  public getJSON(): Observable<any> {
-    return this.http.get("./assets/config.json");
+  public getEN(): Observable<any> {
+    return this.http.get("./assets/lang/en.json");
   }
 
 }

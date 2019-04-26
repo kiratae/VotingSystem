@@ -1,0 +1,20 @@
+{
+    "login_section": {
+        "login": "เข้าสู่ระบบ",
+        "username": "ชื่อผู้ใช้",
+        "password": "รหัสผ่าน",
+        "error_username_password_require": "กรุณาป้อนชื่อผู้ใช้ และรหัสผ่าน",
+        "error_username_require": "กรุณาป้อนชื่อผู้ใช้",
+        "error_password_require": "กรุณาป้อนรหัสผ่าน",
+        "error_incorrect_login": "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง"
+    },
+    "main_section": {
+        "system_name": "ระบบการโหวต",
+        "home": "หน้าแรก",
+        "logout": "ออกจากระบบ",
+        "point": "คะแนน",
+        "multi_point": "คะแนน",
+        "vote_header": "โหวตให้กับ ",
+        "vote": "โหวต"
+    }
+}

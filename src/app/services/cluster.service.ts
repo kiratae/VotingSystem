@@ -14,6 +14,7 @@ export class ClusterService {
   public ct_name_en: String;
   public ct_img: File;
   public ct_color_code: String;
+  public sm_sys_id: Number;
 
   constructor(private http: HttpClient, private appSetting: AppSettingsServiceService) {}
 
@@ -33,9 +34,18 @@ export class ClusterService {
       "ct_name_th": this.ct_name_th,
       "ct_name_en": this.ct_name_en,
       "ct_img": this.ct_img,
-      "ct_color_code": this.ct_color_code
+      "ct_color_code": this.ct_color_code,
+      "sm_sys_id": this.sm_sys_id
     }
     return this.http.post(this.appSetting.apiURL+'/cluster', data);
+  }
+
+  getByKey(): Observable<any>{
+    return this.http.get(this.appSetting.apiURL+'/cluster/'+this.ct_id);
+  }
+
+  delete(): Observable<any>{
+    return this.http.delete(this.appSetting.apiURL+'/cluster/'+this.ct_id);
   }
 
 }

@@ -6,11 +6,14 @@
 
     <div class="navbar-brand pl-4">
         <!-- <img src="https://via.placeholder.com/100x32" class="d-inline-block align-top"> -->
-        Voting System
+        {{ systemNameText }}
     </div>
 
     <div class="navbar-text mr-1 py-1 px-2 border rounded">
-        <span>{{ hasScore }}&ensp;Point</span>
+        <span>{{ hasScore }}&ensp;
+            <span *ngIf="hasScore > 1">{{ multiPointText }}</span>
+            <span *ngIf="hasScore <= 1">{{ pointText }}</span>
+        </span>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarContent">
@@ -18,10 +21,10 @@
             <div class="col-6">
                 <ul class="navbar-nav mr-auto pl-3">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;Home</a>
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;{{ homeText }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;{{ logoutText }}</a>
                     </li>
                 </ul>
             </div>
