@@ -35,6 +35,8 @@ export class UserManagementComponent implements OnInit {
     this.userTypeService.getAll().subscribe((res) => {
       console.log(res);
       this.userTypesData = res['data'];
+      this.userTypeIdFromFile = this.userTypesData[3].ut_id;
+      this.manUserTypeId = this.userTypesData[3].ut_id;
     })
 
   }
