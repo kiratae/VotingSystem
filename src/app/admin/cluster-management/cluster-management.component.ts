@@ -114,13 +114,19 @@ export class ClusterManagementComponent implements OnInit {
     element.style.color = this.ct_color.toString();
   }
 
-  editCluster(ct_id){
-    this.clusterService.ct_id = ct_id;
-    this.clusterService.getByKey().subscribe(
-      res => {
-        console.log(res['data'][0]);
-      }, err => console.log(err)
-    );
+  editCluster(index, element: HTMLInputElement){
+    let data = this.clustersData[index];
+    console.log(data);
+
+    this.ct_sequence = data.ct_sequence;
+    this.ct_name_th = data.ct_name_th;
+    this.ct_name_en = data.ct_name_en;
+    this.ct_color = data.ct_color_code;
+    this.ct_img = data.ct_img;
+
+    this.sm_sys_id = data.sys_id;
+
+    element.style.color = this.ct_color.toString();
   }
 
   deleteCluster(index, ct_id){
