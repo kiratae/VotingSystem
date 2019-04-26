@@ -1,0 +1,55 @@
+<nav class="navbar sticky-top navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <span></span> -->
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="navbar-brand pl-4">
+        <!-- <img src="https://via.placeholder.com/100x32" class="d-inline-block align-top"> -->
+        Admin Voting System
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+        <ul class="navbar-nav mr-auto pl-3">
+            <li class="nav-item text-right">
+                <div class="navbar-text py-1 px-2">
+                    <span>{{username}}&ensp;<i class="fas fa-user"></i></span>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="chart"><i class="fas fa-chart-bar"></i>&ensp;Score Bar Chart</a>
+            </li>
+            <li class="nav-item" [ngClass]="(viewMode=='user')?'active':''">
+                <a class="nav-link" (click)="changeTab('user')"><i class="fas fa-cog"></i>&ensp;user management</a>
+            </li>
+            <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
+                <a class="nav-link" (click)="changeTab('userView')"><i class="fas fa-cog"></i>&ensp;user view</a>
+            </li>
+            <li class="nav-item" [ngClass]="(viewMode=='cluster')?'active':''">
+                <a class="nav-link" (click)="changeTab('cluster')"><i class="fas fa-cog"></i>&ensp;cluster management</a>
+            </li>
+            <li class="nav-item" [ngClass]="(viewMode=='system')?'active':''">
+                <a class="nav-link" (click)="changeTab('system')"><i class="fas fa-cog"></i>&ensp;system management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>
+            </li>
+        </ul>
+
+    </div>
+
+</nav>
+
+<div class="container-fliud mx-3">
+
+    <div [ngSwitch]="viewMode">
+      <app-user-management *ngSwitchCase="'user'"></app-user-management>
+      <app-user-view *ngSwitchCase="'userView'"></app-user-view>
+      <app-cluster-management *ngSwitchCase="'cluster'"></app-cluster-management>
+      <app-system-management *ngSwitchCase="'system'"></app-system-management>
+    </div>
+
+</div>
+
+<modal-logout></modal-logout>

@@ -1,0 +1,44 @@
+<nav class="navbar sticky-top navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <span></span> -->
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="navbar-brand pl-4">
+        <!-- <img src="https://via.placeholder.com/100x32" class="d-inline-block align-top"> -->
+        Voting System
+    </div>
+
+    <div class="navbar-text mr-1 py-1 px-2 border rounded">
+        <span>{{ hasScore }}&ensp;Point</span>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="row">
+            <div class="col-6">
+                <ul class="navbar-nav mr-auto pl-3">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6 text-right">
+                <div class="navbar-text py-1 px-2">
+                    <span>{{username}}&ensp;<i class="fas fa-user"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+<div>
+
+    <app-vote (hasScoreOutput)="setHasScoreParent($event)"></app-vote>
+
+</div>
+
+<modal-logout></modal-logout>

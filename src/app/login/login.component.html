@@ -1,0 +1,68 @@
+<div class="row mt-5 mx-1 d-flex justify-content-center text-center">
+    <div class="col-md-12">
+        <img src="https://via.placeholder.com/150" width="150" height="150">
+    </div>
+</div>
+<div class="row mt-5 mx-1 d-flex justify-content-center">
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="username"
+                            placeholder="Username"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.username.errors || isLogin == -1 && isSubmitted }"
+                            required
+                        >
+                    </div>
+
+                    <div class="input-group mb-3" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input
+                            type="password"
+                            class="form-control"
+                            formControlName="password"
+                            placeholder="Password"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.password.errors || isLogin == -1 && isSubmitted }"
+                            required
+                        >
+                    </div>
+
+                    <div *ngIf="isSubmitted && formControls.username.errors && formControls.password.errors">
+                        <div *ngIf="formControls.username.errors && formControls.password.errors.required" class="mb-3 text-danger">Username and Password is required</div>
+                    </div>
+
+                    <div *ngIf="isSubmitted && formControls.username.errors && !formControls.password.errors">
+                        <div *ngIf="formControls.username.errors.required" class="mb-3 text-danger">Username is required</div>
+                    </div>
+
+                    <div *ngIf="isSubmitted && formControls.password.errors && !formControls.username.errors">
+                        <div *ngIf="formControls.password.errors.required" class="mb-3 text-danger">Password is required</div>
+                    </div>
+
+                    <div *ngIf="isLogin == -1 && isSubmitted && !formControls.password.errors && !formControls.username.errors" class="mb-3 text-danger">
+                        Username or Password isn't correct!
+                    </div>
+
+                    <button class="btn btn-primary btn-block" type="submit">Login</button>
+                </form>
+
+            </div>
+        </div>
+        
+    </div>
+</div>

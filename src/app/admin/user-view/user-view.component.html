@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-12 col-12">
+
+      <div class="card mt-3">
+        <div class="card-header">User Lists</div>
+        <div class="card-body">
+
+          <ul class="list-group">
+            <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
+              <span class="row">
+                <div class="col-md-2">{{ i+1 }}</div>
+                <div class="col-md-5">{{ user.us_username }}</div>
+                <div class="col-md-4">{{ user.ut_name_th }}</div>
+                <div class="col-md-1 text-center">
+                  <button (click)="deleteUser(i, user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                </div>
+              </span>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+  </div>
+</div>
