@@ -9,8 +9,9 @@
             <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
               <span class="row">
                 <div class="col-md-2">{{ i+1 }}</div>
-                <div class="col-md-5">{{ user.us_username }}</div>
-                <div class="col-md-4">{{ user.ut_name_th }}</div>
+                <div class="col-md-4">{{ user.us_username }}</div>
+                <div class="col-md-3">{{ user.ut_name_th }}</div>
+                <div class="col-md-2">{{ user.um_points }}</div>
                 <div class="col-md-1 text-center">
                   <button (click)="deleteUser(i, user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
                 </div>

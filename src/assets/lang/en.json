@@ -16,5 +16,13 @@
         "multi_point": "Points",
         "vote_header": "Vote to ",
         "vote": "Vote"
+    },
+    "modal": {
+        "logout": {
+            "header": "Logout",
+            "body": "Do you want to log out?",
+            "confirm": "OK",
+            "cancel": "Cancel"
+        }
     }
 }

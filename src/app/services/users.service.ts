@@ -18,6 +18,8 @@ export class UsersService {
   public us_lastlogin: String;
   public us_ut_id: Number;
 
+  public um_points: Number;
+
   constructor(
     private http: HttpClient,
     private appSetting: AppSettingsServiceService
@@ -35,7 +37,7 @@ export class UsersService {
   }
 
   insert(): Observable<any>{
-    let data = { "us_username": this.us_username, "us_password": this.us_password, "us_ut_id": this.us_ut_id };
+    let data = { "us_username": this.us_username, "us_password": this.us_password, "us_ut_id": this.us_ut_id, "um_points": this.um_points };
     return this.http.post(this.appSetting.apiURL+'/users', data);
   }
 

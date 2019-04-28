@@ -4,7 +4,6 @@ import { ClusterService } from 'src/app/services/cluster.service';
 import { UsersService } from 'src/app/services/users.service';
 import { ScoreService } from 'src/app/services/score.service'
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
-import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-vote',
@@ -25,6 +24,9 @@ export class VoteComponent implements OnInit {
   clusterToVote = null
 
   imgURL: String;
+
+  timer: number = 500;
+  interval;
 
   voteHeaderText;
   voteText;
@@ -173,8 +175,22 @@ export class VoteComponent implements OnInit {
       this.voteScore--;
   }
 
-  holdMinusScore(timeRemain){
-    let timer = timeRemain;
+  minusScoreDown(){
+    this.interval = setInterval(() => {
+      if(this.voteScore > 1)
+        this.voteScore--
+    }, 150);
+  }
+
+  plusScoreDown(){
+    this.interval = setInterval(() => {
+      if(this.voteScore < this.hasScore)
+        this.voteScore++;
+    }, 150);
+  }
+
+  cancelInterval(){
+    clearInterval(this.interval);
   }
 
 }

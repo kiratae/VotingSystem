@@ -15,15 +15,20 @@ import { UserTypeService } from 'src/app/services/user-type.service';
 export class UserManagementComponent implements OnInit {
 
   usersData = [];
+
   usersDataFromFiles = [];
   userTypeIdFromFile;
+  votePointsFromFile;
+
   userTypesData;
   canAddToLists = true;
+
   manCanAddToLists = true;
   passwordLength = 6;
   manUsername;
   manPassword;
   manUserTypeId;
+  manVotePoints;
 
   constructor(
     private router: Router, 
@@ -47,8 +52,9 @@ export class UserManagementComponent implements OnInit {
       let username = element;
       let password = randomstring;
       let userType = this.findUserTypeNameById(this.userTypeIdFromFile);
+      let votePoints = this.votePointsFromFile;
 
-      this.usersData.push({ "#": index+1, "username": username, "password": password, "user_type_id": this.userTypeIdFromFile, "user_type": userType })
+      this.usersData.push({ "#": index+1, "username": username, "password": password, "user_type_id": this.userTypeIdFromFile, "user_type": userType, "vote_points": votePoints })
     });
   }
 
@@ -69,8 +75,14 @@ export class UserManagementComponent implements OnInit {
     let username = this.manUsername;
     let password = this.manPassword;
     let userType = this.findUserTypeNameById(this.manUserTypeId);
+    let votePoints = this.manVotePoints;
     
-    this.usersData.push({ "#": this.usersData.length+1, "username": username, "password": password, "user_type_id": this.manUserTypeId, "user_type": userType })
+    this.usersData.push({ "#": this.usersData.length+1, "username": username, "password": password, "user_type_id": this.manUserTypeId, "user_type": userType, "vote_points": votePoints })
+
+    this.manUsername = null;
+    this.manPassword = null;
+    this.manUserTypeId = 4;
+    this.manVotePoints = null;
   }
 
   findUserTypeNameById(id){
@@ -112,6 +124,7 @@ export class UserManagementComponent implements OnInit {
         this.usersService.us_username = e.username;
         this.usersService.us_password = hashPassword;
         this.usersService.us_ut_id = e.user_type_id;
+        this.usersService.um_points = e.vote_points;
         this.usersService.insert().subscribe((res) => {
           console.log(res);
           this.deleteAllUser();
@@ -133,19 +146,14 @@ export class UserManagementComponent implements OnInit {
 
   public fileChangeListener(files: FileList){
 
-    //console.log(files);
-
     if(files && files.length > 0) {
       let file : File = files.item(0);
       let fileType = file.name.split('.').pop()
 
-        // console.log(file.name);
-        // console.log(file.size);
-        // console.log(fileType);
-
       if(fileType != "csv"){
-        alert("file type should be csv file !!")
-        return
+        alert("file type should be csv file !!");
+        this.clearUploadField();
+        return;
       }
 
       let reader: FileReader = new FileReader();
@@ -154,27 +162,21 @@ export class UserManagementComponent implements OnInit {
         let csv: string = reader.result.toString();
         let allTextLines = csv.split(/\r|\n|\r/);
         let headers = allTextLines[0].split(',');
-
-        let index = 0;
         
         for (let i = 0; i < allTextLines.length; i++) {
           // split content based on comma
           let data = allTextLines[i].split(',');
-          if (data.length === headers.length) {
-            for (let j = 0; j < headers.length; j++) {
-              if(headers[j] == "username"){
-                if(i != 0){
-                  this.usersDataFromFiles.push(data[j]);
-                }
-                
-              }
 
-            }
-          }
+          if (data.length === headers.length)
+            for (let j = 0; j < headers.length; j++)
+              if(headers[j] == "username")
+                if(i != 0)
+                  this.usersDataFromFiles.push(data[j]);
         }
 
         if(this.usersDataFromFiles.length == 0 || this.usersDataFromFiles == null){
           alert(`not have column name "username" in file "${file.name}"`)
+          this.clearUploadField();
           this.canAddToLists = true;
         }
 
@@ -187,6 +189,11 @@ export class UserManagementComponent implements OnInit {
       }
 
     }
+  }
+
+  private clearUploadField(): void {
+    (<HTMLInputElement>window.document.getElementById('csvUpload'))
+    .value = null;
   }
 
   public selectUserType1ChangeListner(value){
