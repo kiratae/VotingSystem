@@ -129,11 +129,17 @@ export class UserManagementComponent implements OnInit {
         this.usersService.us_password = hashPassword;
         this.usersService.us_ut_id = e.user_type_id;
         this.usersService.um_points = e.vote_points;
-        this.usersService.insert().subscribe((res) => {
-          if(this.appSetting.isDebuging)
-            console.log(res);
-          this.deleteAllUser();
-        })
+
+        this.usersService.insert().subscribe(
+          res => {
+            if(this.appSetting.isDebuging)
+              console.log(res);
+            if(res.error != undefined)
+              alert(res.error)
+            this.deleteAllUser();
+          }, error => console.log(error)
+        );
+
       });
 
   }

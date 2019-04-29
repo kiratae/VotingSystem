@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AppSettingsServiceService{
 
-  apiURL: String = "http://127.0.0.1:3000";
+  apiURL: String = "http://localhost:3000";
 
   isDebuging: boolean = true;
 
