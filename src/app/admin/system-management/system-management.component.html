@@ -13,8 +13,11 @@
                 <div class="col-md-2 text-center">{{ i+1 }}</div>
                 <div class="col-md-4">{{ system.sys_name_th }}</div>
                 <div class="col-md-4">{{ system.sys_name_en }}</div>
-                <div class="col-md-2 text-center">
-                  <button (click)="deleteUser(system.sys_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                <div class="col-md-1 text-center">
+                  <button (click)="edit(i)" data-toggle="modal" data-target="#insert_system" class="btn btn-warning"><i class="fas fa-pen"></i></button>
+                </div>
+                <div class="col-md-1 text-center">
+                  <button (click)="delete(i, system.sys_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
                 </div>
               </span>
             </li>
@@ -38,6 +41,8 @@
             </div>
             <div class="modal-body">
 
+              <input type="hidden" [(ngModel)]="sys_id">
+
               <div class="form-group">
                 <label>Name TH</label>
                 <input type="text" class="form-control" [(ngModel)]="sys_name_th">
@@ -50,7 +55,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" (click)="saveSystem()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-success" (click)="save()" data-dismiss="modal">Save</button>
             </div>
           </div>
       </div>

@@ -26,4 +26,13 @@ export class SystemService {
     return this.http.post(this.appSetting.apiURL+'/systems', data);
   }
 
+  update(): Observable<any>{
+    let data = { "sys_id":this.sys_id , "sys_name_th": this.sys_name_th, "sys_name_en": this.sys_name_en };
+    return this.http.put(this.appSetting.apiURL+'/systems', data);
+  }
+
+  delete(): Observable<any>{
+    return this.http.delete(this.appSetting.apiURL+'/systems/'+this.sys_id);
+  }
+
 }

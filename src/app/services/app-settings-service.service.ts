@@ -9,6 +9,8 @@ export class AppSettingsServiceService{
 
   apiURL: String = "http://127.0.0.1:3000";
 
+  isDebuging: boolean = true;
+
   lang = "TH";
 
   constructor(private http: HttpClient) {}

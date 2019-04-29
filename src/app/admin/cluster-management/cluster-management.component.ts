@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClusterService } from 'src/app/services/cluster.service';
 import { SystemService } from 'src/app/services/system.service';
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
   selector: 'app-cluster-management',
@@ -30,7 +31,8 @@ export class ClusterManagementComponent implements OnInit {
 
   constructor(
     private clusterService: ClusterService,
-    private systemService: SystemService
+    private systemService: SystemService,
+    private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
@@ -65,8 +67,6 @@ export class ClusterManagementComponent implements OnInit {
     if(this.ct_img_preview != null && this.ct_img_name != null && this.ct_sequence != null && this.ct_name_th != null && this.isUploaded && this.ct_color.length == 7 && this.ct_color[0] == "#") {
 
       if(this.ct_id != null){
-        // do for update cluster
-        console.log("do for update cluster");
         this.clusterService.ct_id = this.ct_id;
         this.clusterService.ct_sequence = this.ct_sequence;
         this.clusterService.ct_name_th = this.ct_name_th;
@@ -78,11 +78,12 @@ export class ClusterManagementComponent implements OnInit {
 
         this.clusterService.update().subscribe(
           res => {
-            console.log(res);
+            if(this.appSetting.isDebuging)
+              console.log(res);
             this.closeModal();
             this.fetchCluster();
           },
-          error => console.log(error)
+          error => console.error(error)
         );
         return;
       }
@@ -97,11 +98,12 @@ export class ClusterManagementComponent implements OnInit {
 
       this.clusterService.insert().subscribe(
         res => {
-          console.log(res);
+          if(this.appSetting.isDebuging)
+            console.log(res);
           this.closeModal();
           this.fetchCluster();
         },
-        error => console.log(error)
+        error => console.error(error)
       );
 
     }else{
@@ -139,11 +141,12 @@ export class ClusterManagementComponent implements OnInit {
 
       this.clusterService.uploadImg().subscribe(
         res => {
-          console.log(res[0].filename);
+          if(this.appSetting.isDebuging)
+            console.log(res[0].filename);
           this.ct_img_name = res[0].filename;
           this.canUpload = false;
           this.isUploaded = true;
-        }, error => console.log(error)
+        }, error => console.error(error)
       );
     }
   }
@@ -157,7 +160,8 @@ export class ClusterManagementComponent implements OnInit {
           this.canUpload = true;
           this.ct_img_preview = null;
           this.ct_img_name = null;
-          console.log(this.ct_img_preview);
+          if(this.appSetting.isDebuging)
+            console.log(this.ct_img_preview);
         }, err => console.log(err)
       );
     }
@@ -175,7 +179,8 @@ export class ClusterManagementComponent implements OnInit {
 
   editCluster(index, element: HTMLInputElement){
     let data = this.clustersData[index];
-    console.log(data);
+    if(this.appSetting.isDebuging)
+      console.log(data);
 
     this.ct_id = data.ct_id;
     this.ct_sequence = data.ct_sequence;
@@ -199,8 +204,9 @@ export class ClusterManagementComponent implements OnInit {
     this.clusterService.delete().subscribe(
       res => {
         this.clustersData.splice(index, 1);
-        console.log(`${ct_id} is deleted!`);
-      }, err => console.log(err)
+        if(this.appSetting.isDebuging)
+          console.log(`${ct_id} is deleted!`);
+      }, err => console.error(err)
     );
   }
 

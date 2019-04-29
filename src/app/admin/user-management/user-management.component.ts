@@ -6,6 +6,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 import { UserTypeService } from 'src/app/services/user-type.service';
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
   selector: 'app-user-management',
@@ -33,12 +34,14 @@ export class UserManagementComponent implements OnInit {
   constructor(
     private router: Router, 
     private usersService: UsersService,
-    private userTypeService: UserTypeService
+    private userTypeService: UserTypeService,
+    private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
     this.userTypeService.getAll().subscribe((res) => {
-      console.log(res);
+      if(this.appSetting.isDebuging)
+        console.log(res);
       this.userTypesData = res['data'];
       this.userTypeIdFromFile = this.userTypesData[3].ut_id;
       this.manUserTypeId = this.userTypesData[3].ut_id;
@@ -100,7 +103,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(index){
-    console.log(index);
+    if(this.appSetting.isDebuging)
+      console.log(index);
     this.usersData.splice(index, 1);
   }
 
@@ -126,7 +130,8 @@ export class UserManagementComponent implements OnInit {
         this.usersService.us_ut_id = e.user_type_id;
         this.usersService.um_points = e.vote_points;
         this.usersService.insert().subscribe((res) => {
-          console.log(res);
+          if(this.appSetting.isDebuging)
+            console.log(res);
           this.deleteAllUser();
         })
       });
@@ -184,7 +189,8 @@ export class UserManagementComponent implements OnInit {
           this.canAddToLists = false;
         }
 
-        console.log(this.usersDataFromFiles);
+        if(this.appSetting.isDebuging)
+          console.log(this.usersDataFromFiles);
 
       }
 
@@ -197,11 +203,13 @@ export class UserManagementComponent implements OnInit {
   }
 
   public selectUserType1ChangeListner(value){
-    console.log(value);
+    if(this.appSetting.isDebuging)
+      console.log(value);
   }
 
   public selectUserType2ChangeListner(value){
-    console.log(value);
+    if(this.appSetting.isDebuging)
+      console.log(value);
     this.userTypeIdFromFile = value;
 
     if(this.usersDataFromFiles.length != 0){

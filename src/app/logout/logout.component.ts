@@ -25,14 +25,14 @@ export class LogoutComponent implements OnInit {
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.modal.logout);
-          }, error => console.log(error)
+          }, error => console.error(error)
         );
       break;
       case "TH":
       this.appSetting.getTH().subscribe(
         res => {
           this.setText(res.modal.logout);
-        }, error => console.log(error)
+        }, error => console.error(error)
       );
       break; 
     }
@@ -41,7 +41,8 @@ export class LogoutComponent implements OnInit {
   public logout() {
     sessionStorage.removeItem("us_id");
     sessionStorage.removeItem("user_type");
-    console.log("loging out...");
+    if(this.appSetting.isDebuging)
+      console.log("loging out...");
     this.router.navigate(['login']);
   }
 

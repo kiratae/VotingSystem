@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SystemService } from 'src/app/services/system.service';
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
   selector: 'app-system-management',
@@ -10,18 +11,20 @@ export class SystemManagementComponent implements OnInit {
 
   systemsData = [];
 
+  sys_id;
   sys_name_th;
   sys_name_en;
 
   constructor(
-    private systemService: SystemService
+    private systemService: SystemService,
+    private appSettings: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
-    this.fetchSystems();
+    this.fetch();
   }
 
-  fetchSystems(){
+  fetch(){
     this.systemService.getAll().subscribe(
       (res) => {
         this.systemsData = res['data'];
@@ -32,24 +35,62 @@ export class SystemManagementComponent implements OnInit {
     );
   }
 
-  saveSystem(){
+  save(){
     if(this.sys_name_th != null && this.sys_name_en != null) {
+
+      if(this.sys_id != null){
+        this.systemService.sys_id = this.sys_id;
+        this.systemService.sys_name_th = this.sys_name_th;
+        this.systemService.sys_name_en = this.sys_name_en;
+    
+        this.systemService.update().subscribe(
+          res => {
+            if(this.appSettings.isDebuging)
+              console.log(res);
+            this.fetch();
+          }, err => console.error(err)
+        );
+        return;
+
+      }
 
       this.systemService.sys_name_th = this.sys_name_th;
       this.systemService.sys_name_en = this.sys_name_en;
 
       this.systemService.insert().subscribe(
         res => {
-          console.log(res);
-          this.fetchSystems();
+          if(this.appSettings.isDebuging)
+            console.log(res);
+          this.fetch();
         },
-        error => console.log(error)
+        error => console.error(error)
       );
 
     }else{
       alert("ERROR")
     }
 
+  }
+
+  edit(index){
+    let data = this.systemsData[index];
+
+    this.sys_id = data.sys_id;
+    this.sys_name_th = data.sys_name_th;
+    this.sys_name_en = data.sys_name_en;
+  }
+
+  delete(index, id){
+    confirm(`Want to delete system "${this.systemsData[index].sys_name_th}" ?`);
+
+    this.systemService.sys_id = id;
+    this.systemService.delete().subscribe(
+      res => {
+        if(this.appSettings.isDebuging)
+          console.log(index, id);
+        this.systemsData.splice(index, 1);
+      }, err => console.error(err)
+    );
   }
 
 }
