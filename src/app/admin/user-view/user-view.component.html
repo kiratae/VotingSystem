@@ -9,10 +9,11 @@
             <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
               <span class="row">
                 <div class="col-md-2">{{ i+1 }}</div>
-                <div class="col-md-4">{{ user.us_username }}</div>
+                <div class="col-md-3">{{ user.us_username }}</div>
                 <div class="col-md-3">{{ user.ut_name_th }}</div>
                 <div class="col-md-2">{{ user.um_points }}</div>
-                <div class="col-md-1 text-center">
+                <div class="col-md-2 text-center">
+                  <button (click)="viewLogs(user.us_id)" data-toggle="modal" data-target="#modal_voted_logs" class="btn btn-info"><i class="fas fa-clock"></i></button>
                   <button (click)="deleteUser(i, user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
                 </div>
               </span>
@@ -23,4 +24,37 @@
       </div>
 
   </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal_voted_logs">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">voted_logs</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+
+            <button class="btn btn-danger"><i class="fas fa-trash-restore"></i></button>
+
+            <ul class="list-group">
+              <li *ngFor="let log of userLogsData; let i = index;" class="list-group-item">
+                  <span class="row">
+                    <div class="col-md-2">{{ i+1 }}</div>
+                    <div class="col-md-3">{{ log.ct_name_th }}</div>
+                    <div class="col-md-2">{{ log.voted_score }}</div>
+                    <div class="col-md-4">{{ log.vl_timestamp }}</div>
+                    <div class="col-md-1 text-center">
+                      <button (click)="restoreVotePoint(i)" class="btn btn-primary"><i class="fas fa-undo"></i></button>
+                    </div>
+                  </span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+    </div>
 </div>

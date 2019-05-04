@@ -9,6 +9,7 @@ import { UsersService } from 'src/app/services/users.service'
 export class UserViewComponent implements OnInit {
 
   usersData: Array<any>;
+  userLogsData: Array<any>;
 
   constructor(private usersService: UsersService) { }
 
@@ -17,6 +18,17 @@ export class UserViewComponent implements OnInit {
       console.log(res);
       this.usersData = res['data'];
     })
+  }
+
+  viewLogs(us_id){
+    console.log(us_id);
+    this.usersService.us_id = us_id;
+    this.usersService.getLogs().subscribe(
+      res => {
+        console.log(res['data']);
+        this.userLogsData = res['data'];
+      }, err => console.log(err)
+    );
   }
 
   deleteUser(index, us_id){

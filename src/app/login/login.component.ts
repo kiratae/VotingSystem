@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
         let canLogin = false
         let loginData = res['data'][0];
 
-        console.log(loginData);
+        console.log("login data",loginData);
 
         if(loginData['canLogin'] == "true"){
 

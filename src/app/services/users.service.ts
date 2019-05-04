@@ -49,6 +49,10 @@ export class UsersService {
     return this.http.get(this.appSetting.apiURL+'/users/'+this.us_id);
   }
 
+  getLogs(){
+    return this.http.get(this.appSetting.apiURL+'/users/logs/'+this.us_id);
+  }
+
   delete(): Observable<any>{
     return this.http.delete(this.appSetting.apiURL+'/users/'+this.us_id);
   }

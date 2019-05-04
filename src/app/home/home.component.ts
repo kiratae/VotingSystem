@@ -14,6 +14,11 @@ export class HomeComponent implements OnInit {
   username: String;
   hasScore: any;
 
+  canVote: boolean = false;
+
+  interval;
+  countDownTimer;
+
   systemNameText
   homeText
   logoutText
@@ -51,6 +56,29 @@ export class HomeComponent implements OnInit {
       break; 
     }
 
+    let dateStartString = '2019-05-01 19:40:00'
+    let dateEndString = '2019-05-01 19:41:00' 
+    let startDate = new Date(dateStartString);
+    let endDate = new Date(dateEndString);
+    
+    this.interval = setInterval(() => {
+      let nowDate = new Date();
+      let leftTime = startDate.getTime() - nowDate.getTime();
+      this.countDownTimer = this.millisecToStringOutput(leftTime);
+      console.log(nowDate.toUTCString());
+      if(nowDate.getTime() >= startDate.getTime()){
+        if(nowDate.getTime() >= endDate.getTime()){
+          // console.log("END !!!!!!!!!!!!!");
+          this.canVote = false;
+          this.countDownTimer = "VOTE IS END !!";
+          clearInterval(this.interval);
+        }else{
+          this.canVote = true;
+          // console.log("START !!!!!!!!!!!!!");
+        } 
+      }
+    }, 1000);
+
     this.usersService.us_id = this.us_id;
     this.usersService.getByKey().subscribe(
       (res) => {
@@ -62,6 +90,7 @@ export class HomeComponent implements OnInit {
       },
       error => console.log(error)
     );
+
   }
 
   setText(langData){
@@ -74,6 +103,17 @@ export class HomeComponent implements OnInit {
 
   setHasScoreParent($event){
     this.hasScore = $event;
+  }
+
+  millisecToStringOutput(millisec){
+    let second =  Math.ceil(millisec / 1000);
+    let s = second % 60;
+    let m =  Math.floor(second / 60);
+    return this.getZeroPrefix(m)+" : " + this.getZeroPrefix(s);
+  }
+
+  getZeroPrefix(time){
+    return (time < 10?"0":"") + time;
   }
 
 }

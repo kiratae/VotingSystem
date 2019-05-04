@@ -38,10 +38,11 @@
 
 </nav>
 
-<div>
-
+<div *ngIf="canVote == true">
     <app-vote (hasScoreOutput)="setHasScoreParent($event)"></app-vote>
-
+</div>
+<div *ngIf="canVote == false">
+    <p>{{ countDownTimer }}</p>
 </div>
 
 <modal-logout></modal-logout>
