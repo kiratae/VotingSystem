@@ -24,7 +24,10 @@
                 <a class="nav-link" (click)="changeTab('user')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user management</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
-                <a class="nav-link" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user view</a>
+                <a class="nav-link" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;view users</a>
+            </li>
+            <li class="nav-item" [ngClass]="(viewMode=='scoreView')?'active':''">
+                <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;score users</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='cluster')?'active':''">
                 <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;cluster management</a>

@@ -18,6 +18,7 @@ import { UserViewComponent } from './admin/user-view/user-view.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SystemManagementComponent } from './admin/system-management/system-management.component';
 import { ChartComponent } from './admin/chart/chart.component';
+import { ScoreViewComponent } from './admin/score-view/score-view.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ChartComponent } from './admin/chart/chart.component';
     UserViewComponent,
     LogoutComponent,
     SystemManagementComponent,
-    ChartComponent
+    ChartComponent,
+    ScoreViewComponent
   ],
   imports: [
     BrowserModule,

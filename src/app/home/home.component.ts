@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
     }
 
     let dateStartString = '2019-05-01 19:40:00'
-    let dateEndString = '2019-05-01 19:41:00' 
+    let dateEndString = '2019-05-05 19:41:00' 
     let startDate = new Date(dateStartString);
     let endDate = new Date(dateEndString);
     
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
       let nowDate = new Date();
       let leftTime = startDate.getTime() - nowDate.getTime();
       this.countDownTimer = this.millisecToStringOutput(leftTime);
-      console.log(nowDate.toUTCString());
+      // console.log(nowDate.toUTCString());
       if(nowDate.getTime() >= startDate.getTime()){
         if(nowDate.getTime() >= endDate.getTime()){
           // console.log("END !!!!!!!!!!!!!");
