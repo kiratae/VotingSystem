@@ -33,4 +33,9 @@ export class ScoreService {
   getScore(): Observable<any>{
     return this.http.get(this.appSetting.apiURL+'/score');
   }
+
+  resetScore(): Observable<any>{
+    return this.http.get(this.appSetting.apiURL+'/resetScore');
+  }
+
 }

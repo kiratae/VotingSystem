@@ -1,3 +1,28 @@
-<p>
-  score-view works!
-</p>
+<div class="row">
+    <div class="col-md-12 col-12">
+  
+        <div class="card mt-3">
+          <div class="card-header">Score Lists</div>
+          <div class="card-body">
+
+            <div class="row">
+              <div class="col-12">
+                <button class="btn btn-primary float-right mb-3" (click)="resetScore()"><i class="fas fa-trash-restore"></i>&ensp;Reset All</button>
+              </div>
+            </div>
+  
+            <ul class="list-group">
+              <li *ngFor="let score of scoresData; let i = index;" class="list-group-item">
+                <span class="row">
+                  <div class="col-md-2">{{ i+1 }}</div>
+                  <div class="col-md-3">{{ score.ct_name_th }}</div>
+                  <div class="col-md-3">{{ score.sc_score }}</div>
+                </span>
+              </li>
+            </ul>
+  
+          </div>
+        </div>
+  
+    </div>
+  </div>

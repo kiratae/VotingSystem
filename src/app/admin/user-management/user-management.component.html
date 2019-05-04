@@ -51,17 +51,12 @@
               <div class="card-header">file upload add user</div>
               <div class="card-body">
 
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">CSV File</span>
-                  </div>
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="csvUpload" (change)="fileChangeListener($event.target.files)">
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                  </div>
-                  <small class="text-danger">
-                      ***ต้องเป็นไฟล์ csv เท่านั้น และมี column ชื่อ username เท่านั้น
-                  </small>
+                <div class="form-group mb-3">
+                    <label>CSV File</label>
+                    <input type="file" class="form-control-file" id="csvUpload" (change)="fileChangeListener($event.target.files)">
+                    <p><small class="text-danger">
+                        ***ต้องเป็นไฟล์ csv เท่านั้น และมี column ชื่อ username เท่านั้น
+                    </small></p>
                 </div>
     
                 <h5 class="card-title">Select User Type</h5>

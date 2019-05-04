@@ -49,6 +49,7 @@
     <div [ngSwitch]="viewMode">
       <app-user-management *ngSwitchCase="'user'"></app-user-management>
       <app-user-view *ngSwitchCase="'userView'"></app-user-view>
+      <app-score-view *ngSwitchCase="'scoreView'"></app-score-view>
       <app-cluster-management *ngSwitchCase="'cluster'"></app-cluster-management>
       <app-system-management *ngSwitchCase="'system'"></app-system-management>
     </div>
