@@ -42,16 +42,8 @@ export class AdminHomeComponent implements OnInit {
         this.username = data.us_username;
       }, error => console.log(error)
     );
-    
-    this.voteTimeService.getAll().subscribe(
-      res => {
-        let data = res['data'][0];
-        this.startVote = this.datepipe.transform(new Date(data['vt_start_vote']), 'yyyy-MM-ddThh:mm');
-        this.endVote = this.datepipe.transform(new Date(data['vt_end_vote']), 'yyyy-MM-ddThh:mm');
-        console.log(data, this.startVote, this.endVote);
-        
-      }, error => console.log(error)
-    );
+
+    this.fetchVoteTime();
 
     setInterval(() => {
       let nowDate = new Date();
@@ -59,6 +51,29 @@ export class AdminHomeComponent implements OnInit {
       this.nowDate = this.dateToStringOutput(nowDate);
     }, 1000);
 
+  }
+
+  fetchVoteTime(){
+    this.voteTimeService.getAll().subscribe(
+      res => {
+        let data = res['data'][0];
+        this.startVote = this.datepipe.transform(new Date(data['vt_start_vote']), 'yyyy-MM-dd HH:mm:ss');
+        this.endVote = this.datepipe.transform(new Date(data['vt_end_vote']), 'yyyy-MM-dd HH:mm:ss');
+        console.log(data, this.startVote, this.endVote);
+        
+      }, error => console.log(error)
+    );
+  }
+
+  setTime(){
+    this.voteTimeService.vt_start_vote = this.startVote;
+    this.voteTimeService.vt_end_vote = this.endVote;
+    this.voteTimeService.update().subscribe(
+      res => {
+        console.log(res);
+        
+      }, error => console.log(error)
+    );
   }
 
   dateToTimeStringOutput(date: Date){
@@ -69,10 +84,11 @@ export class AdminHomeComponent implements OnInit {
   }
 
   dateToStringOutput(date: Date){
+    let month = [ "Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec." ];
     let d = date.getDate();
     let m =  date.getMonth();
     let y =  date.getFullYear();
-    return `${this.getZeroPrefix(d)}/${this.getZeroPrefix(m)}/${y}`;
+    return `${this.getZeroPrefix(d)} ${month[m]} ${y}`;
   }
 
   getZeroPrefix(time){

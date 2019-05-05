@@ -38,4 +38,9 @@ export class ScoreService {
     return this.http.get(this.appSetting.apiURL+'/resetScore');
   }
 
+  updateUserPoint(): Observable<any>{
+    let data = { "us_id": this.us_id, "sc_score": this.sc_score, "ct_id": this.sc_ct_id };
+    return this.http.put(this.appSetting.apiURL+'/score', data);
+  }
+
 }

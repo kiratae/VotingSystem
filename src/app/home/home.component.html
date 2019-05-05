@@ -42,7 +42,19 @@
     <app-vote (hasScoreOutput)="setHasScoreParent($event)"></app-vote>
 </div>
 <div *ngIf="canVote == false">
-    <p>{{ countDownTimer }}</p>
+
+        <div class="row my-5 py-5 mx-1 d-flex justify-content-center">
+            <div class="col-md-8 col-lg-6 col-sm-10 col-12">
+        
+                <div class="card border-primary">
+                    <div class="card-body text-center text-primary">
+                        <h2 class="mb-3">การโหวตจะเริ่มใน</h2>
+                        <h4>{{ countDownTimer }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
 </div>
 
 <modal-logout></modal-logout>

@@ -17,9 +17,13 @@ export class VoteTimeService {
     private appSetting: AppSettingsServiceService
   ) { }
 
-  getAll(){
+  getAll(): Observable<any>{
     return this.http.get(this.appSetting.apiURL+'/vote_time');
   }
 
+  update(): Observable<any>{
+    let data = { "vt_start_vote": this.vt_start_vote, "vt_end_vote": this.vt_end_vote };
+    return this.http.put(this.appSetting.apiURL+'/vote_time', data);
+  }
   
 }

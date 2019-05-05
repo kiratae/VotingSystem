@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+import { VoteTimeService } from 'src/app/services/vote-time.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
@@ -28,7 +30,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private usersService: UsersService,
-    private appSetting: AppSettingsServiceService
+    private voteTimeService: VoteTimeService,
+    private appSetting: AppSettingsServiceService,
+    private datepipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -56,28 +60,7 @@ export class HomeComponent implements OnInit {
       break; 
     }
 
-    let dateStartString = '2019-05-01 19:40:00'
-    let dateEndString = '2019-05-05 19:41:00' 
-    let startDate = new Date(dateStartString);
-    let endDate = new Date(dateEndString);
-    
-    this.interval = setInterval(() => {
-      let nowDate = new Date();
-      let leftTime = startDate.getTime() - nowDate.getTime();
-      this.countDownTimer = this.millisecToStringOutput(leftTime);
-      // console.log(nowDate.toUTCString());
-      if(nowDate.getTime() >= startDate.getTime()){
-        if(nowDate.getTime() >= endDate.getTime()){
-          // console.log("END !!!!!!!!!!!!!");
-          this.canVote = false;
-          this.countDownTimer = "VOTE IS END !!";
-          clearInterval(this.interval);
-        }else{
-          this.canVote = true;
-          // console.log("START !!!!!!!!!!!!!");
-        } 
-      }
-    }, 1000);
+    this.fetchVoteTime();
 
     this.usersService.us_id = this.us_id;
     this.usersService.getByKey().subscribe(
@@ -90,6 +73,41 @@ export class HomeComponent implements OnInit {
       },
       error => console.log(error)
     );
+
+  }
+
+  fetchVoteTime(){
+    this.voteTimeService.getAll().subscribe(
+      res => {
+        const data = res['data'][0];
+        const startVote = new Date(data['vt_start_vote']);
+        const endVote = new Date(data['vt_end_vote']);
+        console.log(startVote, endVote);
+        this.startCountDown(startVote, endVote);
+      }, error => console.log(error)
+    );
+  }
+
+  startCountDown(startDateTime: Date, endDateTime: Date){
+
+    this.interval = setInterval(() => {
+      let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+      let nowDate = new Date(toDayString);
+      let leftTime = startDateTime.getTime() - nowDate.getTime();
+      this.countDownTimer = this.millisecToStringOutput(leftTime);
+      // console.log(nowDate);
+      if(nowDate.getTime() >= startDateTime.getTime()){
+        if(nowDate.getTime() >= endDateTime.getTime()){
+          // console.log("END !!!!!!!!!!!!!");
+          this.canVote = false;
+          this.countDownTimer = "VOTE IS END !!";
+          clearInterval(this.interval);
+        }else{
+          this.canVote = true;
+          // console.log("START !!!!!!!!!!!!!");
+        } 
+      }
+    }, 1000);
 
   }
 
@@ -108,8 +126,15 @@ export class HomeComponent implements OnInit {
   millisecToStringOutput(millisec){
     let second =  Math.ceil(millisec / 1000);
     let s = second % 60;
-    let m =  Math.floor(second / 60);
-    return this.getZeroPrefix(m)+" : " + this.getZeroPrefix(s);
+    let m =  Math.floor(second / 60) % 60;
+    let h =  Math.floor(second / 3600) % 24;
+    let d =  Math.floor(second / 86400);
+    if(d <= 0){
+      return this.getZeroPrefix(h)+" : "+this.getZeroPrefix(m)+" : " + this.getZeroPrefix(s) + " ชม.";
+    }else{
+      return d+" วัน "+this.getZeroPrefix(h)+" : "+this.getZeroPrefix(m)+" : " + this.getZeroPrefix(s) + " ชม.";
+    }
+    
   }
 
   getZeroPrefix(time){

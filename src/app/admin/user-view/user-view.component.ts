@@ -14,6 +14,9 @@ export class UserViewComponent implements OnInit {
   usersData: Array<any>;
   userLogsData: Array<any>;
 
+  us_id;
+  edit_point;
+
   constructor(
     private usersService: UsersService,
     public scoreService: ScoreService
@@ -42,7 +45,25 @@ export class UserViewComponent implements OnInit {
     );
   }
 
-  deleteUser(index, us_id){
+  edit(index){
+    const data = this.usersData[index];
+    this.selectedUser = data.us_username;
+    console.log(data);
+    this.us_id = data.us_id;
+    this.edit_point = data.um_points;
+  }
+
+  update(){
+    this.scoreService.us_id = this.us_id;
+    this.scoreService.sc_score = this.edit_point;
+    this.scoreService.updateUserPoint().subscribe(
+      res => {
+        this.fetchUser();
+      }, err => console.log(err)
+    );
+  }
+
+  delete(index, us_id){
     var dialog = confirm(`It will delete user "${this.usersData[index].us_username}" from database.\nAre you sure?`);
     if (dialog == true) {
       this.usersService.us_id = us_id;

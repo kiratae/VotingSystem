@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service'
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 import { Observable } from 'rxjs';
 
 const httpOptions = {
@@ -49,7 +49,7 @@ export class UsersService {
     return this.http.get(this.appSetting.apiURL+'/users/'+this.us_id);
   }
 
-  getLogs(){
+  getLogs(): Observable<any>{
     return this.http.get(this.appSetting.apiURL+'/users/logs/'+this.us_id);
   }
 

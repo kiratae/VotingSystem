@@ -13,6 +13,8 @@ export class AppSettingsServiceService{
 
   lang = "TH";
 
+  chartRefreshTime = 5000;
+
   constructor(private http: HttpClient) {}
 
   public getTH(): Observable<any> {

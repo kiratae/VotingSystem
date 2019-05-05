@@ -8,13 +8,14 @@
           <ul class="list-group">
             <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
               <span class="row">
-                <div class="col-md-2">{{ i+1 }}</div>
+                <div class="col-md-2 text-center">{{ i+1 }}</div>
                 <div class="col-md-3">{{ user.us_username }}</div>
-                <div class="col-md-3">{{ user.ut_name_th }}</div>
-                <div class="col-md-2">{{ user.um_points }}</div>
-                <div class="col-md-2 text-center">
+                <div class="col-md-2 text-center">{{ user.ut_name_th }}</div>
+                <div class="col-md-2 text-center">{{ user.um_points }}</div>
+                <div class="col-md-3 text-center">
+                  <button (click)="edit(i)" data-toggle="modal" data-target="#modal_edit_point" class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
                   <button (click)="viewLogs(user.us_id, user.us_username)" data-toggle="modal" data-target="#modal_voted_logs" class="btn btn-info mr-1"><i class="fas fa-history"></i></button>
-                  <button (click)="deleteUser(i, user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                  <button (click)="delete(i, user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
                 </div>
               </span>
             </li>
@@ -24,6 +25,34 @@
       </div>
 
   </div>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal_edit_point">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">edit_point ของ {{ selectedUser }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+
+            <input type="hidden" [(ngModel)]="us_id">
+
+            <div class="form-group">
+              <label>คะแนนโหวต</label>
+              <input type="number" class="form-control" [(ngModel)]="edit_point">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+            <button type="button" class="btn btn-success" (click)="update()" data-dismiss="modal">Save</button>
+          </div>
+        </div>
+    </div>
 </div>
 
 

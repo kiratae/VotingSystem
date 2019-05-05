@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScoreService } from 'src/app/services/score.service';
-import { ClusterService } from 'src/app/services/cluster.service' ;
+import { ClusterService } from 'src/app/services/cluster.service';
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 import * as Highcharts from 'highcharts';
 
 Highcharts.setOptions({
@@ -87,7 +88,8 @@ export class ChartComponent implements OnInit {
   constructor(
     private router: Router,
     private scoreService: ScoreService,
-    private clusterService: ClusterService
+    private clusterService: ClusterService,
+    private appSettings: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
@@ -157,7 +159,7 @@ export class ChartComponent implements OnInit {
 
         setTimeout(() => {
           this.updateScore();
-        }, 3000);
+        }, this.appSettings.chartRefreshTime);
       },
       error => console.log(error)
       
