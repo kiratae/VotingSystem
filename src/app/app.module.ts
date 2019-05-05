@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 // import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { DatePipe } from '@angular/common'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +47,7 @@ import { LogsViewComponent } from './admin/logs-view/logs-view.component';
     HighchartsChartModule
     // AngularFontAwesomeModule
   ],
-  providers: [],
+  providers: [ DatePipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
