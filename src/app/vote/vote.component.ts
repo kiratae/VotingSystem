@@ -12,7 +12,7 @@ import { AppSettingsServiceService } from 'src/app/services/app-settings-service
 })
 export class VoteComponent implements OnInit {
   
-  voteScore;
+  voteScore: number = 1;
   clustersData = [];
 
   onePointBtn = false;
@@ -36,6 +36,7 @@ export class VoteComponent implements OnInit {
   @Output() hasScoreOutput = new EventEmitter<any>();
 
   hasScore: any  = 0;
+  remainScore = this.hasScore;
 
   constructor(
     private router: Router,
@@ -82,7 +83,7 @@ export class VoteComponent implements OnInit {
 
     if(this.hasScore >= 1){
       this.onePointBtn = false;
-      this.voteScore = 1;
+      this.voteScore = 0;
     }else{
       this.onePointBtn = true;
       this.voteScore = 0;
@@ -98,6 +99,7 @@ export class VoteComponent implements OnInit {
         
         this.hasScore = data.um_points;
 
+        this.updateRemainScore();
         this.sentHasScore();
         this.initUI();
       },
@@ -123,7 +125,6 @@ export class VoteComponent implements OnInit {
     this.multiPointText = langData.multi_point;
   }
 
-
   sentHasScore(){
     this.hasScoreOutput.emit(this.hasScore);
   }
@@ -134,12 +135,18 @@ export class VoteComponent implements OnInit {
     this.clusterNameToVote = this.clusterToVote.ct_name_th;
   }
 
-  keyupScore(){
-    if(this.voteScore < 0){
+  keyupScore(event){
+    if(event.keyCode != 69){
+      if(this.voteScore < 0){
+        this.voteScore = 0;
+      }
+      if(this.voteScore > this.hasScore){
+        this.voteScore = this.hasScore;
+      }
+      this.updateRemainScore();
+    }else{
       this.voteScore = 0;
-    }
-    if(this.voteScore > this.hasScore){
-      this.voteScore = this.hasScore;
+      this.updateRemainScore();
     }
   }
 
@@ -162,35 +169,55 @@ export class VoteComponent implements OnInit {
   }
 
   setScore(score){
-    this.voteScore = score;
+    if(this.voteScore <= this.hasScore - score){
+      this.voteScore += score;
+      this.updateRemainScore();
+    }
   }
 
   plusScore(){
-    if(this.voteScore < this.hasScore)
+    if(this.voteScore < this.hasScore){
       this.voteScore++;
+      this.updateRemainScore();
+    }
   }
 
   minusScore(){
-    if(this.voteScore > 1)
+    if(this.voteScore > 1){
       this.voteScore--;
+      this.updateRemainScore();
+    }
   }
 
   minusScoreDown(){
     this.interval = setInterval(() => {
-      if(this.voteScore > 1)
-        this.voteScore--
+      if(this.voteScore > 1){
+        this.voteScore--;
+        this.updateRemainScore();
+      }
     }, 150);
   }
 
   plusScoreDown(){
     this.interval = setInterval(() => {
-      if(this.voteScore < this.hasScore)
+      if(this.voteScore < this.hasScore){
         this.voteScore++;
+        this.updateRemainScore();
+      }
     }, 150);
   }
 
   cancelInterval(){
     clearInterval(this.interval);
+  }
+
+  updateRemainScore(){
+    this.remainScore = this.hasScore - this.voteScore;
+
+    this.tenPointBtn = (this.remainScore >= 10)?false:true;
+    this.fivePointBtn = (this.remainScore >= 5)?false:true;
+    this.twoPointBtn = (this.remainScore >= 2)?false:true;
+    this.onePointBtn = (this.remainScore >= 1)?false:true;
   }
 
 }

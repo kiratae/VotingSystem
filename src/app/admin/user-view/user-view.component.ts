@@ -108,6 +108,7 @@ export class UserViewComponent implements OnInit {
       (previous, next) => {
         return previous.then(() =>
         {
+          console.log(next.vl_id);
           this.scoreService.us_id = next.vl_us_id;
           this.scoreService.sc_id = next.sc_id;
           this.scoreService.vl_id = next.vl_id;
