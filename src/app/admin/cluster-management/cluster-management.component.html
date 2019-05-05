@@ -4,7 +4,11 @@
 
     <!-- user-management card -->
     <div class="card mt-3">
-      <div class="card-header">cluster-management<button data-toggle="modal" data-target="#insert_cluster" class="btn btn-primary float-right"><i class="fas fa-plus"></i></button></div>
+      <div class="card-header">
+        <h4>Cluster Management</h4>
+        <button class="btn btn-info float-left" (click)="fetchCluster()"><i class="fas fa-sync"></i></button>
+        <button data-toggle="modal" data-target="#insert_cluster" class="btn btn-primary float-right"><i class="fas fa-plus"></i></button>
+      </div>
       <div class="card-body">
 
         <ul class="list-group">
