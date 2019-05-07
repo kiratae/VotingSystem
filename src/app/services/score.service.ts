@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service'
 import { Observable } from 'rxjs';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,9 @@ export class ScoreService {
   ) { }
 
   vote(): Observable<any>{
-    let data = { "us_id": this.us_id, "sc_score": this.sc_score, "ct_id": this.sc_ct_id };
+    const md5 = new Md5();
+    var hashSecretKey = md5.appendStr(this.appSetting.secretKey.toString()).end().toString();
+    let data = { "hash": hashSecretKey, "us_id": this.us_id, "sc_score": this.sc_score, "ct_id": this.sc_ct_id };
     return this.http.post(this.appSetting.apiURL+'/vote', data);
   }
 
