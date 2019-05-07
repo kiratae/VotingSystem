@@ -6,7 +6,8 @@
         "error_username_password_require": "กรุณาป้อนชื่อผู้ใช้ และรหัสผ่าน",
         "error_username_require": "กรุณาป้อนชื่อผู้ใช้",
         "error_password_require": "กรุณาป้อนรหัสผ่าน",
-        "error_incorrect_login": "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง"
+        "error_incorrect_login": "ชื่อผู้ใช้ หรือรหัสผ่านไม่ถูกต้อง",
+        "error_connection": "ขออภัย การเชื่อมต่อมีปัญหา"
     },
     "main_section": {
         "system_name": "ระบบการโหวต",

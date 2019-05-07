@@ -6,7 +6,8 @@
         "error_username_password_require": "Username and Password is required.",
         "error_username_require": "Username is required.",
         "error_password_require": "Password is required.",
-        "error_incorrect_login": "Username or Password isn't correct."
+        "error_incorrect_login": "Username or Password isn't correct.",
+        "error_connection": "Conection Error!"
     },
     "main_section": {
         "system_name": "Voting System",

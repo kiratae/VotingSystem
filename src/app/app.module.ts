@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 // import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { DatePipe } from '@angular/common'
+import { NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +21,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { SystemManagementComponent } from './admin/system-management/system-management.component';
 import { ChartComponent } from './admin/chart/chart.component';
 import { ScoreViewComponent } from './admin/score-view/score-view.component';
-import { LogsViewComponent } from './admin/logs-view/logs-view.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +35,7 @@ import { LogsViewComponent } from './admin/logs-view/logs-view.component';
     LogoutComponent,
     SystemManagementComponent,
     ChartComponent,
-    ScoreViewComponent,
-    LogsViewComponent
+    ScoreViewComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +43,9 @@ import { LogsViewComponent } from './admin/logs-view/logs-view.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    NgbModule,
+    NgbAlertModule
     // AngularFontAwesomeModule
   ],
   providers: [ DatePipe ],

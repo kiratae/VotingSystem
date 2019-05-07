@@ -13,9 +13,10 @@ import { AppSettingsServiceService } from 'src/app/services/app-settings-service
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup
-  isSubmitted = false
-  isLogin = 0
+  loginForm: FormGroup;
+  isSubmitted = false;
+  isLogin = 0;
+  isConnectionError = false;
 
   //String
   loginText;
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   errorUsernameRequire;
   errorPasswordRequire;
   errorIncorrectLogin;
+  errorConnection;
 
   constructor(
     private http: HttpClient,
@@ -70,6 +72,7 @@ export class LoginComponent implements OnInit {
     this.errorUsernameRequire = langData.error_username_require;
     this.errorPasswordRequire = langData.error_password_require;
     this.errorIncorrectLogin = langData.error_incorrect_login;
+    this.errorConnection = langData.error_connection;
   }
 
   get formControls() { return this.loginForm.controls; }
@@ -92,7 +95,8 @@ export class LoginComponent implements OnInit {
 
     this.usersService.login().subscribe(
       (res: any) => {
-        let canLogin = false
+        this.isConnectionError = false;
+        let canLogin = false;
         let loginData = res['data'][0];
 
         console.log("login data",loginData);
@@ -119,7 +123,8 @@ export class LoginComponent implements OnInit {
 
           },
           err => {
-            alert("Conection Error!");
+            // alert("Conection Error!");
+            this.isConnectionError = true;
             console.log(err);
           });
         }else{
@@ -128,7 +133,8 @@ export class LoginComponent implements OnInit {
 
       },
       err => {
-        alert("Conection Error!");
+        // alert("Conection Error!");
+        this.isConnectionError = true;
         console.log(err);
       }
     )

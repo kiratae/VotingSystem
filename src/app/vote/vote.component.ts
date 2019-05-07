@@ -12,7 +12,7 @@ import { AppSettingsServiceService } from 'src/app/services/app-settings-service
 })
 export class VoteComponent implements OnInit {
   
-  voteScore: number = 1;
+  voteScore: number = 0;
   clustersData = [];
 
   onePointBtn = false;
@@ -161,6 +161,8 @@ export class VoteComponent implements OnInit {
         console.log("vote!");
         this.fetchScore();
         this.clusterToVote = null;
+        this.voteScore = 0;
+        this.updateRemainScore();
       },
       error => console.log(error)
       

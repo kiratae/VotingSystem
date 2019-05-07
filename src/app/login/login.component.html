@@ -43,19 +43,39 @@
                     </div>
 
                     <div *ngIf="isSubmitted && formControls.username.errors && formControls.password.errors">
-                        <div *ngIf="formControls.username.errors && formControls.password.errors.required" class="mb-3 text-danger">{{ errorUsernamePasswordRequireText }}</div>
+                        <div *ngIf="formControls.username.errors && formControls.password.errors.required" class="mb-3">
+                            <ngb-alert type="danger" [dismissible]="false">
+                                {{ errorUsernamePasswordRequireText }}
+                            </ngb-alert>
+                        </div>
                     </div>
 
                     <div *ngIf="isSubmitted && formControls.username.errors && !formControls.password.errors">
-                        <div *ngIf="formControls.username.errors.required" class="mb-3 text-danger">{{ errorUsernameRequire }}</div>
+                        <div *ngIf="formControls.username.errors.required" class="mb-3">
+                            <ngb-alert type="danger" [dismissible]="false">
+                                {{ errorUsernameRequire }}
+                            </ngb-alert>
+                        </div>
                     </div>
 
                     <div *ngIf="isSubmitted && formControls.password.errors && !formControls.username.errors">
-                        <div *ngIf="formControls.password.errors.required" class="mb-3 text-danger">{{ errorPasswordRequire }}</div>
+                        <div *ngIf="formControls.password.errors.required" class="mb-3">
+                            <ngb-alert type="danger" [dismissible]="false">
+                                {{ errorPasswordRequire }}
+                            </ngb-alert>
+                        </div>
                     </div>
 
-                    <div *ngIf="isLogin == -1 && isSubmitted && !formControls.password.errors && !formControls.username.errors" class="mb-3 text-danger">
-                        {{ errorIncorrectLogin }}
+                    <div *ngIf="isLogin == -1 && isSubmitted && !formControls.password.errors && !formControls.username.errors" class="mb-3">
+                        <ngb-alert type="danger" [dismissible]="false">
+                            {{ errorIncorrectLogin }}
+                        </ngb-alert>
+                    </div>
+
+                    <div *ngIf="isConnectionError == true" class="mb-3">
+                        <ngb-alert type="danger" [dismissible]="false">
+                            {{ errorConnection }}
+                        </ngb-alert>
                     </div>
 
                     <button class="btn btn-primary btn-block" type="submit">{{ loginText }}</button>
