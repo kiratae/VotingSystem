@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { DatePipe } from '@angular/common'
 import { NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,50 @@ import { LogoutComponent } from './logout/logout.component';
 import { SystemManagementComponent } from './admin/system-management/system-management.component';
 import { ChartComponent } from './admin/chart/chart.component';
 import { ScoreViewComponent } from './admin/score-view/score-view.component';
+
+/**
+ * Custom angular notifier options
+ */
+const customNotifierOptions: NotifierOptions = {
+  position: {
+		horizontal: {
+			position: 'right',
+			distance: 8
+		},
+		vertical: {
+			position: 'top',
+			distance: 8,
+			gap: 10
+		}
+	},
+  theme: 'material',
+  behaviour: {
+    autoHide: 3000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: false,
+    stacking: 2
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease'
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease'
+    },
+    overlap: 150
+  }
+};
 
 @NgModule({
   declarations: [
@@ -45,7 +90,8 @@ import { ScoreViewComponent } from './admin/score-view/score-view.component';
     ReactiveFormsModule,
     HighchartsChartModule,
     NgbModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NotifierModule.withConfig(customNotifierOptions)
     // AngularFontAwesomeModule
   ],
   providers: [ DatePipe ],

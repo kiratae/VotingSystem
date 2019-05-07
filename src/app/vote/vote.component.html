@@ -69,7 +69,7 @@
 
         </div>
         <div class="modal-footer text-center">
-            <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="hasScore == 0">{{ voteText }}</button>
+            <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="hasScore == 0 || voteScore == 0">{{ voteText }}</button>
         </div>
         </div>
     </div>

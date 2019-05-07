@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   username: String;
   hasScore: any;
 
-  canVote: boolean = false;
+  canVote: number = 0;
 
   interval;
   countDownTimer;
@@ -36,6 +36,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.canVote = -1;
     
     if(sessionStorage.getItem("us_id") == null){
       this.router.navigate(['login']);
@@ -99,11 +101,11 @@ export class HomeComponent implements OnInit {
       if(nowDate.getTime() >= startDateTime.getTime()){
         if(nowDate.getTime() >= endDateTime.getTime()){
           // console.log("END !!!!!!!!!!!!!");
-          this.canVote = false;
+          this.canVote = 0;
           this.countDownTimer = "VOTE IS END !!";
           clearInterval(this.interval);
         }else{
-          this.canVote = true;
+          this.canVote = 1;
           // console.log("START !!!!!!!!!!!!!");
         } 
       }

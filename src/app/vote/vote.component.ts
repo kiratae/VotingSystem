@@ -4,6 +4,7 @@ import { ClusterService } from 'src/app/services/cluster.service';
 import { UsersService } from 'src/app/services/users.service';
 import { ScoreService } from 'src/app/services/score.service'
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-vote',
@@ -43,7 +44,8 @@ export class VoteComponent implements OnInit {
     private clusterService: ClusterService,
     private usersService: UsersService,
     private scoreService: ScoreService,
-    private appSetting: AppSettingsServiceService
+    private appSetting: AppSettingsServiceService,
+    private notifier: NotifierService
   ) {}
 
   ngOnInit() {
@@ -158,11 +160,16 @@ export class VoteComponent implements OnInit {
 
     this.scoreService.vote().subscribe(
       res => {
-        console.log("vote!");
+        // console.log("vote!");
+
+        // this.notifier.hideAll();
+        this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
+
         this.fetchScore();
         this.clusterToVote = null;
         this.voteScore = 0;
         this.updateRemainScore();
+
       },
       error => console.log(error)
       
@@ -185,7 +192,7 @@ export class VoteComponent implements OnInit {
   }
 
   minusScore(){
-    if(this.voteScore > 1){
+    if(this.voteScore > 0){
       this.voteScore--;
       this.updateRemainScore();
     }

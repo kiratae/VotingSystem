@@ -38,23 +38,34 @@
 
 </nav>
 
-<div *ngIf="canVote == true">
+<div *ngIf="canVote == 1">
     <app-vote (hasScoreOutput)="setHasScoreParent($event)"></app-vote>
 </div>
-<div *ngIf="canVote == false">
+<div *ngIf="canVote == 0">
 
-        <div class="row my-5 py-5 mx-1 d-flex justify-content-center">
-            <div class="col-md-8 col-lg-6 col-sm-10 col-12">
-        
-                <div class="card border-primary">
-                    <div class="card-body text-center text-primary">
-                        <h2 class="mb-3">การโหวตจะเริ่มใน</h2>
-                        <h4>{{ countDownTimer }}</h4>
-                    </div>
+    <div class="row my-5 py-5 mx-1 d-flex justify-content-center">
+        <div class="col-md-8 col-lg-6 col-sm-10 col-12">
+    
+            <div class="card border-primary">
+                <div class="card-body text-center text-primary">
+                    <h2 class="mb-3">การโหวตจะเริ่มใน</h2>
+                    <h4>{{ countDownTimer }}</h4>
                 </div>
             </div>
         </div>
+    </div>
     
+</div>
+<div *ngIf="canVote == -1" style="position: fixed; top: calc(50% - 4rem); left: calc(50% - 4rem)">
+
+    <div class="text-center">
+        <div class="spinner-border text-info" style="width: 8rem; height: 8rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
 </div>
 
 <modal-logout></modal-logout>
+
+<notifier-container></notifier-container>
