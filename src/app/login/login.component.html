@@ -78,7 +78,10 @@
                         </ngb-alert>
                     </div>
 
-                    <button class="btn btn-primary btn-block" type="submit">{{ loginText }}</button>
+                    <button class="btn btn-primary btn-block" type="submit">
+                        <span *ngIf="isLoading == true" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        {{ loginText }}
+                    </button>
                 </form>
 
             </div>

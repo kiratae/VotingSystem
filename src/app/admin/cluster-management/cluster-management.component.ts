@@ -142,8 +142,9 @@ export class ClusterManagementComponent implements OnInit {
       this.clusterService.uploadImg().subscribe(
         res => {
           if(this.appSetting.isDebuging)
-            console.log(res[0].filename);
-          this.ct_img_name = res[0].filename;
+            console.log(res.filename);
+            
+          this.ct_img_name = res.filename;
           this.canUpload = false;
           this.isUploaded = true;
         }, error => console.error(error)

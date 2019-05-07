@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   isSubmitted = false;
   isLogin = 0;
   isConnectionError = false;
+  isLoading = false;
 
   //String
   loginText;
@@ -85,6 +86,8 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     const md5 = new Md5();
     var username = this.loginForm.get("username").value;
     var password = this.loginForm.get("password").value;
@@ -96,6 +99,7 @@ export class LoginComponent implements OnInit {
     this.usersService.login().subscribe(
       (res: any) => {
         this.isConnectionError = false;
+        this.isLoading = false;
         let canLogin = false;
         let loginData = res['data'][0];
 
@@ -125,6 +129,7 @@ export class LoginComponent implements OnInit {
           err => {
             // alert("Conection Error!");
             this.isConnectionError = true;
+            this.isLoading = false;
             console.log(err);
           });
         }else{
@@ -135,9 +140,10 @@ export class LoginComponent implements OnInit {
       err => {
         // alert("Conection Error!");
         this.isConnectionError = true;
+        this.isLoading = false;
         console.log(err);
       }
-    )
+    );
 
   }
 

@@ -38,7 +38,7 @@ const customNotifierOptions: NotifierOptions = {
 			gap: 10
 		}
 	},
-  theme: 'material',
+  theme: 'material', 
   behaviour: {
     autoHide: 3000,
     onClick: 'hide',
