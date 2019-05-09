@@ -60,14 +60,14 @@ export class VoteComponent implements OnInit {
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.main_section);
-          }, error => console.log(error)
+          }, error => console.error(error)
         );
       break;
       case "TH":
       this.appSetting.getTH().subscribe(
         res => {
           this.setText(res.main_section);
-        }, error => console.log(error)
+        }, error => console.error(error)
       );
       break; 
     }
@@ -96,7 +96,6 @@ export class VoteComponent implements OnInit {
     this.usersService.us_id = sessionStorage.getItem("us_id");
     this.usersService.getByKey().subscribe(
       (res) => {
-        console.log(res['data'][0]);
         let data = res['data'][0];
         
         this.hasScore = data.um_points;
@@ -105,7 +104,7 @@ export class VoteComponent implements OnInit {
         this.sentHasScore();
         this.initUI();
       },
-      error => console.log(error)
+      error => console.error(error)
     );
   }
 
@@ -132,9 +131,16 @@ export class VoteComponent implements OnInit {
   }
 
   clickToVote(index){
-    console.log(this.clustersData[index]);
+    if(this.appSetting.isDebuging)
+      console.log(this.clustersData[index]);
+
     this.clusterToVote = this.clustersData[index];
     this.clusterNameToVote = this.clusterToVote.ct_name_th;
+  }
+
+  closeModal(){
+    this.voteScore = 0;
+    this.updateRemainScore();
   }
 
   keyupScore(event){
@@ -171,7 +177,7 @@ export class VoteComponent implements OnInit {
         this.updateRemainScore();
 
       },
-      error => console.log(error)
+      error => console.error(error)
       
     );
 

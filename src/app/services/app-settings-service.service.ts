@@ -10,11 +10,13 @@ export class AppSettingsServiceService{
   apiURL: String = "http://127.0.0.1:3000";
   secretKey: String = "l3ear@Hunt;"
 
-  isDebuging: boolean = true;
+  isDebuging: boolean = false;
 
   lang = "TH";
 
-  chartRefreshTime = 5000;
+  chartRefreshTime = 5000; // miliseconds
+
+  canStillLoginTime = 10 * 60 * 1000; // minutes x seconds in minutes x miliseconds
 
   constructor(private http: HttpClient) {}
 

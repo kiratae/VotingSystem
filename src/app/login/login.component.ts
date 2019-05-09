@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { UsersService } from 'src/app/services/users.service'
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
@@ -34,11 +35,18 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private usersService: UsersService,
-    private appSetting: AppSettingsServiceService
+    private appSetting: AppSettingsServiceService,
+    private datepipe: DatePipe
   ) { }
 
   ngOnInit() {
     if(sessionStorage.getItem("us_id") != null){
+      let lastLogin = parseInt(sessionStorage.getItem("last_login"));
+      let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+      let now = new Date(toDayString).getTime();
+      if(now - lastLogin >= this.appSetting.canStillLoginTime){
+        return
+      }
       this.router.navigate(['home'])
     }
 
@@ -47,14 +55,14 @@ export class LoginComponent implements OnInit {
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.login_section);
-          }, error => console.log(error)
+          }, error => console.error(error)
         );
       break;
       case "TH":
       this.appSetting.getTH().subscribe(
         res => {
           this.setText(res.login_section);
-        }, error => console.log(error)
+        }, error => console.error(error)
       );
       break; 
     }
@@ -103,7 +111,8 @@ export class LoginComponent implements OnInit {
         let canLogin = false;
         let loginData = res['data'][0];
 
-        console.log("login data",loginData);
+        if(this.appSetting.isDebuging)
+          console.log("login data",loginData);
 
         if(loginData['canLogin'] == "true"){
 
@@ -115,6 +124,11 @@ export class LoginComponent implements OnInit {
 
             sessionStorage.setItem("us_id", userID);
             sessionStorage.setItem("user_type", userType);
+            
+            let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+            let nowLastLogin = new Date(toDayString).getTime().toString();
+
+            sessionStorage.setItem("last_login", nowLastLogin);
 
             if(userType == "Admin"){
               this.router.navigate(['admin'])
@@ -130,7 +144,7 @@ export class LoginComponent implements OnInit {
             // alert("Conection Error!");
             this.isConnectionError = true;
             this.isLoading = false;
-            console.log(err);
+            console.error(err);
           });
         }else{
           this.isLogin = -1
@@ -141,7 +155,7 @@ export class LoginComponent implements OnInit {
         // alert("Conection Error!");
         this.isConnectionError = true;
         this.isLoading = false;
-        console.log(err);
+        console.error(err);
       }
     );
 

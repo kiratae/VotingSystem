@@ -42,7 +42,22 @@ export class HomeComponent implements OnInit {
     if(sessionStorage.getItem("us_id") == null){
       this.router.navigate(['login']);
     }else{
+      let lastLogin = parseInt(sessionStorage.getItem("last_login"));
+      let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+      let now = new Date(toDayString).getTime();
+      if(now - lastLogin >= this.appSetting.canStillLoginTime){
+        this.router.navigate(['login']);
+      }
       this.us_id = sessionStorage.getItem("us_id");
+      this.usersService.us_id = this.us_id;
+      this.usersService.loginCompleted().subscribe(
+        (res) => {
+          let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+          let nowLastLogin = new Date(toDayString).getTime().toString();
+
+          sessionStorage.setItem("last_login", nowLastLogin);
+        }, err => console.error(err)
+      );
     }
 
     switch(this.appSetting.lang){
@@ -67,13 +82,16 @@ export class HomeComponent implements OnInit {
     this.usersService.us_id = this.us_id;
     this.usersService.getByKey().subscribe(
       (res) => {
-        console.log(res['data'][0]);
         let data = res['data'][0];
+        let lastLoging = this.datepipe.transform(new Date(data.us_lastlogin), 'yyyy-MM-dd HH:mm:ss', '+0700');
+
+        if(this.appSetting.isDebuging)
+          console.log(data.us_id, data.us_username, lastLoging);
         
         this.username = data.us_username;
         this.hasScore = data.um_points;
       },
-      error => console.log(error)
+      error => console.error(error)
     );
 
   }
@@ -84,9 +102,12 @@ export class HomeComponent implements OnInit {
         const data = res['data'][0];
         const startVote = new Date(data['vt_start_vote']);
         const endVote = new Date(data['vt_end_vote']);
-        console.log(startVote, endVote);
+
+        if(this.appSetting.isDebuging)
+          console.log(startVote, endVote);
+
         this.startCountDown(startVote, endVote);
-      }, error => console.log(error)
+      }, error => console.error(error)
     );
   }
 

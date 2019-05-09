@@ -32,7 +32,6 @@ export class UsersService {
 
   loginCompleted(): Observable<any>{
     let data = { "us_id": this.us_id };
-    console.log("loginCompleted : us_id = "+this.us_id);
     return this.http.put(this.appSetting.apiURL+'/users/logged_in', data);
   }
 
