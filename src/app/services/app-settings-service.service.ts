@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AppSettingsServiceService{
 
-  apiURL: String = "http://10.80.81.40:3000";
+  apiURL: String = "http://192.168.1.13:3000"; // http://localhost:3000
   secretKey: String = "l3ear@Hunt;"
 
   isDebuging: boolean = false;
@@ -26,6 +26,10 @@ export class AppSettingsServiceService{
 
   public getEN(): Observable<any> {
     return this.http.get("./assets/lang/en.json");
+  }
+
+  getTimeSync(){
+    return this.http.get(this.apiURL+"/timesync");
   }
 
 }
