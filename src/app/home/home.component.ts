@@ -36,8 +36,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.canVote = -1;
     
     if(sessionStorage.getItem("us_id") == null){
       this.router.navigate(['login']);
@@ -97,6 +95,7 @@ export class HomeComponent implements OnInit {
   }
 
   fetchVoteTime(){
+    this.canVote = -1;
     this.voteTimeService.getAll().subscribe(
       res => {
         const data = res['data'][0];
@@ -115,10 +114,13 @@ export class HomeComponent implements OnInit {
 
     this.interval = setInterval(() => {
       let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
-      let nowDate = new Date(toDayString);
+      let nowDate = this.convertDateForIos(toDayString);
+      console.log(nowDate);
+      
       let leftTime = startDateTime.getTime() - nowDate.getTime();
       this.countDownTimer = this.millisecToStringOutput(leftTime);
       // console.log(nowDate);
+      this.canVote = 0;
       if(nowDate.getTime() >= startDateTime.getTime()){
         if(nowDate.getTime() >= endDateTime.getTime()){
           // console.log("END !!!!!!!!!!!!!");
@@ -132,6 +134,12 @@ export class HomeComponent implements OnInit {
       }
     }, 1000);
 
+  }
+
+  convertDateForIos(date) {
+    var arr = date.split(/[- :]/);
+    date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+    return date;
   }
 
   setText(langData){
