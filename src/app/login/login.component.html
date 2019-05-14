@@ -23,6 +23,7 @@
                             class="form-control"
                             formControlName="username"
                             placeholder="{{ usernameText }}"
+                            (keyup)="onkeyup()"
                             [ngClass]="{ 'is-invalid': isSubmitted && formControls.username.errors || isLogin == -1 && isSubmitted }"
                             required
                         >
@@ -37,6 +38,7 @@
                             class="form-control"
                             formControlName="password"
                             placeholder="{{ passowrdText }}"
+                            (keyup)="onkeyup()"
                             [ngClass]="{ 'is-invalid': isSubmitted && formControls.password.errors || isLogin == -1 && isSubmitted }"
                             required
                         >

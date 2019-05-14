@@ -21,11 +21,25 @@ export class ScoreService {
     private appSetting: AppSettingsServiceService
   ) { }
 
-  vote(): Observable<any>{
+  addScore(): Observable<any>{
     const md5 = new Md5();
     var hashSecretKey = md5.appendStr(this.appSetting.secretKey.toString()).end().toString();
     let data = { "hash": hashSecretKey, "us_id": this.us_id, "sc_score": this.sc_score, "ct_id": this.sc_ct_id };
-    return this.http.post(this.appSetting.apiURL+'/vote', data);
+    return this.http.post(this.appSetting.apiURL+'/add_score', data);
+  }
+
+  minusUserScore(): Observable<any>{
+    const md5 = new Md5();
+    var hashSecretKey = md5.appendStr(this.appSetting.secretKey.toString()).end().toString();
+    let data = { "hash": hashSecretKey, "us_id": this.us_id, "sc_score": this.sc_score, "ct_id": this.sc_ct_id };
+    return this.http.post(this.appSetting.apiURL+'/minus_score', data);
+  }
+
+  createLog(): Observable<any>{
+    const md5 = new Md5();
+    var hashSecretKey = md5.appendStr(this.appSetting.secretKey.toString()).end().toString();
+    let data = { "hash": hashSecretKey, "us_id": this.us_id, "sc_score": this.sc_score, "ct_id": this.sc_ct_id };
+    return this.http.post(this.appSetting.apiURL+'/log', data);
   }
 
   restore(): Observable<any>{

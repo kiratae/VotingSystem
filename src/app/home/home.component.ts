@@ -118,7 +118,8 @@ export class HomeComponent implements OnInit {
               this.canVote = 1;
             }else{
               this.canVote = 0;
-              this.startCountDown(now, startVote, endVote);
+              //this.startCountDown(now, startVote, endVote);
+              this.getValueWithAsync(now, startVote, endVote);
             }
 
           }, error => {
@@ -135,32 +136,39 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  async getValueWithAsync(now: Date, startDateTime: Date, endDateTime: Date) {
+    const value = <number>await this.startCountDown(now, startDateTime, endDateTime);
+    console.log(`async result: ${value}`);
+  }
+
   startCountDown(now: Date, startDateTime: Date, endDateTime: Date){
 
-    this.interval = setInterval(() => {
-      let toDayString = this.datepipe.transform(now, 'yyyy-MM-dd HH:mm:ss', '+0700');
-      let nowDate = this.convertDateForIos(toDayString);
+    return new Promise(interval => {
+      setInterval(() => {
+        let toDayString = this.datepipe.transform(now, 'yyyy-MM-dd HH:mm:ss', '+0700');
+        let nowDate = this.convertDateForIos(toDayString);
 
-      if(this.appSetting.isDebuging)
-        console.log(nowDate);
-      
-      let leftTime = startDateTime.getTime() - nowDate.getTime();
-      this.countDownTimer = this.millisecToStringOutput(leftTime);
+        if(this.appSetting.isDebuging)
+          console.log(nowDate);
+        
+        let leftTime = startDateTime.getTime() - nowDate.getTime();
+        this.countDownTimer = this.millisecToStringOutput(leftTime);
 
-      // console.log(nowDate);
-      if(nowDate.getTime() >= startDateTime.getTime()){
-        if(nowDate.getTime() >= endDateTime.getTime()){
-          // console.log("END VOTE !!!!!!!!!!!!!");
-          this.canVote = 0;
-          this.countDownTimer = "VOTE IS END !!";
-          clearInterval(this.interval);
-        }else{
-          this.canVote = 1;
-          // console.log("START VOTE !!!!!!!!!!!!!");
-        } 
-      }
-      now.setMilliseconds(now.getMilliseconds() + 1000);
-    }, 1000);
+        // console.log(nowDate);
+        if(nowDate.getTime() >= startDateTime.getTime()){
+          if(nowDate.getTime() >= endDateTime.getTime()){
+            // console.log("END VOTE !!!!!!!!!!!!!");
+            this.canVote = 0;
+            this.countDownTimer = "VOTE IS END !!";
+            clearInterval(this.interval);
+          }else{
+            this.canVote = 1;
+            // console.log("START VOTE !!!!!!!!!!!!!");
+          } 
+        }
+        now.setMilliseconds(now.getMilliseconds() + 1000);
+      }, 1000);
+    });
 
   }
 

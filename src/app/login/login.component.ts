@@ -20,6 +20,9 @@ export class LoginComponent implements OnInit {
   isConnectionError = false;
   isLoading = false;
 
+  oldInputUsername = "";
+  oldInputPassoword = "";
+
   //String
   loginText;
   usernameText;
@@ -86,6 +89,19 @@ export class LoginComponent implements OnInit {
 
   get formControls() { return this.loginForm.controls; }
 
+  onkeyup() {  
+    var username = this.loginForm.get("username").value;
+    var password = this.loginForm.get("password").value;
+
+    if(this.oldInputUsername == username && this.oldInputPassoword == password){
+      this.isSubmitted = true
+      return;
+    }
+
+    this.isSubmitted = false;
+
+  }
+
   onSubmit() {
     this.isSubmitted = true
     this.isLogin = 0
@@ -100,6 +116,9 @@ export class LoginComponent implements OnInit {
     var username = this.loginForm.get("username").value;
     var password = this.loginForm.get("password").value;
     var hashPassword = md5.appendStr(password).end().toString();
+
+    this.oldInputUsername = username;
+    this.oldInputPassoword = password;
 
     this.usersService.us_username = username;
     this.usersService.us_password = hashPassword;

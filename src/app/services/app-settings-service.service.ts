@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class AppSettingsServiceService{
 
-  apiURL: String = "http://192.168.1.13:3000"; // http://localhost:3000
+  apiURL: String = "http://localhost:3000"; // http://localhost:3000
   secretKey: String = "l3ear@Hunt;"
 
-  isDebuging: boolean = false;
+  isDebuging: boolean = true;
 
   lang = "TH";
 

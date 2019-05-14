@@ -164,22 +164,44 @@ export class VoteComponent implements OnInit {
     this.scoreService.sc_score = this.voteScore;
     this.scoreService.us_id = sessionStorage.getItem("us_id");
 
-    this.scoreService.vote().subscribe(
+    this.scoreService.addScore().subscribe(
       res => {
         // console.log("vote!");
 
-        // this.notifier.hideAll();
-        this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
+        if(res["status"] == true){
+          console.log("yeah add score complete!");
 
-        this.fetchScore();
-        this.clusterToVote = null;
-        this.voteScore = 0;
-        this.updateRemainScore();
+          this.scoreService.minusUserScore().subscribe(
+            res => {
+              if(res["status"] == true){
+                console.log("yeah minus score from user complete!");
 
-      },
-      error => console.error(error)
+                this.scoreService.createLog().subscribe(
+                  res => {
+                    if(res["vl_id"] != undefined || res["vl_id"] != null){
+                      console.log("yeah create log complete! vl_id is "+res["vl_id"]);
+
+                      // this.notifier.hideAll();
+                      this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
+
+                      this.fetchScore();
+                      this.clusterToVote = null;
+                      this.voteScore = 0;
+                      this.updateRemainScore();
+                      
+                    }
+                  }, error => console.error(error)
+                ); // end subscribe createLog
+
+              }
+            }, error => console.error(error)
+          ); // end subscribe minusUserScore
+
+        } // endif res["status"]
+
+      }, error => console.error(error)
       
-    );
+    ); // end subscribe addScore
 
   }
 
