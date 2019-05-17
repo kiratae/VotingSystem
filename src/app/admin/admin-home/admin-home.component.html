@@ -29,8 +29,11 @@
             <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
                 <a class="nav-link" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;view users</a>
             </li>
+            <li class="nav-item" [ngClass]="(viewMode=='userType')?'active':''">
+                <a class="nav-link" (click)="changeTab('userType')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user type</a>
+            </li>
             <li class="nav-item" [ngClass]="(viewMode=='scoreView')?'active':''">
-                <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;score users</a>
+                <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;score views</a>
             </li>
             <li class="nav-item" [ngClass]="(viewMode=='cluster')?'active':''">
                 <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;cluster management</a>
@@ -96,6 +99,7 @@
         </div>
         <app-user-management *ngSwitchCase="'user'"></app-user-management>
         <app-user-view *ngSwitchCase="'userView'"></app-user-view>
+        <app-user-type-management *ngSwitchCase="'userType'"></app-user-type-management>
         <app-score-view *ngSwitchCase="'scoreView'"></app-score-view>
         <app-cluster-management *ngSwitchCase="'cluster'"></app-cluster-management>
         <app-system-management *ngSwitchCase="'system'"></app-system-management>

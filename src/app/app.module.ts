@@ -22,6 +22,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { SystemManagementComponent } from './admin/system-management/system-management.component';
 import { ChartComponent } from './admin/chart/chart.component';
 import { ScoreViewComponent } from './admin/score-view/score-view.component';
+import { UserTypeManagementComponent } from './admin/user-type-management/user-type-management.component';
 
 /**
  * Custom angular notifier options
@@ -80,7 +81,8 @@ const customNotifierOptions: NotifierOptions = {
     LogoutComponent,
     SystemManagementComponent,
     ChartComponent,
-    ScoreViewComponent
+    ScoreViewComponent,
+    UserTypeManagementComponent
   ],
   imports: [
     BrowserModule,
