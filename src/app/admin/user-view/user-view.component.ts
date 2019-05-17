@@ -91,45 +91,26 @@ export class UserViewComponent implements OnInit {
     this.scoreService.vl_id = data.vl_id;
     this.scoreService.sc_score = data.voted_score;
 
-    this.scoreService.restore().subscribe(
+    this.scoreService.restore_step1().subscribe(
       res => {
-        if(res['status'] == true){
-          this.viewLogs(data.vl_us_id);
-          this.fetchUser();
+        if(res['deleted'] == true){
+          this.scoreService.restore_step2().subscribe(
+            res => {
+              if(res['status'] == true){
+                this.scoreService.restore_step3().subscribe(
+                  res => {
+                    if(res['status'] == true){
+                      this.viewLogs(data.vl_us_id);
+                      this.fetchUser();
+                    }
+                  }, err => console.log(err)
+                );
+              }
+            }, err => console.log(err)
+          );
         }
       }, err => console.log(err)
     );
-
-  }
-
-  restoreAllVotePoint(){
-    let count = 0;
-    const data = this.userLogsData;
-
-    data.reduce(
-      (previous, next) => {
-        return previous.then(() =>
-        {
-          console.log(next.vl_id);
-          this.scoreService.us_id = next.vl_us_id;
-          this.scoreService.sc_id = next.sc_id;
-          this.scoreService.vl_id = next.vl_id;
-          this.scoreService.sc_score = next.voted_score;
-          return this.scoreService.restore().subscribe(
-            res => {
-              console.log(res);
-              let index = this.userLogsData.findIndex(e => e.vl_us_id == next.vl_us_id);
-              this.userLogsData.splice(index);
-              this.fetchUser();
-            },
-            err => console.log(err)
-          );
-        })
-      }, Promise.resolve()
-    ).then(() => {
-      console.log("All done.");
-    })
-    .catch(error => console.log(error));
 
   }
 

@@ -46,9 +46,19 @@ export class ScoreService {
     return this.http.post(this.appSetting.apiURL+'/log', data);
   }
 
-  restore(): Observable<any>{
+  restore_step1(): Observable<any>{
     let data = { "vl_id": this.vl_id, "us_id": this.us_id, "sc_score": this.sc_score, "sc_id": this.sc_id };
-    return this.http.post(this.appSetting.apiURL+'/restore', data);
+    return this.http.post(this.appSetting.apiURL+'/restore_vl', data);
+  }
+
+  restore_step2(): Observable<any>{
+    let data = { "vl_id": this.vl_id, "us_id": this.us_id, "sc_score": this.sc_score, "sc_id": this.sc_id };
+    return this.http.post(this.appSetting.apiURL+'/restore_sc', data);
+  }
+
+  restore_step3(): Observable<any>{
+    let data = { "vl_id": this.vl_id, "us_id": this.us_id, "sc_score": this.sc_score, "sc_id": this.sc_id };
+    return this.http.post(this.appSetting.apiURL+'/restore_um', data);
   }
 
   getScore(): Observable<any>{
