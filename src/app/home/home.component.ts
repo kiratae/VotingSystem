@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
               this.canVote = 0;
               this.isEndVote = false;
               //this.startCountDown(now, startVote, endVote);
-              this.getValueWithAsync(now, startVote, endVote);
+              this.getCountDownWithAsync(now, startVote, endVote);
             }
 
           }, error => {
@@ -142,7 +142,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  async getValueWithAsync(now: Date, startDateTime: Date, endDateTime: Date) {
+  async getCountDownWithAsync(now: Date, startDateTime: Date, endDateTime: Date) {
     const value = <number>await this.startCountDown(now, startDateTime, endDateTime);
     console.log(`async result: ${value}`);
   }
