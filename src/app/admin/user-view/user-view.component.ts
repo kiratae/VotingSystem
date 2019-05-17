@@ -93,8 +93,10 @@ export class UserViewComponent implements OnInit {
 
     this.scoreService.restore().subscribe(
       res => {
-        this.viewLogs(data.vl_us_id);
-        this.fetchUser();
+        if(res['status'] == true){
+          this.viewLogs(data.vl_us_id);
+          this.fetchUser();
+        }
       }, err => console.log(err)
     );
 

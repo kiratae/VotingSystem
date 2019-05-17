@@ -35,6 +35,10 @@ export class ScoreService {
     return this.http.post(this.appSetting.apiURL+'/minus_score', data);
   }
 
+  checkCanVote(){
+    
+  }
+
   createLog(): Observable<any>{
     const md5 = new Md5();
     var hashSecretKey = md5.appendStr(this.appSetting.secretKey.toString()).end().toString();

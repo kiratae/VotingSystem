@@ -166,20 +166,22 @@ export class VoteComponent implements OnInit {
 
     this.scoreService.addScore().subscribe(
       res => {
-        // console.log("vote!");
 
         if(res["status"] == true){
-          console.log("yeah add score complete!");
+          if(this.appSetting.isDebuging)
+            console.log("yeah add score complete!");
 
           this.scoreService.minusUserScore().subscribe(
             res => {
               if(res["status"] == true){
-                console.log("yeah minus score from user complete!");
+                if(this.appSetting.isDebuging)
+                  console.log("yeah minus score from user complete!");
 
                 this.scoreService.createLog().subscribe(
                   res => {
                     if(res["vl_id"] != undefined || res["vl_id"] != null){
-                      console.log("yeah create log complete! vl_id is "+res["vl_id"]);
+                      if(this.appSetting.isDebuging)
+                        console.log("yeah create log complete! vl_id is "+res["vl_id"]);
 
                       // this.notifier.hideAll();
                       this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
@@ -197,7 +199,9 @@ export class VoteComponent implements OnInit {
             }, error => console.error(error)
           ); // end subscribe minusUserScore
 
-        } // endif res["status"]
+        }else{
+          this.notifier.notify( 'danger', `คะแนนของคุณไม่พอที่ทำกาณโหวต !` );
+        } // endif-else res["status"]
 
       }, error => console.error(error)
       

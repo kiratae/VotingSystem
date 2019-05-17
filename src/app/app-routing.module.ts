@@ -8,7 +8,7 @@ import { ChartComponent } from './admin/chart/chart.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {

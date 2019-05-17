@@ -36,7 +36,7 @@ export class SystemManagementComponent implements OnInit {
   }
 
   save(){
-    if(this.sys_name_th != null && this.sys_name_en != null) {
+    if(this.sys_name_th != null) {
 
       if(this.sys_id != null){
         this.systemService.sys_id = this.sys_id;
@@ -70,6 +70,12 @@ export class SystemManagementComponent implements OnInit {
       alert("ERROR")
     }
 
+  }
+
+  reset_modal(){
+    this.sys_id = null;
+    this.sys_name_th = null;
+    this.sys_name_en = null;
   }
 
   edit(index){

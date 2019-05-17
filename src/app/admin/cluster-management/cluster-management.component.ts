@@ -24,7 +24,7 @@ export class ClusterManagementComponent implements OnInit {
   ct_color: String = "#";
   sm_sys_id: any;
 
-  imgURL: String = "http://localhost:3000/images/cluster/";
+  imgURL: String;
 
   isUploaded = false;
   canUpload = false;
@@ -36,6 +36,8 @@ export class ClusterManagementComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.imgURL = this.appSetting.apiURL+'/images/cluster/';
+
     this.fetchCluster();
     this.fetchSystem();
   }
