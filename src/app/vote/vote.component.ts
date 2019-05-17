@@ -195,13 +195,17 @@ export class VoteComponent implements OnInit {
                   }, error => console.error(error)
                 ); // end subscribe createLog
 
-              }
+              }else{
+                this.notifier.notify( 'error', `คะแนนของคุณไม่พอที่จะทำการโหวต !` );
+                this.fetchScore();
+                this.voteScore = 0;
+                this.updateRemainScore();
+              } // endif-else res["status"]
+              
             }, error => console.error(error)
           ); // end subscribe minusUserScore
 
-        }else{
-          this.notifier.notify( 'danger', `คะแนนของคุณไม่พอที่ทำกาณโหวต !` );
-        } // endif-else res["status"]
+        }// endif res["status"]
 
       }, error => console.error(error)
       

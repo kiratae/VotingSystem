@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   hasScore: any;
 
   canVote: number = 0;
+  isEndVote: boolean = false;
 
   interval;
   countDownTimer;
@@ -116,8 +117,13 @@ export class HomeComponent implements OnInit {
             
             if(now.getTime() >= startVote.getTime()){
               this.canVote = 1;
+              if(now.getTime() >= endVote.getTime()){
+                this.canVote = 0;
+                this.isEndVote = true;
+              }
             }else{
               this.canVote = 0;
+              this.isEndVote = false;
               //this.startCountDown(now, startVote, endVote);
               this.getValueWithAsync(now, startVote, endVote);
             }
@@ -156,10 +162,12 @@ export class HomeComponent implements OnInit {
 
         // console.log(nowDate);
         if(nowDate.getTime() >= startDateTime.getTime()){
+
           if(nowDate.getTime() >= endDateTime.getTime()){
             // console.log("END VOTE !!!!!!!!!!!!!");
             this.canVote = 0;
-            this.countDownTimer = "VOTE IS END !!";
+            // this.countDownTimer = "VOTE IS END !!";
+            this.isEndVote = true;
             clearInterval(this.interval);
           }else{
             this.canVote = 1;

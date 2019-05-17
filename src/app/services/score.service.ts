@@ -35,10 +35,6 @@ export class ScoreService {
     return this.http.post(this.appSetting.apiURL+'/minus_score', data);
   }
 
-  checkCanVote(){
-    
-  }
-
   createLog(): Observable<any>{
     const md5 = new Md5();
     var hashSecretKey = md5.appendStr(this.appSetting.secretKey.toString()).end().toString();
@@ -48,17 +44,17 @@ export class ScoreService {
 
   restore_step1(): Observable<any>{
     let data = { "vl_id": this.vl_id, "us_id": this.us_id, "sc_score": this.sc_score, "sc_id": this.sc_id };
-    return this.http.post(this.appSetting.apiURL+'/restore_vl', data);
+    return this.http.post(this.appSetting.apiURL+'/restore_sc', data);
   }
 
   restore_step2(): Observable<any>{
     let data = { "vl_id": this.vl_id, "us_id": this.us_id, "sc_score": this.sc_score, "sc_id": this.sc_id };
-    return this.http.post(this.appSetting.apiURL+'/restore_sc', data);
+    return this.http.post(this.appSetting.apiURL+'/restore_um', data);
   }
 
   restore_step3(): Observable<any>{
     let data = { "vl_id": this.vl_id, "us_id": this.us_id, "sc_score": this.sc_score, "sc_id": this.sc_id };
-    return this.http.post(this.appSetting.apiURL+'/restore_um', data);
+    return this.http.post(this.appSetting.apiURL+'/restore_vl', data);
   }
 
   getScore(): Observable<any>{

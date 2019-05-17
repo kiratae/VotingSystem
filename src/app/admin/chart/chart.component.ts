@@ -14,7 +14,7 @@ Highcharts.setOptions({
     }
   },
   title: {
-    text: 'Vote Scores',
+    text: 'OSSD#7',
     style: {
       fontFamily: "Prompt",
       fontSize: "40px",
@@ -24,7 +24,7 @@ Highcharts.setOptions({
   yAxis: {
     min: 0,
     title: {
-        text: 'Score (Points)'
+        text: 'คะแนน'
     },
     labels: {
       style: {

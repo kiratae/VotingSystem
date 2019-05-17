@@ -47,10 +47,16 @@ export class LoginComponent implements OnInit {
       let lastLogin = parseInt(sessionStorage.getItem("last_login"));
       let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
       let now = new Date(toDayString).getTime();
-      if(now - lastLogin >= this.appSetting.canStillLoginTime){
-        return
+      if(now - lastLogin < this.appSetting.canStillLoginTime){
+        this.router.navigate(['home'])
       }
-      this.router.navigate(['home'])
+    }else{
+      //this.router.navigate(['login'])
+
+      this.loginForm  =  this.formBuilder.group({
+        username: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required)
+      });
     }
 
     switch(this.appSetting.lang){
@@ -70,10 +76,6 @@ export class LoginComponent implements OnInit {
       break; 
     }
 
-    this.loginForm  =  this.formBuilder.group({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
-    });
   }
 
   setText(langData){

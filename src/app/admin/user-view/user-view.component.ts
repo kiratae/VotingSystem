@@ -93,7 +93,7 @@ export class UserViewComponent implements OnInit {
 
     this.scoreService.restore_step1().subscribe(
       res => {
-        if(res['deleted'] == true){
+        if(res['status'] == true){
           this.scoreService.restore_step2().subscribe(
             res => {
               if(res['status'] == true){
