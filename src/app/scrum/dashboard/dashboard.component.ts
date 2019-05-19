@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { LogService } from 'src/app/services/scrum/log.service';
 import { ClusterService } from 'src/app/services/cluster.service';
+import { EventService } from 'src/app/services/scrum/event.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
@@ -11,9 +13,11 @@ import { AppSettingsServiceService } from 'src/app/services/app-settings-service
 })
 export class DashboardComponent implements OnInit {
 
+  eventHistoryData = [];
   clusterData = [];
   isDashboard = true;
   boardName = "Dashboard"
+  selectedCluster;
 
   rootPath;
 
@@ -25,6 +29,8 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private logService: LogService,
     private clusterService: ClusterService,
+    private eventService: EventService,
+    private datepipe: DatePipe,
     private appSetting: AppSettingsServiceService
   ) { }
 
@@ -92,6 +98,25 @@ export class DashboardComponent implements OnInit {
         console.log(this.clusterData);
       }, err => console.log(err)
     );
+  }
+
+  viewHistory(index, ct_id){
+    this.selectedCluster = this.clusterData[index].ct_name_th;
+    this.eventService.ct_id = ct_id;
+    this.eventService.getHistory().subscribe(
+      res => {
+        this.eventHistoryData = res['data'];
+      }, err => console.log(err)
+    );
+  }
+
+  convertDate(dateTime){
+    let month = [ "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." ];
+    let date = new Date(dateTime);
+    let toDayString = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss', '+0700');
+    let arr = toDayString.split(/[- :]/);
+    let thaiDate = arr[2]+" "+month[parseInt(arr[1])]+" "+(parseInt(arr[0])+543)+" เวลา "+arr[3]+":"+arr[4]+":"+arr[5]+" น."
+    return thaiDate;
   }
 
   numberWithCommas(x){
