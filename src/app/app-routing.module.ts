@@ -31,7 +31,11 @@ const routes: Routes = [
     component: ChartComponent
   },
   {
-    path: 'money_chart',
+    path: 'money_line_chart',
+    component: MoneyChartComponent
+  },
+  {
+    path: 'money_bar_chart',
     component: MoneyChartComponent
   },
   {
@@ -39,7 +43,7 @@ const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'scum',
+    path: 'scrum',
     component: EventManagementComponent
   }
 ];
