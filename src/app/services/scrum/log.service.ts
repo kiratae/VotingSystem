@@ -22,16 +22,16 @@ export class LogService {
 
   
   getAll(): Observable<any>{
-    return this.http.get(this.appSetting.apiURL+'/scum/logs');
+    return this.http.get(this.appSetting.apiURL+'/scrum/logs');
   }
 
   getByRangeTime(): Observable<any>{
     let data = { time: this.time }
-    return this.http.post(this.appSetting.apiURL+'/scum/all_money', data);
+    return this.http.post(this.appSetting.apiURL+'/scrum/all_money', data);
   }
 
   getByRangeTimeNow(): Observable<any>{
-    return this.http.get(this.appSetting.apiURL+'/scum/all_money_now');
+    return this.http.get(this.appSetting.apiURL+'/scrum/all_money_now');
   }
 
   insert(): Observable<any>{
@@ -40,7 +40,7 @@ export class LogService {
       "sl_ct_id": this.sl_ct_id,
       "sl_se_id": this.sl_se_id,
     }
-    return this.http.post(this.appSetting.apiURL+'/scum/logs', data);
+    return this.http.post(this.appSetting.apiURL+'/scrum/logs', data);
   }
 
 }

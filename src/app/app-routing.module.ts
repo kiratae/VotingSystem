@@ -8,6 +8,7 @@ import { MoneyChartComponent } from './scrum/money-chart/money-chart.component';
 import { EventManagementComponent } from './scrum/event-management/event-management.component';
 import { DashboardComponent } from './scrum/dashboard/dashboard.component';
 import { ScrumBarComponent } from './scrum/scrum-bar/scrum-bar.component';
+import { ScrumAchievementsComponent } from './scrum/scrum-achievements/scrum-achievements.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'money_dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'achievement',
+    component: ScrumAchievementsComponent
   },
   {
     path: 'scrum',

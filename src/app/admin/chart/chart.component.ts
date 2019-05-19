@@ -195,7 +195,7 @@ export class ChartComponent implements OnInit {
           this.clusterScoreData.push({ "y": element.sc_score, "color": element.ct_color_code });
         });
 
-        this.  chartOptions = {
+        this.chartOptions = {
           chart: {
             type: 'column',
             style: {

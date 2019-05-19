@@ -16,7 +16,7 @@
                         <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-crown"></i>&ensp;Archivements</a>
+                        <a class="nav-link" href="achievement"><i class="fas fa-crown"></i>&ensp;Achievements</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="money_bar_chart"><i class="fas fa-chart-bar"></i>&ensp;Bar Chart</a>
@@ -63,13 +63,24 @@
       </div>
       <div class="card-body">
 
+        <ul class="list-group mb-1">
+          <li class="list-group-item">
+            <span class="row">
+              <div class="col-md-1 col-12 text-center"><strong>#</strong></div>
+              <div class="col-md-4 col-12 text-center"><strong>Name</strong></div>
+              <div class="col-md-4 col-12 text-center"><strong>Details</strong></div>
+              <div class="col-md-2 col-12 text-center"><strong>Values</strong></div>
+              <div class="col-md-1 col-12 text-center"><strong>Operation</strong></div>
+            </span>
+          </li>
+        </ul>
         <ul class="list-group">
           <li *ngFor="let event of eventData; let i = index;" class="list-group-item">
             <span class="row">
               <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
-              <div class="col-md-3 col-12">{{ event.se_name }}</div>
-              <div class="col-md-5 col-12">{{ event.se_details }}</div>
-              <div class="col-md-2 col-12">{{ event.se_values }}</div>
+              <div class="col-md-4 col-12">{{ event.se_name }}</div>
+              <div class="col-md-4 col-12">{{ event.se_details }}</div>
+              <div class="col-md-2 col-12 text-center">{{ event.se_values }}</div>
               <div class="col-md-1 col-6 text-center">
                 <button (click)="edit(i)" data-toggle="modal" data-target="#insert_event" class="btn btn-warning"><i class="fas fa-pen"></i></button>
               </div>

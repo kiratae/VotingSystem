@@ -27,6 +27,7 @@ import { EventManagementComponent } from './scrum/event-management/event-managem
 import { MoneyChartComponent } from './scrum/money-chart/money-chart.component';
 import { DashboardComponent } from './scrum/dashboard/dashboard.component';
 import { ScrumBarComponent } from './scrum/scrum-bar/scrum-bar.component';
+import { ScrumAchievementsComponent } from './scrum/scrum-achievements/scrum-achievements.component';
 
 /**
  * Custom angular notifier options
@@ -90,7 +91,8 @@ const customNotifierOptions: NotifierOptions = {
     EventManagementComponent,
     MoneyChartComponent,
     DashboardComponent,
-    ScrumBarComponent
+    ScrumBarComponent,
+    ScrumAchievementsComponent
   ],
   imports: [
     BrowserModule,
