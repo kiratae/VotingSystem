@@ -1,0 +1,4 @@
+.dashboard-card:hover{
+    cursor: pointer;
+    background-color: #eee;
+}

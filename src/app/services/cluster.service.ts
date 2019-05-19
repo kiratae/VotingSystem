@@ -22,6 +22,14 @@ export class ClusterService {
     return this.http.get(this.appSetting.apiURL+'/cluster');
   }
 
+  getDashboard(): Observable<any>{
+    return this.http.get(this.appSetting.apiURL+'/cluster/dashboard');
+  }
+
+  getLeaderboard(): Observable<any>{
+    return this.http.get(this.appSetting.apiURL+'/cluster/leaderboard');
+  }
+
   uploadImg(): Observable<any>{
     const formData = new FormData();
     formData.append('ct_img', this.ct_img)

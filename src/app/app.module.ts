@@ -23,8 +23,9 @@ import { SystemManagementComponent } from './admin/system-management/system-mana
 import { ChartComponent } from './admin/chart/chart.component';
 import { ScoreViewComponent } from './admin/score-view/score-view.component';
 import { UserTypeManagementComponent } from './admin/user-type-management/user-type-management.component';
-import { EventManagementComponent } from './scum/event-management/event-management.component';
-import { MoneyChartComponent } from './scum/money-chart/money-chart.component';
+import { EventManagementComponent } from './scrum/event-management/event-management.component';
+import { MoneyChartComponent } from './scrum/money-chart/money-chart.component';
+import { DashboardComponent } from './scrum/dashboard/dashboard.component';
 
 /**
  * Custom angular notifier options
@@ -86,7 +87,8 @@ const customNotifierOptions: NotifierOptions = {
     ScoreViewComponent,
     UserTypeManagementComponent,
     EventManagementComponent,
-    MoneyChartComponent
+    MoneyChartComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

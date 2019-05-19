@@ -1,0 +1,19 @@
+<div class="text-right">
+    <select class="form-control col-md-1 float-right" [(ngModel)]="minRate" (change)="getMoney()">
+        <option value="60" selected>1 hr.</option>
+        <option value="120">2 hr.</option>
+        <option value="240">4 hr.</option>
+        <option value="480">8 hr.</option>
+        <option value="720">12 hr.</option>
+        <option value="1440">1 day.</option>
+    </select>
+    <a href="{{ rootPath }}/scum" class="btn btn-light"><i class="fas fa-chevron-left"></i></a>
+    <button class="btn btn-light" (click)="getMoney()"><i class="fas fa-sync"></i></button>
+</div>
+
+<highcharts-chart 
+[Highcharts]="Highcharts"
+[options]="chartOptions"
+
+style="width: 100%; height: 94vh; display: block;"
+></highcharts-chart>

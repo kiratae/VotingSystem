@@ -4,7 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { ChartComponent } from './admin/chart/chart.component';
-import { MoneyChartComponent } from './scum/money-chart/money-chart.component';
+import { MoneyChartComponent } from './scrum/money-chart/money-chart.component';
+import { EventManagementComponent } from './scrum/event-management/event-management.component';
+import { DashboardComponent } from './scrum/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,14 @@ const routes: Routes = [
   {
     path: 'money_chart',
     component: MoneyChartComponent
+  },
+  {
+    path: 'money_dashboard',
+    component: DashboardComponent
+  },
+  {
+    path: 'scum',
+    component: EventManagementComponent
   }
 ];
 

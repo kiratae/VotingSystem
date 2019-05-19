@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { LogService } from 'src/app/services/scum/log.service';
+import { LogService } from 'src/app/services/scrum/log.service';
 import { ClusterService } from 'src/app/services/cluster.service';
 import * as Highcharts from 'highcharts';
 
 Highcharts.setOptions({
   chart: {
     type: 'line',
-    marginRight: 120
+    marginRight: 130
   },
   title: {
     text: 'OSSD#7',
@@ -24,7 +24,7 @@ Highcharts.setOptions({
   yAxis: {
     min: 0,
     title: {
-        text: 'จำนวนเงิน',
+        text: 'จำนวนเงิน (บาท)',
         style: {
           fontFamily: "Prompt",
           fontSize: "28px",
@@ -92,7 +92,10 @@ Highcharts.setOptions({
 })
 export class MoneyChartComponent implements OnInit {
 
-  chartRefreshTime = 30 * 60 * 1000; // miliseconds
+  minRate = 60;
+  chartRefreshTime = 15 * 60 * 1000; // min.
+
+  rootPath = location.origin;
 
   timeouter;
 
@@ -160,6 +163,10 @@ export class MoneyChartComponent implements OnInit {
 
   getMoney(){
 
+    this.chartRefreshTime = this.minRate * 60 * 1000;
+
+    this.resetData();
+
     clearTimeout(this.timeouter)
 
     this.logService.time = this.chartRefreshTime / 1000;
@@ -168,6 +175,7 @@ export class MoneyChartComponent implements OnInit {
         let data = res['data'];
         // console.log(data);
         console.log("Synced!");
+        
         data.forEach((e) => {
           if(!this.clusterData[e.ct_sequence].name){
             this.clusterData[e.ct_sequence].name = e.ct_name_th
@@ -197,7 +205,15 @@ export class MoneyChartComponent implements OnInit {
             this.clusterData[e.ct_sequence].color = e.ct_color_code
           }
           this.clusterData[e.ct_sequence].data.push({ x: (new Date()).getTime() - e.Hour * this.chartRefreshTime ,y: e.total_money })
+
+          console.log(e.ct_sequence, this.clusterData[e.ct_sequence].data.length);
+
+          if(this.clusterData[e.ct_sequence].data.length > 50){
+            this.clusterData[e.ct_sequence].data.splice(0, this.clusterData[e.ct_sequence].data.length - 50);
+          }
         })
+
+        
         this.setChart();
 
         this.timeouter = setTimeout(() => {
@@ -208,6 +224,13 @@ export class MoneyChartComponent implements OnInit {
       
     );
 
+  }
+
+  resetData(){
+    this.clusterData = [{name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
+    {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
+    {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
+    {name:"",color:"",data:[]}];
   }
 
   setChart(){

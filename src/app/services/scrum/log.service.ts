@@ -34,4 +34,13 @@ export class LogService {
     return this.http.get(this.appSetting.apiURL+'/scum/all_money_now');
   }
 
+  insert(): Observable<any>{
+    let data = {
+      "sl_id": this.sl_id,
+      "sl_ct_id": this.sl_ct_id,
+      "sl_se_id": this.sl_se_id,
+    }
+    return this.http.post(this.appSetting.apiURL+'/scum/logs', data);
+  }
+
 }

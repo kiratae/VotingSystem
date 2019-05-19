@@ -30,8 +30,12 @@ export class UserTypeManagementComponent implements OnInit {
     })
   }
 
-  edit(){
+  edit(index){
+    let data = this.usersTypeData[index];
 
+    this.ut_id = data.ut_id;
+    this.ut_name_th = data.ut_name_th;
+    this.ut_name_en = data.ut_name_en;
   }
 
   delete(index, ut_id){
@@ -53,6 +57,39 @@ export class UserTypeManagementComponent implements OnInit {
   }
 
   save(){
+    if(this.ut_name_th != null) {
+
+      if(this.ut_id != null){
+        this.userTypeService.ut_id = this.ut_id;
+        this.userTypeService.ut_name_th = this.ut_name_th;
+        this.userTypeService.ut_name_en = this.ut_name_en;
+    
+        this.userTypeService.update().subscribe(
+          res => {
+            if(this.appSetting.isDebuging)
+              console.log(res);
+            this.fetch();
+          }, err => console.error(err)
+        );
+        return;
+
+      }
+
+      this.userTypeService.ut_name_th = this.ut_name_th;
+      this.userTypeService.ut_name_en = this.ut_name_en;
+
+      this.userTypeService.insert().subscribe(
+        res => {
+          if(this.appSetting.isDebuging)
+            console.log(res);
+          this.fetch();
+        },
+        error => console.error(error)
+      );
+
+    }else{
+      alert("ERROR")
+    }
 
   }
 
