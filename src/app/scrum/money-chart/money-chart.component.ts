@@ -1,88 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { LogService } from 'src/app/services/scrum/log.service';
 import { ClusterService } from 'src/app/services/cluster.service';
 import * as Highcharts from 'highcharts';
-
-Highcharts.setOptions({
-  chart: {
-    type: 'line',
-    marginRight: 130
-  },
-  title: {
-    text: 'OSSD#7',
-    style: {
-      fontFamily: "Prompt",
-      fontSize: "40px",
-      fontWeight: "600"
-    }
-  },
-  time: {
-    useUTC: false,
-    timezoneOffset: 7 * 60
-  },
-  yAxis: {
-    min: 0,
-    title: {
-        text: 'จำนวนเงิน (บาท)',
-        style: {
-          fontFamily: "Prompt",
-          fontSize: "28px",
-          fontWeight: "600"
-        }
-    },
-    labels: {
-      style: {
-        fontFamily: "Prompt",
-        fontSize: "24px"
-      }
-    }
-  },
-  xAxis: {
-    title: {
-      text: 'เวลา',
-      style: {
-        fontFamily: "Prompt",
-        fontSize: "28px",
-        fontWeight: "600"
-      }
-    },
-    type: 'datetime',
-    tickPixelInterval: 150,
-    labels: {
-      format: '{value: %H:%M}',
-      style: {
-        fontFamily: "Prompt",
-        fontSize: "24px",
-        fontWeight: "400"
-      }
-    },
-  },
-  legend:{
-    enabled: true,
-    itemStyle: {
-      fontFamily: "Prompt",
-      fontSize: "28px",
-      fontWeight: "600"
-    },
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'middle'
-  },
-  tooltip: {
-    enabled: true,
-    headerFormat: '<b>{series.name}</b><br/>',
-    pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
-  },
-  plotOptions: {
-    series: {
-      lineWidth: 8,
-      dataLabels: {
-          enabled: false
-      }
-    }
-  },
-});
 
 @Component({
   selector: 'app-money-chart',
@@ -96,6 +17,8 @@ export class MoneyChartComponent implements OnInit {
 
   timeouter;
 
+  rootPath;
+
   clusterMoneyData: any = [];
   clusterData: any = [{name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
   {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
@@ -103,6 +26,83 @@ export class MoneyChartComponent implements OnInit {
   {name:"",color:"",data:[]}];
   Highcharts = Highcharts;
   chartOptions = {
+    chart: {
+      type: 'line',
+      marginRight: 130
+    },
+    title: {
+      text: 'OSSD#7',
+      style: {
+        fontFamily: "Prompt",
+        fontSize: "40px",
+        fontWeight: "600"
+      }
+    },
+    time: {
+      useUTC: false,
+      timezoneOffset: 7 * 60
+    },
+    yAxis: {
+      min: 0,
+      title: {
+          text: 'จำนวนเงิน (บาท)',
+          style: {
+            fontFamily: "Prompt",
+            fontSize: "28px",
+            fontWeight: "600"
+          }
+      },
+      labels: {
+        style: {
+          fontFamily: "Prompt",
+          fontSize: "24px"
+        }
+      }
+    },
+    xAxis: {
+      title: {
+        text: 'เวลา',
+        style: {
+          fontFamily: "Prompt",
+          fontSize: "28px",
+          fontWeight: "600"
+        }
+      },
+      type: 'datetime',
+      tickPixelInterval: 150,
+      labels: {
+        format: '{value: %H:%M}',
+        style: {
+          fontFamily: "Prompt",
+          fontSize: "24px",
+          fontWeight: "400"
+        }
+      },
+    },
+    legend:{
+      enabled: true,
+      itemStyle: {
+        fontFamily: "Prompt",
+        fontSize: "28px",
+        fontWeight: "600"
+      },
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'middle'
+    },
+    tooltip: {
+      enabled: true,
+      headerFormat: '<b>{series.name}</b><br/>',
+      pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+    },
+    plotOptions: {
+      series: {
+        lineWidth: 8,
+        dataLabels: {
+            enabled: false
+        }
+      }
+    },
     series: [{
       name: "",
       data: [],
@@ -147,12 +147,15 @@ export class MoneyChartComponent implements OnInit {
   };
 
   constructor(
+    private router: Router,
     private logService: LogService,
     private clusterService: ClusterService,
     private datepipe: DatePipe
   ) { }
 
   ngOnInit() {
+
+    this.rootPath = this.router.url;
 
     this.getMoney();
 
@@ -232,6 +235,83 @@ export class MoneyChartComponent implements OnInit {
 
   setChart(){
     this.chartOptions = {
+      chart: {
+        type: 'line',
+        marginRight: 130
+      },
+      title: {
+        text: 'OSSD#7',
+        style: {
+          fontFamily: "Prompt",
+          fontSize: "40px",
+          fontWeight: "600"
+        }
+      },
+      time: {
+        useUTC: false,
+        timezoneOffset: 7 * 60
+      },
+      yAxis: {
+        min: 0,
+        title: {
+            text: 'จำนวนเงิน (บาท)',
+            style: {
+              fontFamily: "Prompt",
+              fontSize: "28px",
+              fontWeight: "600"
+            }
+        },
+        labels: {
+          style: {
+            fontFamily: "Prompt",
+            fontSize: "24px"
+          }
+        }
+      },
+      xAxis: {
+        title: {
+          text: 'เวลา',
+          style: {
+            fontFamily: "Prompt",
+            fontSize: "28px",
+            fontWeight: "600"
+          }
+        },
+        type: 'datetime',
+        tickPixelInterval: 150,
+        labels: {
+          format: '{value: %H:%M}',
+          style: {
+            fontFamily: "Prompt",
+            fontSize: "24px",
+            fontWeight: "400"
+          }
+        },
+      },
+      legend:{
+        enabled: true,
+        itemStyle: {
+          fontFamily: "Prompt",
+          fontSize: "28px",
+          fontWeight: "600"
+        },
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+      },
+      tooltip: {
+        enabled: true,
+        headerFormat: '<b>{series.name}</b><br/>',
+        pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+      },
+      plotOptions: {
+        series: {
+          lineWidth: 8,
+          dataLabels: {
+              enabled: false
+          }
+        }
+      },
       series: [{
         name: this.clusterData[0].name,
         data: this.clusterData[0].data,

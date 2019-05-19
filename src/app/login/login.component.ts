@@ -48,7 +48,15 @@ export class LoginComponent implements OnInit {
       let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
       let now = new Date(toDayString).getTime();
       if(now - lastLogin < this.appSetting.canStillLoginTime){
-        this.router.navigate(['home'])
+        let userType = sessionStorage.getItem("user_type");
+        if(userType == "Admin"){
+          this.router.navigate(['admin'])
+        }else if(userType == "Scum Master"){
+          this.router.navigate(['scrum'])
+          
+        }else{
+          this.router.navigate(['home'])
+        }
       }
     }else{
       //this.router.navigate(['login'])

@@ -26,6 +26,7 @@ import { UserTypeManagementComponent } from './admin/user-type-management/user-t
 import { EventManagementComponent } from './scrum/event-management/event-management.component';
 import { MoneyChartComponent } from './scrum/money-chart/money-chart.component';
 import { DashboardComponent } from './scrum/dashboard/dashboard.component';
+import { ScrumBarComponent } from './scrum/scrum-bar/scrum-bar.component';
 
 /**
  * Custom angular notifier options
@@ -88,7 +89,8 @@ const customNotifierOptions: NotifierOptions = {
     UserTypeManagementComponent,
     EventManagementComponent,
     MoneyChartComponent,
-    DashboardComponent
+    DashboardComponent,
+    ScrumBarComponent
   ],
   imports: [
     BrowserModule,

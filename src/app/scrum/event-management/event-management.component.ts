@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { EventService } from 'src/app/services/scrum/event.service';
 import { LogService } from 'src/app/services/scrum/log.service';
 import { ClusterService } from 'src/app/services/cluster.service';
+import { UsersService } from 'src/app/services/users.service';
+import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
   selector: 'app-event-management',
@@ -10,6 +13,9 @@ import { ClusterService } from 'src/app/services/cluster.service';
   styleUrls: ['./event-management.component.css']
 })
 export class EventManagementComponent implements OnInit {
+
+  us_id: any;
+  username: String;
 
   eventData = []
   clusterData = []
@@ -24,22 +30,58 @@ export class EventManagementComponent implements OnInit {
 
   checkedAllBtn = 0;
 
-  rootPath = location.origin;
+  rootPath;
 
   constructor(
     private router: Router,
+    private usersService: UsersService,
     private clusterService: ClusterService,
     private eventService: EventService,
-    private logService: LogService
+    private logService: LogService,
+    private appSetting: AppSettingsServiceService,
+    private datepipe: DatePipe
   ) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem("us_id") != null && sessionStorage.getItem("user_type") != "Scum Master"){
-      this.router.navigate([''])
+    if(sessionStorage.getItem("us_id") == null){
+      // this.router.navigate(['login']);
+    }else{
+      let lastLogin = parseInt(sessionStorage.getItem("last_login"));
+      let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+      let now = new Date(toDayString).getTime();
+      if(now - lastLogin >= this.appSetting.canStillLoginTime){
+        this.router.navigate(['login']);
+      }
+      this.us_id = sessionStorage.getItem("us_id");
+      this.usersService.us_id = this.us_id;
+      this.usersService.loginCompleted().subscribe(
+        (res) => {
+          let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+          let nowLastLogin = new Date(toDayString).getTime().toString();
+
+          sessionStorage.setItem("last_login", nowLastLogin);
+        }, err => console.error(err)
+      );
     }
+
+    this.rootPath = this.router.url;
 
     this.fetch();
     this.fetch_ct();
+
+    this.usersService.us_id = this.us_id;
+    this.usersService.getByKey().subscribe(
+      (res) => {
+        let data = res['data'][0];
+        let lastLoging = this.datepipe.transform(new Date(data.us_lastlogin), 'yyyy-MM-dd HH:mm:ss', '+0700');
+
+        if(this.appSetting.isDebuging)
+          console.log(data.us_id, data.us_username, lastLoging);
+        
+        this.username = data.us_username;
+      },
+      error => console.error(error)
+    );
   }
 
   

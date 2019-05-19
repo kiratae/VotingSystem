@@ -5,63 +5,6 @@ import { ClusterService } from 'src/app/services/cluster.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 import * as Highcharts from 'highcharts';
 
-Highcharts.setOptions({
-  chart: {
-    type: 'column',
-    style: {
-      fontFamily: "Prompt",
-      fontSize: "24px"
-    }
-  },
-  title: {
-    text: 'OSSD#7',
-    style: {
-      fontFamily: "Prompt",
-      fontSize: "40px",
-      fontWeight: "600"
-    }
-  },
-  yAxis: {
-    min: 0,
-    title: {
-        text: 'คะแนน'
-    },
-    labels: {
-      style: {
-        fontFamily: "Prompt",
-        fontSize: "24px"
-      }
-    }
-  },
-  xAxis: {
-    labels: {
-      style: {
-        fontFamily: "Prompt",
-        fontSize: "28px",
-        fontWeight: "500"
-      }
-    }
-  },
-  legend:{
-    enabled: false
-  },
-  tooltip: {
-    enabled: false
-  },
-  plotOptions: {
-    series: {
-      dataLabels: {
-          enabled: true,
-          format: '{point.y}',
-          style: {
-            fontFamily: "Prompt",
-            fontSize: "24px"
-          }
-      }
-    }
-  },
-});
-
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -77,8 +20,60 @@ export class ChartComponent implements OnInit {
 
   Highcharts = Highcharts;
   chartOptions = {
-    xAxis: { 
+    chart: {
+      type: 'column',
+      style: {
+        fontFamily: "Prompt",
+        fontSize: "24px"
+      }
+    },
+    title: {
+      text: 'OSSD#7',
+      style: {
+        fontFamily: "Prompt",
+        fontSize: "40px",
+        fontWeight: "600"
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+          text: 'คะแนน'
+      },
+      labels: {
+        style: {
+          fontFamily: "Prompt",
+          fontSize: "24px"
+        }
+      }
+    },
+    xAxis: {
+      labels: {
+        style: {
+          fontFamily: "Prompt",
+          fontSize: "28px",
+          fontWeight: "500"
+        }
+      },
       categories: this.clusterCategories
+    },
+    legend:{
+      enabled: false
+    },
+    tooltip: {
+      enabled: false
+    },
+    plotOptions: {
+      series: {
+        dataLabels: {
+            enabled: true,
+            format: '{point.y:,.0f}',
+            style: {
+              fontFamily: "Prompt",
+              fontSize: "24px"
+            }
+        }
+      }
     },
     series: [{
       data: this.clusterScoreData
@@ -116,9 +111,61 @@ export class ChartComponent implements OnInit {
           this.clusterScoreData.push({ "y": element.sc_score, "color": element.ct_color_code });
         });
 
-        this.chartOptions = {
-          xAxis: { 
+        this.  chartOptions = {
+          chart: {
+            type: 'column',
+            style: {
+              fontFamily: "Prompt",
+              fontSize: "24px"
+            }
+          },
+          title: {
+            text: 'OSSD#7',
+            style: {
+              fontFamily: "Prompt",
+              fontSize: "40px",
+              fontWeight: "600"
+            }
+          },
+          yAxis: {
+            min: 0,
+            title: {
+                text: 'คะแนน'
+            },
+            labels: {
+              style: {
+                fontFamily: "Prompt",
+                fontSize: "24px"
+              }
+            }
+          },
+          xAxis: {
+            labels: {
+              style: {
+                fontFamily: "Prompt",
+                fontSize: "28px",
+                fontWeight: "500"
+              }
+            },
             categories: this.clusterCategories
+          },
+          legend:{
+            enabled: false
+          },
+          tooltip: {
+            enabled: false
+          },
+          plotOptions: {
+            series: {
+              dataLabels: {
+                  enabled: true,
+                  format: '{point.y:,.0f}',
+                  style: {
+                    fontFamily: "Prompt",
+                    fontSize: "24px"
+                  }
+              }
+            }
           },
           series: [{
             data: this.clusterScoreData
@@ -148,9 +195,61 @@ export class ChartComponent implements OnInit {
           this.clusterScoreData.push({ "y": element.sc_score, "color": element.ct_color_code });
         });
 
-        this.chartOptions = {
-          xAxis: { 
+        this.  chartOptions = {
+          chart: {
+            type: 'column',
+            style: {
+              fontFamily: "Prompt",
+              fontSize: "24px"
+            }
+          },
+          title: {
+            text: 'OSSD#7',
+            style: {
+              fontFamily: "Prompt",
+              fontSize: "40px",
+              fontWeight: "600"
+            }
+          },
+          yAxis: {
+            min: 0,
+            title: {
+                text: 'คะแนน'
+            },
+            labels: {
+              style: {
+                fontFamily: "Prompt",
+                fontSize: "24px"
+              }
+            }
+          },
+          xAxis: {
+            labels: {
+              style: {
+                fontFamily: "Prompt",
+                fontSize: "28px",
+                fontWeight: "500"
+              }
+            },
             categories: this.clusterCategories
+          },
+          legend:{
+            enabled: false
+          },
+          tooltip: {
+            enabled: false
+          },
+          plotOptions: {
+            series: {
+              dataLabels: {
+                  enabled: true,
+                  format: '{point.y}',
+                  style: {
+                    fontFamily: "Prompt",
+                    fontSize: "24px"
+                  }
+              }
+            }
           },
           series: [{
             data: this.clusterScoreData

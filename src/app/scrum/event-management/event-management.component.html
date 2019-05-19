@@ -1,27 +1,56 @@
+<nav class="navbar sticky-top navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- <span></span> -->
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="navbar-brand pl-4">
+      Scrum x Gamification System
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="row">
+            <div class="col-6">
+                <ul class="navbar-nav mr-auto pl-3">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-crown"></i>&ensp;Archivements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="money_bar_chart"><i class="fas fa-chart-bar"></i>&ensp;Bar Chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="money_line_chart"><i class="fas fa-chart-line"></i>&ensp;Line Chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="money_dashboard"><i class="fas fa-tachometer-alt"></i>&ensp;Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6 text-right">
+                <div class="navbar-text py-1 px-2">
+                    <span>{{username}}&ensp;<i class="fas fa-user"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
 <div class="row mt-3 px-3">
 
-  <div class="col-4">
-      <button data-toggle="modal" data-target="#insert_log" class="btn btn-primary float-left"><i class="fas fa-plus"></i>&ensp;Add Event to Cluster</button>
-  </div>
-
-  <div class="col-2">
-    <a href="#" class="btn btn-primary float-right">Badges</a>
-  </div>
-
-  <div class="col-2">
-    <a href="{{ rootPath }}/money_bar_chart" class="btn btn-primary float-right">Bar Chart</a>
-  </div>
-
-  <div class="col-2">
-    <a href="{{ rootPath }}/money_line_chart" class="btn btn-primary float-right">Line Chart</a>
-  </div>
-
-  <div class="col-2">
-    <a href="{{ rootPath }}/money_dashboard" class="btn btn-primary float-right">Dashboard</a>
-  </div>
+    <div class="col-4">
+        <button data-toggle="modal" data-target="#insert_log" class="btn btn-primary float-left"><i class="fas fa-plus"></i>&ensp;Add Event to Cluster</button>
+    </div>
 
 </div>
-<div class="row mt-3 px-3">
+
+<div class="row mt-2 px-3">
 
   <div class="col-12">
 
@@ -123,3 +152,5 @@
         </div>
     </div>
 </div>
+
+<modal-logout></modal-logout>

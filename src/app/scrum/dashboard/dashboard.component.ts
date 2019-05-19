@@ -15,19 +15,21 @@ export class DashboardComponent implements OnInit {
   isDashboard = true;
   boardName = "Dashboard"
 
-  rootPath = location.origin;
+  rootPath;
 
   rank = [ '🥇', '🥈', '🥉', '', '', '', '', '', '', '😭' ]
 
   imgURL;
 
   constructor(
+    private router: Router,
     private logService: LogService,
     private clusterService: ClusterService,
     private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
+    this.rootPath = this.router.url;
     this.imgURL = this.appSetting.apiURL+'/images/cluster/';
     this.fetch_dashboard()
 
