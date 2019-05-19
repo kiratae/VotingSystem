@@ -84,7 +84,6 @@ Highcharts.setOptions({
   },
 });
 
-
 @Component({
   selector: 'app-money-chart',
   templateUrl: './money-chart.component.html',
@@ -94,8 +93,6 @@ export class MoneyChartComponent implements OnInit {
 
   minRate = 60;
   chartRefreshTime = 15 * 60 * 1000; // min.
-
-  rootPath = location.origin;
 
   timeouter;
 

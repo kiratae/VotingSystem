@@ -154,7 +154,7 @@ export class LoginComponent implements OnInit {
             if(userType == "Admin"){
               this.router.navigate(['admin'])
             }else if(userType == "Scum Master"){
-              this.router.navigate(['scum'])
+              this.router.navigate(['scrum'])
             }else{
               this.router.navigate(['home'])
             }
