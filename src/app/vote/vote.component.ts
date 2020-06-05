@@ -12,7 +12,7 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./vote.component.css']
 })
 export class VoteComponent implements OnInit {
-  
+
   voteScore: number = 0;
   clustersData = [];
 
@@ -36,7 +36,7 @@ export class VoteComponent implements OnInit {
 
   @Output() hasScoreOutput = new EventEmitter<any>();
 
-  hasScore: any  = 0;
+  hasScore: any = 0;
   remainScore = this.hasScore;
 
   constructor(
@@ -46,58 +46,58 @@ export class VoteComponent implements OnInit {
     private scoreService: ScoreService,
     private appSetting: AppSettingsServiceService,
     private notifier: NotifierService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
-    this.imgURL = this.appSetting.apiURL+'/images/cluster/';
-    
+    this.imgURL = this.appSetting.apiURL + '/images/cluster/';
+
     this.fetchCluster();
     this.fetchScore();
 
-    switch(this.appSetting.lang){
+    switch (this.appSetting.lang) {
       case "EN":
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.main_section);
           }, error => console.error(error)
         );
-      break;
+        break;
       case "TH":
-      this.appSetting.getTH().subscribe(
-        res => {
-          this.setText(res.main_section);
-        }, error => console.error(error)
-      );
-      break; 
+        this.appSetting.getTH().subscribe(
+          res => {
+            this.setText(res.main_section);
+          }, error => console.error(error)
+        );
+        break;
     }
 
-    if(this.clusterNameToVote == null){
-     this.clusterNameToVote = "NULL";
+    if (this.clusterNameToVote == null) {
+      this.clusterNameToVote = "NULL";
     }
 
   }
 
-  initUI(){
-    this.tenPointBtn = (this.hasScore >= 10)?false:true;
-    this.fivePointBtn = (this.hasScore >= 5)?false:true;
-    this.twoPointBtn = (this.hasScore >= 2)?false:true;
+  initUI() {
+    this.tenPointBtn = (this.hasScore >= 10) ? false : true;
+    this.fivePointBtn = (this.hasScore >= 5) ? false : true;
+    this.twoPointBtn = (this.hasScore >= 2) ? false : true;
 
-    if(this.hasScore >= 1){
+    if (this.hasScore >= 1) {
       this.onePointBtn = false;
       this.voteScore = 0;
-    }else{
+    } else {
       this.onePointBtn = true;
       this.voteScore = 0;
     }
   }
 
-  fetchScore(){
+  fetchScore() {
     this.usersService.us_id = sessionStorage.getItem("us_id");
     this.usersService.getByKey().subscribe(
       (res) => {
         let data = res['data'][0];
-        
+
         this.hasScore = data.um_points;
 
         this.updateRemainScore();
@@ -108,7 +108,7 @@ export class VoteComponent implements OnInit {
     );
   }
 
-  fetchCluster(){
+  fetchCluster() {
     this.clusterService.getAll().subscribe(
       res => {
         this.clustersData = res['data'];
@@ -119,150 +119,134 @@ export class VoteComponent implements OnInit {
     );
   }
 
-  setText(langData){
+  setText(langData) {
     this.voteHeaderText = langData.vote_header;
     this.voteText = langData.vote;
     this.pointText = langData.point;
     this.multiPointText = langData.multi_point;
   }
 
-  sentHasScore(){
+  sentHasScore() {
     this.hasScoreOutput.emit(this.hasScore);
   }
 
-  clickToVote(index){
-    if(this.appSetting.isDebuging)
+  clickToVote(index) {
+    if (this.appSetting.isDebuging)
       console.log(this.clustersData[index]);
 
     this.clusterToVote = this.clustersData[index];
     this.clusterNameToVote = this.clusterToVote.ct_name_th;
   }
 
-  closeModal(){
+  closeModal() {
     this.voteScore = 0;
     this.updateRemainScore();
   }
 
-  keyupScore(event){
-    if(event.keyCode != 69){
-      if(this.voteScore < 0){
+  keyupScore(event) {
+    if (event.keyCode != 69) {
+      if (this.voteScore <= 0 || this.voteScore == null) {
         this.voteScore = 0;
       }
-      if(this.voteScore > this.hasScore){
+      if (this.voteScore > this.hasScore) {
         this.voteScore = this.hasScore;
       }
       this.updateRemainScore();
-    }else{
+    } else {
       this.voteScore = 0;
       this.updateRemainScore();
     }
   }
 
-  vote(){
+  vote() {
+    if(this.voteScore <= 0 || this.voteScore > this.hasScore){
+      this.notifier.notify('error', `ค่า ${this.voteScore} ไม่ถูกต้องสำหรับคะแนน !`);
+      this.fetchScore();
+      this.voteScore = 0;
+      this.updateRemainScore();
+      return;
+    }
 
     this.scoreService.sc_ct_id = this.clusterToVote.ct_id;
     this.scoreService.sc_score = this.voteScore;
     this.scoreService.us_id = sessionStorage.getItem("us_id");
 
-    this.scoreService.addScore().subscribe(
-      res => {
-
-        if(res["status"] == true){
-          if(this.appSetting.isDebuging)
-            console.log("yeah add score complete!");
-
-          this.scoreService.minusUserScore().subscribe(
-            res => {
-              if(res["status"] == true){
-                if(this.appSetting.isDebuging)
-                  console.log("yeah minus score from user complete!");
-
-                this.scoreService.createLog().subscribe(
-                  res => {
-                    if(res["vl_id"] != undefined || res["vl_id"] != null){
-                      if(this.appSetting.isDebuging)
-                        console.log("yeah create log complete! vl_id is "+res["vl_id"]);
-
-                      // this.notifier.hideAll();
-                      this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
-
-                      this.fetchScore();
-                      this.clusterToVote = null;
-                      this.voteScore = 0;
-                      this.updateRemainScore();
-                      
-                    }
-                  }, error => console.error(error)
-                ); // end subscribe createLog
-
-              }else{
-                this.notifier.notify( 'error', `คะแนนของคุณไม่พอที่จะทำการโหวต !` );
-                this.fetchScore();
-                this.voteScore = 0;
-                this.updateRemainScore();
-              } // endif-else res["status"]
-              
-            }, error => console.error(error)
-          ); // end subscribe minusUserScore
-
-        }// endif res["status"]
-
-      }, error => console.error(error)
-      
-    ); // end subscribe addScore
+    this.scoreService.createLog().subscribe(res => {
+      //console.log(res);
+      if (res["status"] == 1) {
+        // something error here! may be score is out!
+        this.notifier.notify('error', `คะแนนของคุณไม่พอที่จะทำการโหวต !`);
+        this.fetchScore();
+        this.voteScore = 0;
+        this.updateRemainScore();
+      } else if (res["status"] == 0) {
+        // ok save the vote
+        this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
+        this.fetchScore();
+        this.clusterToVote = null;
+        this.voteScore = 0;
+        this.updateRemainScore();
+      } else {
+        // may be network or server error
+        this.notifier.notify('error', `เกิดข้อผิดพลาด โหวตไม่สำเร็จ !`);
+        this.fetchScore();
+        this.voteScore = 0;
+        this.updateRemainScore();
+      }
+    });
 
   }
 
-  setScore(score){
-    if(this.voteScore <= this.hasScore - score){
+  setScore(score) {
+    if (this.voteScore <= this.hasScore - score) {
       this.voteScore += score;
       this.updateRemainScore();
     }
   }
 
-  plusScore(){
-    if(this.voteScore < this.hasScore){
+  plusScore() {
+    if (this.voteScore < this.hasScore) {
       this.voteScore++;
       this.updateRemainScore();
     }
   }
 
-  minusScore(){
-    if(this.voteScore > 0){
+  minusScore() {
+    if (this.voteScore > 0) {
       this.voteScore--;
       this.updateRemainScore();
     }
   }
 
-  minusScoreDown(){
+  minusScoreDown() {
     this.interval = setInterval(() => {
-      if(this.voteScore > 1){
+      if (this.voteScore > 1) {
         this.voteScore--;
         this.updateRemainScore();
       }
     }, 150);
   }
 
-  plusScoreDown(){
+  plusScoreDown() {
     this.interval = setInterval(() => {
-      if(this.voteScore < this.hasScore){
+      if (this.voteScore < this.hasScore) {
         this.voteScore++;
         this.updateRemainScore();
       }
     }, 150);
   }
 
-  cancelInterval(){
+  cancelInterval() {
     clearInterval(this.interval);
   }
 
-  updateRemainScore(){
+  updateRemainScore() {
     this.remainScore = this.hasScore - this.voteScore;
 
-    this.tenPointBtn = (this.remainScore >= 10)?false:true;
-    this.fivePointBtn = (this.remainScore >= 5)?false:true;
-    this.twoPointBtn = (this.remainScore >= 2)?false:true;
-    this.onePointBtn = (this.remainScore >= 1)?false:true;
+    this.tenPointBtn = (this.remainScore >= 10) ? false : true;
+    this.fivePointBtn = (this.remainScore >= 5) ? false : true;
+    this.twoPointBtn = (this.remainScore >= 2) ? false : true;
+    this.onePointBtn = (this.remainScore >= 1) ? false : true;
   }
 
 }
