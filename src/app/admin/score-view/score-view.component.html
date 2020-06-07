@@ -1,31 +1,26 @@
 <div class="row">
-    <div class="col-md-12 col-12">
-  
-        <div class="card mt-3">
-          <div class="card-header">
-            <h4>Score Lists</h4>
-            <button class="btn btn-info float-left" (click)="fetchScore()"><i class="fas fa-sync"></i></button>
-          </div>
-          <div class="card-body">
 
-            <div class="row">
-              <div class="col-12">
+    <div class="col-md-12 col-12">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>Score Lists</h4>
+                <button class="btn btn-info float-left" (click)="fetchScore()"><i class="fas fa-sync"></i></button>
                 <button class="btn btn-primary float-right mb-3" (click)="resetScore()"><i class="fas fa-trash-restore"></i>&ensp;Reset All</button>
-              </div>
             </div>
-  
-            <ul class="list-group">
-              <li *ngFor="let score of scoresData; let i = index;" class="list-group-item">
-                <span class="row">
+            <div class="card-body">
+
+                <ul class="list-group">
+                    <li *ngFor="let score of scoresData; let i = index;" class="list-group-item">
+                        <span class="row">
                   <div class="col-md-2">{{ i+1 }}</div>
                   <div class="col-md-3">{{ score.ct_name_th }}</div>
                   <div class="col-md-3">{{ score.sc_score }}</div>
                 </span>
-              </li>
-            </ul>
-  
-          </div>
+                    </li>
+                </ul>
+
+            </div>
         </div>
-  
+
     </div>
-  </div>
+</div>
