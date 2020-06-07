@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ClusterService {
 
   public ct_id: Number;
@@ -18,60 +19,60 @@ export class ClusterService {
 
   constructor(private http: HttpClient, private appSetting: AppSettingsServiceService) {}
 
-  getAll(): Observable<any>{
-    return this.http.get(this.appSetting.apiURL+'/cluster');
+  getAll(): Observable<any> {
+    return this.http.get(this.appSetting.apiURL + '/cluster');
   }
 
-  getDashboard(): Observable<any>{
-    return this.http.get(this.appSetting.apiURL+'/cluster/dashboard');
+  getDashboard(): Observable<any> {
+    return this.http.get(this.appSetting.apiURL + '/cluster/dashboard');
   }
 
-  getLeaderboard(): Observable<any>{
-    return this.http.get(this.appSetting.apiURL+'/cluster/leaderboard');
+  getLeaderboard(): Observable<any> {
+    return this.http.get(this.appSetting.apiURL + '/cluster/leaderboard');
   }
 
-  uploadImg(): Observable<any>{
+  uploadImg(): Observable<any> {
     const formData = new FormData();
-    formData.append('ct_img', this.ct_img)
-    return this.http.post(this.appSetting.apiURL+'/api/Upload', formData);
+    formData.append('ct_img', this.ct_img);
+    return this.http.post(this.appSetting.apiURL + '/api/Upload', formData);
   }
 
-  deleteImg(): Observable<any>{
-    let data = { "filename": this.ct_img }
-    return this.http.post(this.appSetting.apiURL+'/api/deleteImage', data);
+  deleteImg(): Observable<any> {
+    const data = { filename: this.ct_img };
+    return this.http.post(this.appSetting.apiURL + '/api/deleteImage', data);
   }
 
-  insert(){
-    let data = {
-      "ct_sequence": this.ct_sequence,
-      "ct_name_th": this.ct_name_th,
-      "ct_name_en": this.ct_name_en,
-      "ct_img": this.ct_img,
-      "ct_color_code": this.ct_color_code,
-      "sm_sys_id": this.sm_sys_id
+  insert() {
+    const data = {
+      ct_sequence: this.ct_sequence,
+      ct_name_th: this.ct_name_th,
+      ct_name_en: this.ct_name_en,
+      ct_img: this.ct_img,
+      ct_color_code: this.ct_color_code,
+      sm_sys_id: this.sm_sys_id
+    };
+    return this.http.post(this.appSetting.apiURL + '/cluster', data);
+  }
+
+  update() {
+    const data = {
+      ct_id: this.ct_id,
+      ct_sequence: this.ct_sequence,
+      ct_name_th: this.ct_name_th,
+      ct_name_en: this.ct_name_en,
+      ct_img: this.ct_img,
+      ct_color_code: this.ct_color_code,
+      sm_sys_id: this.sm_sys_id
     }
-    return this.http.post(this.appSetting.apiURL+'/cluster', data);
+    return this.http.put(this.appSetting.apiURL + '/cluster', data);
   }
 
-  update(){
-    let data = {
-      "ct_id": this.ct_id,
-      "ct_sequence": this.ct_sequence,
-      "ct_name_th": this.ct_name_th,
-      "ct_name_en": this.ct_name_en,
-      "ct_img": this.ct_img,
-      "ct_color_code": this.ct_color_code,
-      "sm_sys_id": this.sm_sys_id
-    }
-    return this.http.put(this.appSetting.apiURL+'/cluster', data);
-  }
-
-  getByKey(): Observable<any>{
-    return this.http.get(this.appSetting.apiURL+'/cluster/'+this.ct_id);
+  getByKey(): Observable<any> {
+    return this.http.get(this.appSetting.apiURL + '/cluster/' + this.ct_id);
   }
 
   delete(): Observable<any>{
-    return this.http.delete(this.appSetting.apiURL+'/cluster/'+this.ct_id);
+    return this.http.delete(this.appSetting.apiURL + '/cluster/' + this.ct_id);
   }
 
 }

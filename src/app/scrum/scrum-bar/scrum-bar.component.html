@@ -3,9 +3,5 @@
     <button class="btn btn-light" (click)="fetch_leaderboard()"><i class="fas fa-sync"></i></button>
 </div>
 
-<highcharts-chart 
-[Highcharts]="Highcharts"
-[options]="chartOptions"
-
-style="width: 100%; height: 94vh; display: block;"
-></highcharts-chart>
+<highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="width: 100%; height: 94vh; display: block;">
+</highcharts-chart>

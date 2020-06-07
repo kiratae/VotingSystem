@@ -16,14 +16,14 @@ export class DashboardComponent implements OnInit {
   eventHistoryData = [];
   clusterData = [];
   isDashboard = true;
-  boardName = "Dashboard"
-  selectedCluster;
+  boardName = 'Dashboard';
+  selectedCluster: any;
 
-  rootPath;
+  rootPath: string;
 
-  rank = [ '🥇', '🥈', '🥉', '', '', '', '', '', '', '😭' ]
+  rank = [ '🥇', '🥈', '🥉', '', '', '', '', '', '', '😭' ];
 
-  imgURL;
+  imgURL: string;
 
   constructor(
     private router: Router,
@@ -36,91 +36,92 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.rootPath = this.router.url;
-    this.imgURL = this.appSetting.apiURL+'/images/cluster/';
-    this.fetch_dashboard()
+    this.imgURL = this.appSetting.apiURL + '/images/cluster/';
+    this.fetch_dashboard();
 
-    console.log(location.origin)
+    console.log(location.origin);
   }
 
-  sync(){
-    if(this.isDashboard){
-      this.fetch_dashboard()
-    }else{
+  sync() {
+    if (this.isDashboard) {
+      this.fetch_dashboard();
+    } else {
       this.fetch_leaderboard();
     }
   }
 
-  fetch_ct(){
+  fetch_ct() {
     this.clusterService.getAll().subscribe(
       res => {
-        let data = res['data'];
+        const data = res.data;
         this.clusterService.getLeaderboard().subscribe(
           res => {
-            this.clusterData = res['data'];
+            this.clusterData = res.data;
 
             this.clusterData.forEach((e, i) => {
-              this.clusterData[i].rank = i
+              this.clusterData[i].rank = i;
             });
 
-            let new_data = []
+            let new_data = [];
 
-            for(let i = 0; i < data.length; i++){
-              for(let j = 0; j < this.clusterData.length; j++){
-                if(data[i].ct_id == this.clusterData[j].ct_id){
-                  new_data.push(this.clusterData[j])
+            for (let i = 0; i < data.length; i++) {
+              for (let j = 0; j < this.clusterData.length; j++) {
+                if (data[i].ct_id == this.clusterData[j].ct_id) {
+                  new_data.push(this.clusterData[j]);
                 }
               }
             }
 
-            this.clusterData = new_data
+            this.clusterData = new_data;
           }, err => console.log(err)
         );
       }, err => console.log(err)
     );
   }
 
-  fetch_dashboard(){
-    this.boardName = "Dashboard"
+  fetch_dashboard() {
+    this.boardName = 'Dashboard';
     this.isDashboard = true;
     this.fetch_ct();
   }
 
-  fetch_leaderboard(){
-    this.boardName = "Leaderboard"
+  fetch_leaderboard() {
+    this.boardName = 'Leaderboard';
     this.isDashboard = false;
     this.clusterService.getLeaderboard().subscribe(
       res => {
-        this.clusterData = res['data'];
+        this.clusterData = res.data;
 
         this.clusterData.forEach((e, i) => {
-          this.clusterData[i].rank = i
+          this.clusterData[i].rank = i;
         });
         console.log(this.clusterData);
       }, err => console.log(err)
     );
   }
 
-  viewHistory(index, ct_id){
+  viewHistory(index: string | number, ct_id: any) {
     this.selectedCluster = this.clusterData[index].ct_name_th;
     this.eventService.ct_id = ct_id;
     this.eventService.getHistory().subscribe(
       res => {
-        this.eventHistoryData = res['data'];
+        this.eventHistoryData = res.data;
       }, err => console.log(err)
     );
   }
 
-  convertDate(dateTime){
-    let month = [ "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค." ];
-    let date = new Date(dateTime);
-    let toDayString = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss', '+0700');
-    let arr = toDayString.split(/[- :]/);
-    let thaiDate = arr[2]+" "+month[parseInt(arr[1])]+" "+(parseInt(arr[0])+543)+" เวลา "+arr[3]+":"+arr[4]+":"+arr[5]+" น."
+  convertDate(dateTime: string | number | Date) {
+    const month = [ 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.' ];
+    const date = new Date(dateTime);
+    const toDayString = this.datepipe.transform(date, 'yyyy-MM-dd HH:mm:ss', '+0700');
+    const arr = toDayString.split(/[- :]/);
+    // tslint:disable-next-line: max-line-length
+    const thaiDate = arr[2] + ' ' + month[parseInt(arr[1])] + ' ' + (parseInt(arr[0]) + 543) + ' เวลา ' + arr[3] + ':' + arr[4] + ':' + arr[5] + ' น.';
     return thaiDate;
   }
 
-  numberWithCommas(x){
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  numberWithCommas(x: { toString: () => string; }) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
 }

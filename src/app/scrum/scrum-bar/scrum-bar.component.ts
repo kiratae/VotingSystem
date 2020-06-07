@@ -13,16 +13,16 @@ Highcharts.setOptions({
   yAxis: {
     title: {
       style: {
-        fontFamily: "Prompt",
-        fontSize: "24px",
-        fontWeight: "600"
+        fontFamily: 'Prompt',
+        fontSize: '24px',
+        fontWeight: '600'
       }
     },
     labels: {
       style: {
-        fontFamily: "Prompt",
-        fontSize: "36px",
-        fontWeight: "600"
+        fontFamily: 'Prompt',
+        fontSize: '36px',
+        fontWeight: '600'
       }
     }
   }
@@ -33,47 +33,45 @@ Highcharts.setOptions({
   templateUrl: './scrum-bar.component.html',
   styleUrls: ['./scrum-bar.component.css']
 })
+
 export class ScrumBarComponent implements OnInit {
 
   clusterMoneyData = [];
-
   clusterData = [];
-
   clusterCategories = [];
-
   rootPath;
-  
   Highcharts = Highcharts;
+
   chartOptions = {
     chart: {
       type: 'column'
     },
     title: {
-      text: 'OSSD#7',
+      text: 'OSSD#8',
       style: {
-        fontFamily: "Prompt",
-        fontSize: "40px",
-        fontWeight: "600"
+        fontFamily: 'Prompt',
+        fontSize: '40px',
+        fontWeight: '600'
       }
     },
     yAxis: {
       min: 0,
       title: {
-          text: 'จำนวนเงิน (บาท)'
+          text: 'จำนวนเงิน ($E)'
       },
       labels: {
         style: {
-          fontFamily: "Prompt",
-          fontSize: "24px"
+          fontFamily: 'Prompt',
+          fontSize: '24px'
         }
       }
     },
     xAxis: {
       labels: {
         style: {
-          fontFamily: "Prompt",
-          fontSize: "28px",
-          fontWeight: "500"
+          fontFamily: 'Prompt',
+          fontSize: '28px',
+          fontWeight: '500'
         }
       },
       categories: this.clusterCategories
@@ -90,8 +88,8 @@ export class ScrumBarComponent implements OnInit {
             enabled: true,
             format: '{point.y:,.0f}',
             style: {
-              fontFamily: "Prompt",
-              fontSize: "24px"
+              fontFamily: 'Prompt',
+              fontSize: '24px'
             }
         }
       }
@@ -110,23 +108,24 @@ export class ScrumBarComponent implements OnInit {
 
   ngOnInit() {
     this.rootPath = this.router.url;
-    this.fetch_leaderboard()
+    this.fetch_leaderboard();
   }
 
-  fetch_leaderboard(){
+  fetch_leaderboard() {
     this.clusterService.getDashboard().subscribe(
       res => {
-        let data = res['data'];
+
+        const data = res.data;
 
         this.clusterCategories = [];
         this.clusterMoneyData = [];
 
         console.log(data);
-        
+        console.log('getDashboard');
 
         data.forEach(element => {
           this.clusterCategories.push(element.ct_name_th);
-          this.clusterMoneyData.push({ "y": element.total_money, "color": element.ct_color_code });
+          this.clusterMoneyData.push({ y: element.total_money, color: element.ct_color_code });
         });
 
         this.chartOptions = {
@@ -134,36 +133,36 @@ export class ScrumBarComponent implements OnInit {
             type: 'column'
           },
           title: {
-            text: 'OSSD#7',
+            text: 'OSSD#8',
             style: {
-              fontFamily: "Prompt",
-              fontSize: "40px",
-              fontWeight: "600"
+              fontFamily: 'Prompt',
+              fontSize: '40px',
+              fontWeight: '600'
             }
           },
           yAxis: {
             min: 0,
             title: {
-                text: "จำนวนเงิน (บาท)"
+                text: 'จำนวนเงิน ($E)'
             },
             labels: {
               style: {
-                fontFamily: "Prompt",
-                fontSize: "24px"
+                fontFamily: 'Prompt',
+                fontSize: '24px'
               }
             }
           },
           xAxis: {
             labels: {
               style: {
-                fontFamily: "Prompt",
-                fontSize: "28px",
-                fontWeight: "500"
+                fontFamily: 'Prompt',
+                fontSize: '28px',
+                fontWeight: '500'
               }
             },
             categories: this.clusterCategories
           },
-          legend:{
+          legend: {
             enabled: false
           },
           tooltip: {
@@ -175,8 +174,8 @@ export class ScrumBarComponent implements OnInit {
                   enabled: true,
                   format: '{point.y:,.0f}',
                   style: {
-                    fontFamily: "Prompt",
-                    fontSize: "24px"
+                    fontFamily: 'Prompt',
+                    fontSize: '24px'
                   }
               }
             }
@@ -191,8 +190,8 @@ export class ScrumBarComponent implements OnInit {
     );
   }
 
-  numberWithCommas(x){
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
 }
