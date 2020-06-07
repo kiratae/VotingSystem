@@ -9,44 +9,100 @@
         Admin Voting System
     </div>
 
+    <!-- Collapse -->
     <div class="collapse navbar-collapse" id="navbarContent">
 
+        <!-- Navbar -->
         <ul class="navbar-nav mr-auto pl-3">
+
+            <!-- Show username -->
             <li class="nav-item text-right">
                 <div class="navbar-text py-1 px-2">
                     <span>{{username}}&ensp;<i class="fas fa-user"></i></span>
                 </div>
             </li>
+            <!-- End show username -->
+
+            <!-- Home -->
             <li class="nav-item" [ngClass]="(viewMode=='main')?'active':''">
-                <a class="nav-link" (click)="changeTab('main')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-home"></i>&ensp;Home</a>
+                <a class="nav-link" (click)="changeTab('main')" data-toggle="collapse" data-target="#navbarContent">
+                    <i class="fas fa-home"></i>&ensp;Home
+                </a>
             </li>
+            <!-- End home -->
+
+            <!-- Score -->
+            <li class="nav-item navbar-text">
+                <i class="fas fa-chart-bar"></i>&ensp;Score
+            </li>
+            <ul class="navbar-nav mr-auto pl-3">
+                <li class="nav-item ml-3">
+                    <a class="nav-link" href="chart">
+                        &ensp;Score Bar Chart
+                    </a>
+                </li>
+                <li class="nav-item ml-3" [ngClass]="(viewMode=='scoreView')?'active':''">
+                    <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent">
+                        &ensp;Score views
+                    </a>
+                </li>
+            </ul>
+            <!-- End core -->
+
+            <!-- Cluster and system -->
+            <li class="nav-item navbar-text">
+                <i class="fas fa-users"></i>&ensp;Cluster and system
+            </li>
+            <ul class="navbar-nav mr-auto pl-3">
+                <li class="nav-item ml-3" [ngClass]="(viewMode=='cluster')?'active':''">
+                    <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent">
+                        &ensp;Cluster management
+                    </a>
+                </li>
+                <li class="nav-item ml-3" [ngClass]="(viewMode=='system')?'active':''">
+                    <a class="nav-link" (click)="changeTab('system')" data-toggle="collapse" data-target="#navbarContent">
+                        &ensp;System management
+                    </a>
+                </li>
+            </ul>
+            <!-- End cluster and system -->
+
+            <!-- User management -->
+            <li class="nav-item navbar-text">
+                <i class="fas fa-user"></i>&ensp;User
+            </li>
+            <ul class="navbar-nav mr-auto pl-3">
+                <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
+                    <a class="nav-link ml-3" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent">
+                        &ensp;Show users
+                    </a>
+                </li>
+                <li class="nav-item" [ngClass]="(viewMode=='user')?'active':''">
+                    <a class="nav-link ml-3" (click)="changeTab('user')" data-toggle="collapse" data-target="#navbarContent">
+                        &ensp;User management
+                    </a>
+                </li>
+                <li class="nav-item" [ngClass]="(viewMode=='userType')?'active':''">
+                    <a class="nav-link ml-3" (click)="changeTab('userType')" data-toggle="collapse" data-target="#navbarContent">
+                        &ensp;User type management
+                    </a>
+                </li>
+            </ul>
+            <!-- End user management -->
+
+            <!-- Logout -->
             <li class="nav-item">
-                <a class="nav-link" href="chart"><i class="fas fa-chart-bar"></i>&ensp;Score Bar Chart</a>
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt"></i>&ensp;Logout
+                </a>
             </li>
-            <li class="nav-item" [ngClass]="(viewMode=='user')?'active':''">
-                <a class="nav-link" (click)="changeTab('user')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user management</a>
-            </li>
-            <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
-                <a class="nav-link" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;view users</a>
-            </li>
-            <li class="nav-item" [ngClass]="(viewMode=='userType')?'active':''">
-                <a class="nav-link" (click)="changeTab('userType')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;user type</a>
-            </li>
-            <li class="nav-item" [ngClass]="(viewMode=='scoreView')?'active':''">
-                <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;score views</a>
-            </li>
-            <li class="nav-item" [ngClass]="(viewMode=='cluster')?'active':''">
-                <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;cluster management</a>
-            </li>
-            <li class="nav-item" [ngClass]="(viewMode=='system')?'active':''">
-                <a class="nav-link" (click)="changeTab('system')" data-toggle="collapse" data-target="#navbarContent"><i class="fas fa-cog"></i>&ensp;system management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>
-            </li>
+            <!-- End logout -->
+
         </ul>
+        <!-- End navbar -->
 
     </div>
+    <!-- End collapse -->
 
 </nav>
 
@@ -58,10 +114,12 @@
             <div class="row mb-3 justify-content-center">
 
                 <div class="col-8">
-                
+
                     <!-- user-management card -->
                     <div class="card mt-3">
-                        <div class="card-header"><h4>Voting Time Setting</h4></div>
+                        <div class="card-header">
+                            <h4>Voting Time Setting</h4>
+                        </div>
                         <div class="card-body">
 
                             <div class="text-center mb-3">

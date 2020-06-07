@@ -11,15 +11,15 @@ import { VoteTimeService } from 'src/app/services/vote-time.service';
 })
 export class AdminHomeComponent implements OnInit {
 
-  viewMode = "main"
+  viewMode = 'main'
   us_id: any;
   username: String;
 
-  startVote;
-  endVote;
+  startVote: string;
+  endVote: string;
 
-  nowTime;
-  nowDate;
+  nowTime: string;
+  nowDate: string;
 
   constructor(
     private router: Router,
@@ -29,73 +29,75 @@ export class AdminHomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem("us_id") != null && sessionStorage.getItem("user_type") != "Admin"){
-      this.router.navigate([''])
+    if (sessionStorage.getItem('us_id') != null && sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['']);
     }
 
-    this.usersService.us_id = this.us_id = sessionStorage.getItem("us_id");;
+    this.usersService.us_id = this.us_id = sessionStorage.getItem('us_id');
     this.usersService.getByKey().subscribe(
       (res) => {
-        console.log(res['data'][0]);
-        let data = res['data'][0];
-        
+
+        console.log(res.data[0]);
+        const data = res.data[0];
+
         this.username = data.us_username;
+        console.log(this.username); // Check username
       }, error => console.log(error)
     );
 
     this.fetchVoteTime();
 
     setInterval(() => {
-      let nowDate = new Date();
+      const nowDate = new Date();
       this.nowTime = this.dateToTimeStringOutput(nowDate);
       this.nowDate = this.dateToStringOutput(nowDate);
     }, 1000);
 
   }
 
-  fetchVoteTime(){
+  fetchVoteTime() {
     this.voteTimeService.getAll().subscribe(
       res => {
-        let data = res['data'][0];
-        this.startVote = this.datepipe.transform(new Date(data['vt_start_vote']), 'yyyy-MM-dd HH:mm:ss');
-        this.endVote = this.datepipe.transform(new Date(data['vt_end_vote']), 'yyyy-MM-dd HH:mm:ss');
+        const data = res.data[0];
+        this.startVote = this.datepipe.transform(new Date(data.vt_start_vote), 'yyyy-MM-dd HH:mm:ss');
+        this.endVote = this.datepipe.transform(new Date(data.vt_end_vote), 'yyyy-MM-dd HH:mm:ss');
         console.log(data, this.startVote, this.endVote);
-        
       }, error => console.log(error)
     );
   }
 
-  setTime(){
+  setTime() {
     this.voteTimeService.vt_start_vote = this.startVote;
     this.voteTimeService.vt_end_vote = this.endVote;
     this.voteTimeService.update().subscribe(
       res => {
+        console.log('Date start |' + this.startVote);
+        console.log('Date end |' + this.endVote);
         console.log(res);
-        
       }, error => console.log(error)
     );
   }
 
-  dateToTimeStringOutput(date: Date){
-    let s = date.getSeconds();
-    let m =  date.getMinutes();
-    let h =  date.getHours();
-    return this.getZeroPrefix(h)+" : "+this.getZeroPrefix(m)+" : " + this.getZeroPrefix(s);
+  dateToTimeStringOutput(date: Date) {
+    const s = date.getSeconds();
+    const m =  date.getMinutes();
+    const h =  date.getHours();
+    return this.getZeroPrefix(h) + ' : ' + this.getZeroPrefix(m) + ' : ' + this.getZeroPrefix(s);
   }
 
-  dateToStringOutput(date: Date){
-    let month = [ "Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec." ];
-    let d = date.getDate();
-    let m =  date.getMonth();
-    let y =  date.getFullYear();
+  dateToStringOutput(date: Date) {
+    const month = [ 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.' ];
+    const d = date.getDate();
+    const m =  date.getMonth();
+    const y =  date.getFullYear();
     return `${this.getZeroPrefix(d)} ${month[m]} ${y}`;
   }
 
-  getZeroPrefix(time){
-    return (time < 10?"0":"") + time;
+  getZeroPrefix(time: number) {
+    return (time < 10 ? '0' : '') + time;
   }
 
-  changeTab(viewMode){
+  changeTab(viewMode: string) {
     this.viewMode = viewMode;
   }
 
