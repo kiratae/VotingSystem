@@ -5,10 +5,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AppSettingsServiceService{
+export class AppSettingsServiceService {
 
   // apiURL: String = "http://10.80.39.252:3000"; // http://localhost:3000
-  apiURL: String = "http://localhost:3000"; // http://localhost:3000
+  // apiURL: String = "http://localhost:3000"; // http://localhost:3000
+  apiURL: String = "https://bearhunt-vote-api.herokuapp.com";
+
   secretKey: String = "l3ear@Hunt;" // secret key
 
   isDebuging: boolean = false; // use to open/close console log
@@ -19,7 +21,7 @@ export class AppSettingsServiceService{
 
   canStillLoginTime = 10 * 60 * 1000; // minutes x seconds in minutes x miliseconds
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /*
   * getTH
@@ -41,8 +43,8 @@ export class AppSettingsServiceService{
   * getTimeSync
   * get server time
   */
-  getTimeSync(){
-    return this.http.get(this.apiURL+"/timesync");
+  getTimeSync() {
+    return this.http.get(this.apiURL + "/timesync");
   }
 
 }

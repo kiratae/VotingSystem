@@ -135,6 +135,8 @@ export class LoginComponent implements OnInit {
 
     this.usersService.login().subscribe(
       (res: any) => {
+        console.log(res);
+        return;
         this.isConnectionError = false;
         this.isLoading = false;
         let canLogin = false;
