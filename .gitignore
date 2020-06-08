@@ -1,4 +1,8 @@
-node_modules
-dist
 
-package-lock.json
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules

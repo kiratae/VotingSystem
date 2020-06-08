@@ -22,4 +22,8 @@ export class ScrumAchievementsComponent implements OnInit {
     );
   }
 
+  sync(){
+    console.log('TODO:sync()');
+  }
+
 }
