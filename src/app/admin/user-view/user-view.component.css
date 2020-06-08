@@ -1,0 +1,39 @@
+.btn-red {
+    color: #fff;
+    background-color: rgb(248, 43, 43);
+    border-color: rgb(248, 43, 43);
+}
+
+.btn-red:hover {
+    color: #fff;
+    background-color: rgb(207, 38, 38);
+    border-color: rgb(207, 38, 38);
+}
+
+.btn-red:focus,
+.btn-red.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(252, 0, 0, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(252, 0, 0, 0.5);
+}
+
+.btn-red.disabled,
+.btn-red:disabled {
+    color: #fff;
+    background-color: rgb(245, 72, 66);
+    border-color: rgb(245, 72, 66);
+}
+
+.btn-red:not(:disabled):not(.disabled):active,
+.btn-red:not(:disabled):not(.disabled).active,
+.show>.btn-red.dropdown-toggle {
+    color: #fff;
+    background-color: rgb(194, 0, 0);
+    border-color: rgb(194, 0, 0);
+}
+
+.btn-red:not(:disabled):not(.disabled):active:focus,
+.btn-red:not(:disabled):not(.disabled).active:focus,
+.show>.btn-red.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(247, 38, 38, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(247, 38, 38, 0.5);
+}

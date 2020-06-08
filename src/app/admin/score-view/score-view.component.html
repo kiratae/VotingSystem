@@ -10,12 +10,28 @@
             <div class="card-body">
 
                 <ul class="list-group">
+                    <li class="list-group-item font-weight-bold bg-primary text-white">
+                        <span class="row">
+                            <div class="col-md-1 text-center mb-1">
+                                ลำดับ
+                            </div>
+                            <div class="col-md-7 text-center mb-1">
+                                ชื่อมกุล
+                            </div>
+                            <div class="col-md-4 text-center mb-1">
+                                คะแนนโหวต
+                            </div>
+                        </span>
+                    </li>
                     <li *ngFor="let score of scoresData; let i = index;" class="list-group-item">
                         <span class="row">
-                  <div class="col-md-2">{{ i+1 }}</div>
-                  <div class="col-md-3">{{ score.ct_name_th }}</div>
-                  <div class="col-md-3">{{ score.sc_score }}</div>
-                </span>
+                            <div class="col-md-1 text-center">{{ i+1 }}</div>
+                            <div class="col-md-7 text-center">
+                                <img src="{{ imgURL+score?.ct_img }}" width="32px" height="32px">
+                                {{ score.ct_name_th }}
+                            </div>
+                            <div class="col-md-4 text-center">{{ score.sc_score }}</div>
+                        </span>
                     </li>
                 </ul>
 
