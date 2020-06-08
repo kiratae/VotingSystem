@@ -11,4 +11,4 @@ app.get('/*', function (req, res) {
 
 app.listen(PORT);
 
-console.log('app listen on port : ' + PORT)
+console.log('voting app listen on port : ' + PORT)
