@@ -64,6 +64,7 @@ export class AdminHomeComponent implements OnInit {
         console.log(data, this.startVote, this.endVote);
       }, error => console.log(error)
     );
+
   }
 
   setTime() {
@@ -86,11 +87,13 @@ export class AdminHomeComponent implements OnInit {
   }
 
   dateToStringOutput(date: Date) {
-    const month = [ 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.' ];
+    const month = [ 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'
+                    , 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม' ];
     const d = date.getDate();
     const m =  date.getMonth();
     const y =  date.getFullYear();
-    return `${this.getZeroPrefix(d)} ${month[m]} ${y}`;
+
+    return `${d} ${month[m]} พ.ศ. ${y + 543}`;
   }
 
   getZeroPrefix(time: number) {

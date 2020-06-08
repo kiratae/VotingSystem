@@ -26,24 +26,24 @@
             <!-- Home -->
             <li class="nav-item" [ngClass]="(viewMode=='main')?'active':''">
                 <a class="nav-link" (click)="changeTab('main')" data-toggle="collapse" data-target="#navbarContent">
-                    <i class="fas fa-home"></i>&ensp;Home
+                    <i class="fas fa-home"></i>&ensp;หน้าหลัก
                 </a>
             </li>
             <!-- End home -->
 
             <!-- Score -->
             <li class="nav-item navbar-text">
-                <i class="fas fa-chart-bar"></i>&ensp;Score
+                <i class="fas fa-chart-bar"></i>&ensp;คะแนนโหวต (Score Vote)
             </li>
-            <ul class="navbar-nav mr-auto pl-3">
+            <ul class="navbar-nav mr-auto pl-3" style="font-size: 15px;">
                 <li class="nav-item ml-3">
                     <a class="nav-link" href="chart">
-                        &ensp;Score Bar Chart
+                        &ensp;กราฟแสดงคะแนนโหวต (Score Vote Bar chart)
                     </a>
                 </li>
                 <li class="nav-item ml-3" [ngClass]="(viewMode=='scoreView')?'active':''">
                     <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;Score views
+                        &ensp;รายการคะแนนโหวต (Score Vote Lists)
                     </a>
                 </li>
             </ul>
@@ -51,17 +51,17 @@
 
             <!-- Cluster and system -->
             <li class="nav-item navbar-text">
-                <i class="fas fa-users"></i>&ensp;Cluster and system
+                <i class="fas fa-users"></i>&ensp;มกุลและระบบ (Cluster and System)
             </li>
-            <ul class="navbar-nav mr-auto pl-3">
+            <ul class="navbar-nav mr-auto pl-3" style="font-size: 15px;">
                 <li class="nav-item ml-3" [ngClass]="(viewMode=='cluster')?'active':''">
                     <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;Cluster management
+                        &ensp;การจัดการมกุล (Cluster management)
                     </a>
                 </li>
                 <li class="nav-item ml-3" [ngClass]="(viewMode=='system')?'active':''">
                     <a class="nav-link" (click)="changeTab('system')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;System management
+                        &ensp;การจัดการระบบ (System management)
                     </a>
                 </li>
             </ul>
@@ -69,22 +69,22 @@
 
             <!-- User management -->
             <li class="nav-item navbar-text">
-                <i class="fas fa-user"></i>&ensp;User
+                <i class="fas fa-user"></i>&ensp;ผู้ใช้งาน (User)
             </li>
-            <ul class="navbar-nav mr-auto pl-3">
+            <ul class="navbar-nav mr-auto pl-3" style="font-size: 15px;">
                 <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
                     <a class="nav-link ml-3" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;Show users
+                        &ensp;แสดงผู้ใช้งานทั้งหมด (Show all users)
                     </a>
                 </li>
                 <li class="nav-item" [ngClass]="(viewMode=='user')?'active':''">
                     <a class="nav-link ml-3" (click)="changeTab('user')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;User management
+                        &ensp;จัดการผู้ใช้งาน (User management)
                     </a>
                 </li>
                 <li class="nav-item" [ngClass]="(viewMode=='userType')?'active':''">
                     <a class="nav-link ml-3" (click)="changeTab('userType')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;User type management
+                        &ensp;จัดการประเภทผู้ใช้งาน (User type management)
                     </a>
                 </li>
             </ul>
@@ -93,7 +93,7 @@
             <!-- Logout -->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt"></i>&ensp;Logout
+                    <i class="fas fa-sign-out-alt"></i>&ensp;ออกจากระบบ
                 </a>
             </li>
             <!-- End logout -->
@@ -115,30 +115,34 @@
 
                 <div class="col-8">
 
-                    <!-- user-management card -->
+                    <!-- Voting time setting card -->
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h4>Voting Time Setting</h4>
+                            <h4>กำหนดเวลาสำหรับการโหวต (Voting Time Setting)</h4>
                         </div>
                         <div class="card-body">
 
+                            <div class="text-center mb-2">
+                                <img src="https://image.flaticon.com/icons/svg/2972/2972531.svg" alt="http://www.flaticon.com/free-icon/sushi_187463#term=sushi&page=1&position=68" data-toggle="tooltip" title="Icon made by Pixel perfect from www.flaticon.com" style="width: 70px">
+                            </div>
+
                             <div class="text-center mb-3">
                                 <p>{{ nowDate }}</p>
-                                <h3>{{ nowTime }}</h3>
+                                <h3>{{ nowTime }} น.</h3>
                             </div>
 
                             <div class="row mb-3">
 
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label>Start Vote</label>
+                                        <label>เริ่มโหวต (Start vote)</label>
                                         <input type="datetime" class="form-control" [(ngModel)]="startVote">
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label>End Vote</label>
+                                        <label>สิ้นสุดการโหวต (End vote)</label>
                                         <input type="datetime" class="form-control" [(ngModel)]="endVote">
                                     </div>
                                 </div>
@@ -147,7 +151,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-success btn-lg btn-block" (click)="setTime()">Set</button>
+                            <button class="btn btn-success btn-lg btn-block" (click)="setTime()">กำหนดเวลา</button>
                         </div>
                     </div>
 
