@@ -28,23 +28,23 @@ import { MoneyChartComponent } from './scrum/money-chart/money-chart.component';
 import { DashboardComponent } from './scrum/dashboard/dashboard.component';
 import { ScrumBarComponent } from './scrum/scrum-bar/scrum-bar.component';
 import { ScrumAchievementsComponent } from './scrum/scrum-achievements/scrum-achievements.component';
-
+import { FilterPipeModule } from 'ngx-filter-pipe'; // <-- Import
 /**
  * Custom angular notifier options
  */
 const customNotifierOptions: NotifierOptions = {
   position: {
-		horizontal: {
-			position: 'right',
-			distance: 8
-		},
-		vertical: {
-			position: 'top',
-			distance: 8,
-			gap: 10
-		}
-	},
-  theme: 'material', 
+    horizontal: {
+      position: 'right',
+      distance: 8
+    },
+    vertical: {
+      position: 'top',
+      distance: 8,
+      gap: 10
+    }
+  },
+  theme: 'material',
   behaviour: {
     autoHide: 3000,
     onClick: 'hide',
@@ -96,6 +96,7 @@ const customNotifierOptions: NotifierOptions = {
   ],
   imports: [
     BrowserModule,
+    FilterPipeModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

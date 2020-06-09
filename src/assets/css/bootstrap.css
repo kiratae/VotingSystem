@@ -4086,12 +4086,12 @@ input[type="button"].btn-block {
 }
 
 .custom-control-input:focus~.custom-control-label::before {
-    -webkit-box-shadow: 0 0 0 0.2rem rgba(235, 104, 100, 0.25);
-    box-shadow: 0 0 0 0.2rem rgba(235, 104, 100, 0.25);
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(114, 100, 235, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(109, 100, 235, 0.25);
 }
 
 .custom-control-input:focus:not(:checked)~.custom-control-label::before {
-    border-color: #fad6d5;
+    border-color: #e0d5fa;
 }
 
 .custom-control-input:not(:disabled):active~.custom-control-label::before {
@@ -4297,9 +4297,9 @@ input[type="button"].btn-block {
 }
 
 .custom-file-input:focus~.custom-file-label {
-    border-color: #fad6d5;
-    -webkit-box-shadow: 0 0 0 0.2rem rgba(235, 104, 100, 0.25);
-    box-shadow: 0 0 0 0.2rem rgba(235, 104, 100, 0.25);
+    border-color: #d7d5fa;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(114, 100, 235, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(125, 100, 235, 0.25);
 }
 
 .custom-file-input:disabled~.custom-file-label {
