@@ -21,9 +21,11 @@ export class DashboardComponent implements OnInit {
 
   rootPath: string;
 
-  rank = [ '🥇', '🥈', '🥉', '', '', '', '', '', '', '😭' ];
+  rank = [ '🥇', '🥈', '🥉', '', '', '', '', '', '', '✌' ];
 
   imgURL: string;
+  nowTime: string;
+  nowDate: string;
 
   constructor(
     private router: Router,
@@ -37,12 +39,44 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.rootPath = this.router.url;
     this.imgURL = this.appSetting.apiURL + '/images/cluster/';
-    this.fetch_dashboard();
 
-    console.log(location.origin);
+    setInterval(() => {
+      this.getTime();
+      this.fetch_dashboard();
+    }, 1000);
+
+    // console.log(location.origin);
+  }
+
+  getTime() {
+    const nowDate = new Date();
+    this.nowDate = this.dateToStringOutput(nowDate);
+    this.nowTime = this.dateToTimeStringOutput(nowDate);
+  }
+
+  dateToTimeStringOutput(date: Date) {
+    const s = date.getSeconds();
+    const m =  date.getMinutes();
+    const h =  date.getHours();
+    return this.getZeroPrefix(h) + ' : ' + this.getZeroPrefix(m) + ' : ' + this.getZeroPrefix(s);
+  }
+
+  dateToStringOutput(date: Date) {
+    const month = [ 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'
+                    , 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม' ];
+    const d = date.getDate();
+    const m =  date.getMonth();
+    const y =  date.getFullYear();
+
+    return `${d} ${month[m]} พ.ศ. ${y + 543}`;
+  }
+
+  getZeroPrefix(time: number) {
+    return (time < 10 ? '0' : '') + time;
   }
 
   sync() {
+    this.getTime();
     if (this.isDashboard) {
       this.fetch_dashboard();
     } else {
@@ -91,7 +125,6 @@ export class DashboardComponent implements OnInit {
     this.clusterService.getLeaderboard().subscribe(
       res => {
         this.clusterData = res.data;
-
         this.clusterData.forEach((e, i) => {
           this.clusterData[i].rank = i;
         });

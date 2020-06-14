@@ -99,6 +99,9 @@ export class ScrumBarComponent implements OnInit {
     }]
   };
 
+  nowTime: string;
+  nowDate: string;
+
   constructor(
     private router: Router,
     private logService: LogService,
@@ -109,9 +112,41 @@ export class ScrumBarComponent implements OnInit {
   ngOnInit() {
     this.rootPath = this.router.url;
     this.fetch_leaderboard();
+    setInterval(() => {
+      this.getTime();
+    }, 1000);
+  }
+
+  getTime() {
+      const nowDate = new Date();
+      this.nowDate = this.dateToStringOutput(nowDate);
+      this.nowTime = this.dateToTimeStringOutput(nowDate);
+  }
+
+  dateToTimeStringOutput(date: Date) {
+    const s = date.getSeconds();
+    const m =  date.getMinutes();
+    const h =  date.getHours();
+    return this.getZeroPrefix(h) + ' : ' + this.getZeroPrefix(m) + ' : ' + this.getZeroPrefix(s);
+  }
+
+  dateToStringOutput(date: Date) {
+    const month = [ 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'
+                    , 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม' ];
+    const d = date.getDate();
+    const m =  date.getMonth();
+    const y =  date.getFullYear();
+
+    return `${d} ${month[m]} พ.ศ. ${y + 543}`;
+  }
+
+  getZeroPrefix(time: number) {
+    return (time < 10 ? '0' : '') + time;
   }
 
   fetch_leaderboard() {
+    this.getTime();
+
     this.clusterService.getDashboard().subscribe(
       res => {
 
@@ -133,22 +168,22 @@ export class ScrumBarComponent implements OnInit {
             type: 'column'
           },
           title: {
-            text: 'OSSD#8',
+            text: `OOSD#8`,
             style: {
               fontFamily: 'Prompt',
-              fontSize: '40px',
-              fontWeight: '600'
+              fontSize: '35px',
+              fontWeight: '500'
             }
           },
           yAxis: {
             min: 0,
             title: {
-                text: 'จำนวนเงิน ($E)'
+                text: 'จำนวนเงิน ($E)',
             },
             labels: {
               style: {
                 fontFamily: 'Prompt',
-                fontSize: '24px'
+                fontSize: '20px'
               }
             }
           },
@@ -156,7 +191,7 @@ export class ScrumBarComponent implements OnInit {
             labels: {
               style: {
                 fontFamily: 'Prompt',
-                fontSize: '28px',
+                fontSize: '24px',
                 fontWeight: '500'
               }
             },

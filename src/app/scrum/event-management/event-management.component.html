@@ -109,32 +109,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">insert_event</h5>
+                <h5 class="modal-title">เพิ่มกิจกรรมใหม่</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
 
                 <input type="hidden" [(ngModel)]="se_id">
 
                 <div class="form-group">
-                    <label>Name</label>
+                    <label>ชื่อกิจกรรม</label>
                     <input type="text" class="form-control" [(ngModel)]="se_name">
                 </div>
                 <div class="form-group">
-                    <label>Details</label>
+                    <label>รายละเอียดกิจกรรม</label>
                     <textarea class="form-control" [(ngModel)]="se_details"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Value</label>
+                    <label>เงินรางวัล ($E)</label>
                     <input type="number" class="form-control" [(ngModel)]="se_values">
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancel</button>
-                <button type="button" class="btn btn-success" (click)="save()" data-dismiss="modal">Save</button>
+                <button type="button" class="pull-left btn btn-secondary" data-dismiss="modal" (click)="closeModal()">ยกเลิก</button>
+                <button type="button" class="btn btn-success" (click)="save()" data-dismiss="modal">บันทึก</button>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">insert_event</h5>
+                <h5 class="modal-title">เพิ่มกิจกรรม</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
@@ -152,23 +152,25 @@
             <div class="modal-body">
 
                 <div class="form-group">
-                    <label>Event</label>
-                    <select class="form-control" [(ngModel)]="sl_se_id">
-                <option *ngFor="let event of eventData; let i = index;" [value]="event.se_id">{{ event.se_name }} / {{ event.se_values }}</option>
-              </select>
+                    <label>กิจกรรม</label>
+                    <select class="form-control" data-live-search="true" [(ngModel)]="sl_se_id">
+                        <option *ngFor="let event of eventData; let i = index;" [value]="event.se_id">
+                            {{ event.se_name }} / {{ event.se_values }}
+                        </option>
+                    </select>
                 </div>
                 <div *ngFor="let cluster of clusterData; let i = index;" class="form-check">
                     <input class="form-check-input" [(ngModel)]="sl_ct_id[i]" type="checkbox" value="{{ cluster.ct_id }}" id="checkbox_{{ cluster.ct_id }}">
                     <label class="form-check-label" for="checkbox_{{ cluster.ct_id }}">
-                {{ cluster.ct_name_th }}
-              </label>
+                        {{ cluster.ct_name_th }}
+                    </label>
                 </div>
                 <button class="btn btn-light" (click)="checkAll()">{{ checkedAllBtn==1?'Deselect All':'Select All' }}</button>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal_log()">Cancel</button>
-                <button type="button" class="btn btn-success" (click)="save_log()" data-dismiss="modal">Save</button>
+                <button type="button" class="float-left btn btn-secondary" data-dismiss="modal" (click)="closeModal_log()">ยกเลิก</button>
+                <button type="button" class="float-right btn btn-success" (click)="save_log()" data-dismiss="modal">บันทึก</button>
             </div>
         </div>
     </div>

@@ -96,6 +96,7 @@ const customNotifierOptions: NotifierOptions = {
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FilterPipeModule,
     AppRoutingModule,
     FormsModule,
