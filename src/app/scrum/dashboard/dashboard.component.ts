@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
   nowTime: string;
   nowDate: string;
 
+  check_leader: boolean
+  check_dashboard: boolean
+
   constructor(
     private router: Router,
     private logService: LogService,
@@ -40,10 +43,7 @@ export class DashboardComponent implements OnInit {
     this.rootPath = this.router.url;
     this.imgURL = this.appSetting.apiURL + '/images/cluster/';
 
-    setInterval(() => {
-      this.getTime();
-      this.fetch_dashboard();
-    }, 1000);
+    this.select_leaderboard();
 
     // console.log(location.origin);
   }
@@ -81,6 +81,28 @@ export class DashboardComponent implements OnInit {
       this.fetch_dashboard();
     } else {
       this.fetch_leaderboard();
+    }
+  }
+
+  select_dashboard() {
+    this.check_leader = false;
+    this.check_dashboard = true;
+    if (this.check_dashboard === true) {
+      this.fetch_dashboard();
+      setInterval(() => {
+        this.getTime();
+      }, 1000);
+    }
+  }
+
+  select_leaderboard() {
+    this.check_dashboard = false;
+    this.check_leader = true;
+    if (this.check_leader === true) {
+      this.fetch_leaderboard();
+      setInterval(() => {
+        this.getTime();
+      }, 1000);
     }
   }
 

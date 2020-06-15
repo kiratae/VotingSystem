@@ -48,7 +48,7 @@ export class EventManagementComponent implements OnInit {
 
   ngOnInit() {
     if (sessionStorage.getItem('us_id') == null) {
-      // this.router.navigate(['login']);
+      this.router.navigate(['login']);
     } else {
       const lastLogin = parseInt(sessionStorage.getItem('last_login'));
       const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
@@ -62,7 +62,6 @@ export class EventManagementComponent implements OnInit {
         (res) => {
           const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
           const nowLastLogin = new Date(toDayString).getTime().toString();
-
           sessionStorage.setItem('last_login', nowLastLogin);
         }, err => console.error(err)
       );
@@ -78,11 +77,9 @@ export class EventManagementComponent implements OnInit {
       (res) => {
         const data = res.data[0];
         const lastLoging = this.datepipe.transform(new Date(data.us_lastlogin), 'yyyy-MM-dd HH:mm:ss', '+0700');
-
         if (this.appSetting.isDebuging) {
           console.log(data.us_id, data.us_username, lastLoging);
         }
-
         this.username = data.us_username;
       },
       error => console.error(error)
@@ -97,7 +94,7 @@ export class EventManagementComponent implements OnInit {
     this.eventService.getAll().subscribe(
       res => {
         this.eventData = res.data;
-        console.log(res.data)
+        // console.log(res.data);
       }, err => console.log(err)
     );
   }
