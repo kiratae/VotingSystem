@@ -16,7 +16,7 @@
             <span class="row">
               <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
               <div class="col-md-2 col-12 text-center mb-1">
-                <img src="{{ imgURL+cluster?.ct_img }}" width="64px" height="64px">
+                <img src="{{ cluster?.ct_img }}" width="64px" height="64px">
               </div>
               <div class="col-md-3 col-12 text-center">{{ cluster.ct_name_th }} ({{ cluster.ct_name_en }})</div>
               <div class="col-md-2 col-12 text-center">{{ cluster.sys_name_th }} ({{ cluster.sys_name_en }})</div>
@@ -71,14 +71,15 @@
             </div>
             <div class="form-group">
               <label>Logo Image</label>
-              <div *ngIf="ct_img_preview != null">
-                <img src="{{ ct_img_preview }}" width="64px" height="64px">
+              <input type="text" class="form-control" [(ngModel)]="ct_img_url">
+              <div *ngIf="ct_img_url != null">
+                <img src="{{ ct_img_url }}" width="128px" height="128px">
               </div>
-              <div *ngIf="ct_img_preview == null">
+              <!-- <div *ngIf="ct_img_preview == null">
                 <input type="file" class="form-control-file" id="imgUpload" (change)="fileChangeListener($event.target.files)">
               </div>
               <button class="btn btn-success" (click)="uploadImage()" [disabled]="canUpload == false">Upload Image</button>
-              <button class="btn btn-danger" (click)="deleteImage()" [disabled]="isUploaded == false">Remove Image</button>
+              <button class="btn btn-danger" (click)="deleteImage()" [disabled]="isUploaded == false">Remove Image</button> -->
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">

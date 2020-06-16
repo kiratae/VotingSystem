@@ -1,6 +1,6 @@
 {
   "name": "voting",
-  "version": "0.0.0",
+  "version": "1.2.2",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",

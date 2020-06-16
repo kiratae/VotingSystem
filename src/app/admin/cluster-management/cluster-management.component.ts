@@ -20,6 +20,7 @@ export class ClusterManagementComponent implements OnInit {
   ct_name_en: String;
   ct_img_name: String;
   ct_img: File;
+  ct_img_url: String;
   ct_img_preview: any;
   ct_color: String = "#";
   sm_sys_id: any;
@@ -67,14 +68,14 @@ export class ClusterManagementComponent implements OnInit {
 
   saveCluster(){
     console.log(this);
-    if(this.ct_img_preview != null && this.ct_img_name != null && this.ct_sequence != null && this.ct_name_th != null && this.isUploaded && this.ct_color.length == 7 && this.ct_color[0] == "#") {
+    if(this.ct_sequence != null && this.ct_name_th != null && this.ct_img_url && this.ct_color.length == 7 && this.ct_color[0] == "#") {
 
       if(this.ct_id != null){
         this.clusterService.ct_id = this.ct_id;
         this.clusterService.ct_sequence = this.ct_sequence;
         this.clusterService.ct_name_th = this.ct_name_th;
         this.clusterService.ct_name_en = this.ct_name_en;
-        this.clusterService.ct_img = this.ct_img_name;
+        this.clusterService.ct_img = this.ct_img_url;
         this.clusterService.ct_color_code = this.ct_color;
 
         this.clusterService.sm_sys_id = this.sm_sys_id;
@@ -94,7 +95,7 @@ export class ClusterManagementComponent implements OnInit {
       this.clusterService.ct_sequence = this.ct_sequence;
       this.clusterService.ct_name_th = this.ct_name_th;
       this.clusterService.ct_name_en = this.ct_name_en;
-      this.clusterService.ct_img = this.ct_img_name;
+      this.clusterService.ct_img = this.ct_img_url;
       this.clusterService.ct_color_code = this.ct_color;
 
       this.clusterService.sm_sys_id = this.sm_sys_id;
@@ -191,8 +192,7 @@ export class ClusterManagementComponent implements OnInit {
     this.ct_name_th = data.ct_name_th;
     this.ct_name_en = data.ct_name_en;
     this.ct_color = data.ct_color_code;
-    this.ct_img_preview = this.imgURL+data.ct_img;
-    this.ct_img_name = data.ct_img;
+    this.ct_img_url = data.ct_img;
 
     this.sm_sys_id = data.sys_id;
 
@@ -220,15 +220,15 @@ export class ClusterManagementComponent implements OnInit {
     this.ct_name_th = null;
     this.ct_name_en = null;
     this.ct_color = "#";
-    this.ct_img = null;
+    this.ct_img_url = null;
 
     this.sm_sys_id = null;
 
-    if(this.ct_img_preview == null){
-      this.clearUploadField();
-    }else{
-      this.ct_img_preview = null;
-    }
+    // if(this.ct_img_preview == null){
+    //   this.clearUploadField();
+    // }else{
+    //   this.ct_img_preview = null;
+    // }
   }
 
   private clearUploadField(): void {
