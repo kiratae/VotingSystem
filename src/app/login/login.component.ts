@@ -47,11 +47,11 @@ export class LoginComponent implements OnInit {
       const lastLogin = parseInt(sessionStorage.getItem('last_login'));
       const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
       const now = new Date(toDayString).getTime();
-      if(now - lastLogin < this.appSetting.canStillLoginTime){
+      if (now - lastLogin < this.appSetting.canStillLoginTime){
         const userType = sessionStorage.getItem('user_type');
-        if(userType == 'Admin'){
+        if(userType === 'Admin'){
           this.router.navigate(['admin']);
-        } else if(userType == 'Scum Master') {
+        } else if(userType === 'Scum Master') {
           this.router.navigate(['scrum']);
         } else{
           this.router.navigate(['home']);
@@ -98,11 +98,11 @@ export class LoginComponent implements OnInit {
 
   get formControls() { return this.loginForm.controls; }
 
-  onkeyup() {  
+  onkeyup() {
     let username = this.loginForm.get('username').value;
     let password = this.loginForm.get('password').value;
 
-    if(this.oldInputUsername == username && this.oldInputPassoword == password){
+    if(this.oldInputUsername === username && this.oldInputPassoword === password){
       this.isSubmitted = true;
       return;
     }
@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     this.isLogin = 0;
-    if(this.loginForm.invalid){
+    if(this.loginForm.invalid) {
       this.isLogin = 0;
       return;
     }
@@ -136,8 +136,11 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.isConnectionError = false;
         this.isLoading = false;
-        const canLogin = false;
+        const can_login = false;
         const loginData = res.data[0];
+
+        console.log(res.data[0]);
+        console.log('----------------------------------------')
 
         if (this.appSetting.isDebuging) {
           console.log('login data', loginData);
