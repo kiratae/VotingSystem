@@ -23,7 +23,7 @@
             <div class="row mx-md-0">
                 <div class="col-12" *ngIf="clusterToVote != null">
                     <div class="text-center">
-                        <img src="{{ imgURL+clusterToVote?.ct_img }}" class="m-auto" width="64px" height="64px">
+                        <img src="{{ clusterToVote?.ct_img }}" class="m-auto" width="64px" height="64px">
                     </div>
                     <h4 class="text-center">{{ clusterToVote.ct_name_th }}</h4>
                     <p class="text-center">{{ clusterToVote.sys_name_th }}</p>
