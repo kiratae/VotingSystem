@@ -1,6 +1,6 @@
 <ul class="list-unstyled">
     <li class="media border-bottom p-2" *ngFor="let cluster of clustersData; let i = index;" (click)="clickToVote(i)" data-toggle="modal" data-target="#voteModal">
-        <img src="{{ imgURL+cluster?.ct_img }}" class="m-auto" width="64px" height="64px">
+        <img src="{{ cluster?.ct_img }}" class="m-auto" width="64px" height="64px">
         <div class="media-body ml-2">
             <h5 class="mt-0">{{ cluster.ct_name_th }}</h5>
             <p>{{ cluster.sys_name_th }}</p>
