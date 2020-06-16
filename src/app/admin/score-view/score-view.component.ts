@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScoreService } from 'src/app/services/score.service';
+import { ClusterService } from 'src/app/services/cluster.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
@@ -7,17 +8,22 @@ import { AppSettingsServiceService } from 'src/app/services/app-settings-service
   templateUrl: './score-view.component.html',
   styleUrls: ['./score-view.component.css']
 })
+
 export class ScoreViewComponent implements OnInit {
 
   scoresData: Array<any>;
-  imgURL: String;
+  imgURL: string;
+  clustersData = [];
+  voteText;
 
   constructor(
     private scoreService: ScoreService,
+    private clusterService: ClusterService,
     private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
+    this.fetchCluster();
     this.fetchScore();
     this.imgURL = this.appSetting.apiURL + '/images/cluster/';
   }
@@ -28,6 +34,17 @@ export class ScoreViewComponent implements OnInit {
         console.log(res.data);
         this.scoresData = res.data;
       }, err => console.log(err)
+    );
+  }
+
+  fetchCluster() {
+    this.clusterService.getAll().subscribe(
+      res => {
+        this.clustersData = res.data;
+      },
+      error => {
+        console.error(error);
+      }
     );
   }
 

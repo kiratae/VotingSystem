@@ -118,9 +118,9 @@ export class ScrumBarComponent implements OnInit {
   }
 
   getTime() {
-      const nowDate = new Date();
-      this.nowDate = this.dateToStringOutput(nowDate);
-      this.nowTime = this.dateToTimeStringOutput(nowDate);
+    const nowDate = new Date();
+    this.nowDate = this.dateToStringOutput(nowDate);
+    this.nowTime = this.dateToTimeStringOutput(nowDate);
   }
 
   dateToTimeStringOutput(date: Date) {

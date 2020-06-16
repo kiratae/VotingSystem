@@ -80,6 +80,9 @@ export class ChartComponent implements OnInit {
     }]
   };
 
+  nowTime: string;
+  nowDate: string;
+
   constructor(
     private router: Router,
     private scoreService: ScoreService,
@@ -89,8 +92,8 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
 
-    if (sessionStorage.getItem('us_id') != null && sessionStorage.getItem('user_type') != 'Admin') {
-      this.router.navigate(['']);
+    if (sessionStorage.getItem('us_id') != null && sessionStorage.getItem('user_type') !== 'Admin') {
+      this.router.navigate(['login']);
     }
 
     this.clusterService.getAll().subscribe(
@@ -111,7 +114,7 @@ export class ChartComponent implements OnInit {
           this.clusterScoreData.push({ y: element.sc_score, color: element.ct_color_code });
         });
 
-        this.  chartOptions = {
+        this.chartOptions = {
           chart: {
             type: 'column',
             style: {
@@ -178,10 +181,39 @@ export class ChartComponent implements OnInit {
 
     );
 
+    setInterval(() => {
+      this.getTime();
+    }, 1000);
+  }
+
+  getTime() {
+    const nowDate = new Date();
+    this.nowDate = this.dateToStringOutput(nowDate);
+    this.nowTime = this.dateToTimeStringOutput(nowDate);
+  }
+
+  dateToTimeStringOutput(date: Date) {
+    const s = date.getSeconds();
+    const m =  date.getMinutes();
+    const h =  date.getHours();
+    return this.getZeroPrefix(h) + ' : ' + this.getZeroPrefix(m) + ' : ' + this.getZeroPrefix(s);
+  }
+
+  dateToStringOutput(date: Date) {
+    const month = [ 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'
+                    , 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม' ];
+    const d = date.getDate();
+    const m =  date.getMonth();
+    const y =  date.getFullYear();
+
+    return `${d} ${month[m]} พ.ศ. ${y + 543}`;
+  }
+
+  getZeroPrefix(time: number) {
+    return (time < 10 ? '0' : '') + time;
   }
 
   updateScore() {
-
     this.scoreService.getScore().subscribe(
       res => {
         const data = res.data;
@@ -200,14 +232,14 @@ export class ChartComponent implements OnInit {
             type: 'column',
             style: {
               fontFamily: 'Prompt',
-              fontSize: '24px'
+              fontSize: '22px'
             }
           },
           title: {
             text: 'OSSD#8',
             style: {
               fontFamily: 'Prompt',
-              fontSize: '40px',
+              fontSize: '35px',
               fontWeight: '600'
             }
           },
@@ -227,7 +259,7 @@ export class ChartComponent implements OnInit {
             labels: {
               style: {
                 fontFamily: 'Prompt',
-                fontSize: '28px',
+                fontSize: '24px',
                 fontWeight: '500'
               }
             },
@@ -261,7 +293,6 @@ export class ChartComponent implements OnInit {
         }, this.appSettings.chartRefreshTime);
       },
       error => console.log(error)
-
     );
 
   }

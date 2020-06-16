@@ -158,6 +158,14 @@
                 </div>
             </div>
 
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <button (click)="changeTab('scoreView')" class="btn-lg btn-info">แสดงคะแนน</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <app-user-management *ngSwitchCase="'user'"></app-user-management>
         <app-user-view *ngSwitchCase="'userView'"></app-user-view>

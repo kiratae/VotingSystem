@@ -1,15 +1,43 @@
 <div class="row">
-
     <div class="col-md-12 col-12">
         <div class="card mt-3">
-            <div class="card-header">
+
+            <!-- Class header -->
+            <div class="card-header bg-success text-white">
                 <h4 class="float-left">รายการคะแนน <span style="font-size: 20px">(Score Lists)</span></h4>
-                <button class="btn btn-info float-right mx-2" (click)="fetchScore()"><i class="fas fa-sync"></i></button>
-                <button class="btn btn-primary float-right mb-3" disabled (click)="resetScore()"><i class="fas fa-trash-restore"></i>&ensp;Reset All</button>
+                <button class="btn btn-warning float-right mx-2" (click)="fetchScore()"><i class="fas fa-sync"></i></button>
+                <button class="btn btn-warning float-right mb-3" disabled (click)="resetScore()"><i class="fas fa-trash-restore"></i>&ensp;Reset All</button>
             </div>
+            <!-- End class header -->
+
+            <!-- Class body -->
             <div class="card-body">
 
-                <ul class="list-group">
+                <!-- Card detail -->
+                <div class="row align-items-start justify-content-center">
+                    <div class="col-12 col-sm-12 col-md-6 mb-3" *ngFor="let score of scoresData; let cluster of clustersData; let i = index;" data-toggle="modal" data-target="#voteModal">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media" role="button">
+                                    <img src="{{ imgURL+cluster?.ct_img }}" class="mr-3" width="64px" height="64px">
+                                    <div class="media-body ml-2">
+                                        <h5 class="mt-0">{{ cluster.ct_name_th }}</h5>
+                                        <p class="mb-0">{{ cluster.sys_name_th }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End card body -->
+                            <div class="card-footer text-center">
+                                <span *ngIf="score.sc_score!=0 else zero">{{ score.sc_score }}</span>
+                                <ng-template #zero class=""><span>0</span></ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End card detail -->
+
+                <!-- List group -->
+                <!-- <ul class="list-group">
                     <li class="list-group-item font-weight-bold bg-primary text-white">
                         <span class="row">
                             <div class="col-md-1 text-center mb-1">
@@ -33,10 +61,12 @@
                             <div class="col-md-4 text-center">{{ score.sc_score }}</div>
                         </span>
                     </li>
-                </ul>
+                </ul> -->
+                <!-- End list group -->
 
             </div>
-        </div>
+            <!-- End class body -->
 
+        </div>
     </div>
 </div>

@@ -197,7 +197,7 @@ export class MoneyChartComponent implements OnInit {
     );
   }
 
-  updateMoney(){
+  updateMoney() {
 
     this.logService.getByRangeTimeNow().subscribe(
       res => {

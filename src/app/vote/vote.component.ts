@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClusterService } from 'src/app/services/cluster.service';
 import { UsersService } from 'src/app/services/users.service';
-import { ScoreService } from 'src/app/services/score.service'
+import { ScoreService } from 'src/app/services/score.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 import { NotifierService } from 'angular-notifier';
 
@@ -13,7 +13,7 @@ import { NotifierService } from 'angular-notifier';
 })
 export class VoteComponent implements OnInit {
 
-  voteScore: number = 0;
+  voteScore = 0;
   clustersData = [];
 
   onePointBtn = false;
@@ -21,12 +21,12 @@ export class VoteComponent implements OnInit {
   fivePointBtn = false;
   tenPointBtn = false;
 
-  clusterNameToVote = null
-  clusterToVote = null
+  clusterNameToVote = null;
+  clusterToVote = null;
 
   imgURL: String;
 
-  timer: number = 500;
+  timer = 500;
   interval;
 
   voteHeaderText;
@@ -38,6 +38,9 @@ export class VoteComponent implements OnInit {
 
   hasScore: any = 0;
   remainScore = this.hasScore;
+
+  nowTime: string;
+  nowDate: string;
 
   constructor(
     private router: Router,
@@ -56,14 +59,14 @@ export class VoteComponent implements OnInit {
     this.fetchScore();
 
     switch (this.appSetting.lang) {
-      case "EN":
+      case 'EN':
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.main_section);
           }, error => console.error(error)
         );
         break;
-      case "TH":
+      case 'TH':
         this.appSetting.getTH().subscribe(
           res => {
             this.setText(res.main_section);
@@ -73,9 +76,36 @@ export class VoteComponent implements OnInit {
     }
 
     if (this.clusterNameToVote == null) {
-      this.clusterNameToVote = "NULL";
+      this.clusterNameToVote = 'NULL';
     }
 
+  }
+
+  getTime() {
+    const nowDate = new Date();
+    this.nowDate = this.dateToStringOutput(nowDate);
+    this.nowTime = this.dateToTimeStringOutput(nowDate);
+  }
+
+  dateToTimeStringOutput(date: Date) {
+    const s = date.getSeconds();
+    const m =  date.getMinutes();
+    const h =  date.getHours();
+    return this.getZeroPrefix(h) + ' : ' + this.getZeroPrefix(m) + ' : ' + this.getZeroPrefix(s);
+  }
+
+  dateToStringOutput(date: Date) {
+    const month = [ 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'
+                    , 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม' ];
+    const d = date.getDate();
+    const m =  date.getMonth();
+    const y =  date.getFullYear();
+
+    return `${d} ${month[m]} พ.ศ. ${y + 543}`;
+  }
+
+  getZeroPrefix(time: number) {
+    return (time < 10 ? '0' : '') + time;
   }
 
   initUI() {
@@ -93,10 +123,10 @@ export class VoteComponent implements OnInit {
   }
 
   fetchScore() {
-    this.usersService.us_id = sessionStorage.getItem("us_id");
+    this.usersService.us_id = sessionStorage.getItem('us_id');
     this.usersService.getByKey().subscribe(
       (res) => {
-        let data = res['data'][0];
+        const data = res.data[0];
 
         this.hasScore = data.um_points;
 
@@ -111,7 +141,7 @@ export class VoteComponent implements OnInit {
   fetchCluster() {
     this.clusterService.getAll().subscribe(
       res => {
-        this.clustersData = res['data'];
+        this.clustersData = res.data;
       },
       error => {
         console.error(error);
@@ -131,8 +161,9 @@ export class VoteComponent implements OnInit {
   }
 
   clickToVote(index) {
-    if (this.appSetting.isDebuging)
+    if (this.appSetting.isDebuging) {
       console.log(this.clustersData[index]);
+    }
 
     this.clusterToVote = this.clustersData[index];
     this.clusterNameToVote = this.clusterToVote.ct_name_th;
@@ -159,7 +190,7 @@ export class VoteComponent implements OnInit {
   }
 
   vote() {
-    if(this.voteScore <= 0 || this.voteScore > this.hasScore){
+    if (this.voteScore <= 0 || this.voteScore > this.hasScore) {
       this.notifier.notify('error', `ค่า ${this.voteScore} ไม่ถูกต้องสำหรับคะแนน !`);
       this.fetchScore();
       this.voteScore = 0;
@@ -169,17 +200,17 @@ export class VoteComponent implements OnInit {
 
     this.scoreService.sc_ct_id = this.clusterToVote.ct_id;
     this.scoreService.sc_score = this.voteScore;
-    this.scoreService.us_id = sessionStorage.getItem("us_id");
+    this.scoreService.us_id = sessionStorage.getItem('us_id');
 
     this.scoreService.createLog().subscribe(res => {
-      //console.log(res);
-      if (res["status"] == 1) {
+      // console.log(res);
+      if (res.status == 1) {
         // something error here! may be score is out!
         this.notifier.notify('error', `คะแนนของคุณไม่พอที่จะทำการโหวต !`);
         this.fetchScore();
         this.voteScore = 0;
         this.updateRemainScore();
-      } else if (res["status"] == 0) {
+      } else if (res.status == 0) {
         // ok save the vote
         this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
         this.fetchScore();
