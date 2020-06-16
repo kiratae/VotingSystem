@@ -1,0 +1,29 @@
+{
+    "login_section": {
+        "login": "Login",
+        "username": "Username",
+        "password": "Password",
+        "error_username_password_require": "Username and Password is required.",
+        "error_username_require": "Username is required.",
+        "error_password_require": "Password is required.",
+        "error_incorrect_login": "Username or Password isn't correct.",
+        "error_connection": "Conection Error!"
+    },
+    "main_section": {
+        "system_name": "Voting System",
+        "home": "Home",
+        "logout": "Logout",
+        "point": "Point",
+        "multi_point": "Points",
+        "vote_header": "Vote to ",
+        "vote": "Vote"
+    },
+    "modal": {
+        "logout": {
+            "header": "Logout",
+            "body": "Do you want to log out?",
+            "confirm": "OK",
+            "cancel": "Cancel"
+        }
+    }
+}
