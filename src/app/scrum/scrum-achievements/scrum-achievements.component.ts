@@ -8,7 +8,7 @@ import { ClusterService } from 'src/app/services/cluster.service';
 })
 export class ScrumAchievementsComponent implements OnInit {
 
-  clusterData = []
+  clusterData = [];
 
   constructor(
     private clusterService: ClusterService
@@ -17,9 +17,13 @@ export class ScrumAchievementsComponent implements OnInit {
   ngOnInit() {
     this.clusterService.getAll().subscribe(
       res => {
-        this.clusterData = res['data'];
+        this.clusterData = res.data;
       }, err => console.log(err)
     );
+  }
+
+  sync() {
+
   }
 
 }
