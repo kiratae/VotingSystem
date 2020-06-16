@@ -22,8 +22,6 @@ export class ScrumAchievementsComponent implements OnInit {
     );
   }
 
-  sync() {
-
-  }
+  sync() {}
 
 }

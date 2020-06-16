@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { UsersService } from 'src/app/services/users.service'
+import { UsersService } from 'src/app/services/users.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
 
 @Component({
@@ -20,10 +20,10 @@ export class LoginComponent implements OnInit {
   isConnectionError = false;
   isLoading = false;
 
-  oldInputUsername = "";
-  oldInputPassoword = "";
+  oldInputUsername = '';
+  oldInputPassoword = '';
 
-  //String
+  // String
   loginText;
   usernameText;
   passowrdText;
@@ -43,23 +43,22 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem("us_id") != null){
-      let lastLogin = parseInt(sessionStorage.getItem("last_login"));
-      let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
-      let now = new Date(toDayString).getTime();
+    if(sessionStorage.getItem('us_id') != null){
+      const lastLogin = parseInt(sessionStorage.getItem('last_login'));
+      const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+      const now = new Date(toDayString).getTime();
       if(now - lastLogin < this.appSetting.canStillLoginTime){
-        let userType = sessionStorage.getItem("user_type");
-        if(userType == "Admin"){
-          this.router.navigate(['admin'])
-        }else if(userType == "Scum Master"){
-          this.router.navigate(['scrum'])
-          
-        }else{
-          this.router.navigate(['home'])
+        const userType = sessionStorage.getItem('user_type');
+        if(userType == 'Admin'){
+          this.router.navigate(['admin']);
+        } else if(userType == 'Scum Master') {
+          this.router.navigate(['scrum']);
+        } else{
+          this.router.navigate(['home']);
         }
       }
-    }else{
-      //this.router.navigate(['login'])
+    } else {
+      // this.router.navigate(['login'])
 
       this.loginForm  =  this.formBuilder.group({
         username: new FormControl('', Validators.required),
@@ -67,21 +66,21 @@ export class LoginComponent implements OnInit {
       });
     }
 
-    switch(this.appSetting.lang){
-      case "EN":
+    switch(this.appSetting.lang) {
+      case 'EN':
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.login_section);
           }, error => console.error(error)
         );
-      break;
-      case "TH":
+        break;
+      case 'TH':
       this.appSetting.getTH().subscribe(
         res => {
           this.setText(res.login_section);
         }, error => console.error(error)
       );
-      break; 
+      break;
     }
 
   }
@@ -100,11 +99,11 @@ export class LoginComponent implements OnInit {
   get formControls() { return this.loginForm.controls; }
 
   onkeyup() {  
-    var username = this.loginForm.get("username").value;
-    var password = this.loginForm.get("password").value;
+    let username = this.loginForm.get('username').value;
+    let password = this.loginForm.get('password').value;
 
     if(this.oldInputUsername == username && this.oldInputPassoword == password){
-      this.isSubmitted = true
+      this.isSubmitted = true;
       return;
     }
 
@@ -113,19 +112,19 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSubmitted = true
-    this.isLogin = 0
+    this.isSubmitted = true;
+    this.isLogin = 0;
     if(this.loginForm.invalid){
-      this.isLogin = 0
+      this.isLogin = 0;
       return;
     }
 
     this.isLoading = true;
 
     const md5 = new Md5();
-    var username = this.loginForm.get("username").value;
-    var password = this.loginForm.get("password").value;
-    var hashPassword = md5.appendStr(password).end().toString();
+    let username = this.loginForm.get('username').value;
+    let password = this.loginForm.get('password').value;
+    let hashPassword = md5.appendStr(password).end().toString();
 
     this.oldInputUsername = username;
     this.oldInputPassoword = password;
@@ -137,38 +136,38 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.isConnectionError = false;
         this.isLoading = false;
-        let canLogin = false;
-        let loginData = res['data'][0];
+        const canLogin = false;
+        const loginData = res.data[0];
 
-        if(this.appSetting.isDebuging)
-          console.log("login data",loginData);
+        if (this.appSetting.isDebuging) {
+          console.log('login data', loginData);
+        }
 
-        if(loginData['canLogin'] == "true"){
+        if (loginData.can_login === 'true') {
 
-          this.usersService.us_id = loginData['us_id'];
+          this.usersService.us_id = loginData.us_id;
           this.usersService.loginCompleted().subscribe((res) => {
 
-            let userType = loginData['ut_name_en'];
-            let userID = loginData['us_id'];
+            const userType = loginData.ut_name_en;
+            const userID = loginData.us_id;
 
-            sessionStorage.setItem("us_id", userID);
-            sessionStorage.setItem("user_type", userType);
-            
-            let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
-            let nowLastLogin = new Date(toDayString).getTime().toString();
+            sessionStorage.setItem('us_id', userID);
+            sessionStorage.setItem('user_type', userType);
 
-            sessionStorage.setItem("last_login", nowLastLogin);
+            const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+            const nowLastLogin = new Date(toDayString).getTime().toString();
 
-            if(userType == "Admin"){
-              this.router.navigate(['admin'])
-            }else if(userType == "Scum Master"){
-              this.router.navigate(['scrum'])
-            }else{
-              this.router.navigate(['home'])
+            sessionStorage.setItem('last_login', nowLastLogin);
+
+            if (userType === 'Admin'){
+              this.router.navigate(['admin']);
+            } else if (userType === 'Scum Master') {
+              this.router.navigate(['scrum']);
+            } else {
+              this.router.navigate(['home']);
             }
 
-            
-            this.isLogin = 1
+            this.isLogin = 1;
 
           },
           err => {
@@ -177,8 +176,8 @@ export class LoginComponent implements OnInit {
             this.isLoading = false;
             console.error(err);
           });
-        }else{
-          this.isLogin = -1
+        } else {
+          this.isLogin = -1;
         }
 
       },
