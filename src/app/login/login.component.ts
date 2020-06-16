@@ -43,50 +43,50 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem("us_id") != null){
+    if (sessionStorage.getItem("us_id") != null) {
       let lastLogin = parseInt(sessionStorage.getItem("last_login"));
       let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
       let now = new Date(toDayString).getTime();
-      if(now - lastLogin < this.appSetting.canStillLoginTime){
+      if (now - lastLogin < this.appSetting.canStillLoginTime) {
         let userType = sessionStorage.getItem("user_type");
-        if(userType == "Admin"){
+        if (userType == "Admin") {
           this.router.navigate(['admin'])
-        }else if(userType == "Scum Master"){
+        } else if (userType == "Scum Master") {
           this.router.navigate(['scrum'])
-          
-        }else{
+
+        } else {
           this.router.navigate(['home'])
         }
       }
-    }else{
+    } else {
       //this.router.navigate(['login'])
 
-      this.loginForm  =  this.formBuilder.group({
+      this.loginForm = this.formBuilder.group({
         username: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required)
       });
     }
 
-    switch(this.appSetting.lang){
+    switch (this.appSetting.lang) {
       case "EN":
         this.appSetting.getEN().subscribe(
           res => {
             this.setText(res.login_section);
           }, error => console.error(error)
         );
-      break;
+        break;
       case "TH":
-      this.appSetting.getTH().subscribe(
-        res => {
-          this.setText(res.login_section);
-        }, error => console.error(error)
-      );
-      break; 
+        this.appSetting.getTH().subscribe(
+          res => {
+            this.setText(res.login_section);
+          }, error => console.error(error)
+        );
+        break;
     }
 
   }
 
-  setText(langData){
+  setText(langData) {
     this.loginText = langData.login;
     this.usernameText = langData.username;
     this.passowrdText = langData.password;
@@ -99,11 +99,11 @@ export class LoginComponent implements OnInit {
 
   get formControls() { return this.loginForm.controls; }
 
-  onkeyup() {  
+  onkeyup() {
     var username = this.loginForm.get("username").value;
     var password = this.loginForm.get("password").value;
 
-    if(this.oldInputUsername == username && this.oldInputPassoword == password){
+    if (this.oldInputUsername == username && this.oldInputPassoword == password) {
       this.isSubmitted = true
       return;
     }
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true
     this.isLogin = 0
-    if(this.loginForm.invalid){
+    if (this.loginForm.invalid) {
       this.isLogin = 0
       return;
     }
@@ -136,16 +136,22 @@ export class LoginComponent implements OnInit {
     this.usersService.login().subscribe(
       (res: any) => {
         console.log(res);
-        return;
-        this.isConnectionError = false;
+        // return;
         this.isLoading = false;
         let canLogin = false;
+
+        if (res['data'].length == 0) {
+          this.isLogin = -1;
+          return;
+        }
+
+
         let loginData = res['data'][0];
 
-        if(this.appSetting.isDebuging)
-          console.log("login data",loginData);
+        if (this.appSetting.isDebuging)
+          console.log("login data", loginData);
 
-        if(loginData['canLogin'] == "true"){
+        if (loginData['can_login'] == true) {
 
           this.usersService.us_id = loginData['us_id'];
           this.usersService.loginCompleted().subscribe((res) => {
@@ -155,31 +161,31 @@ export class LoginComponent implements OnInit {
 
             sessionStorage.setItem("us_id", userID);
             sessionStorage.setItem("user_type", userType);
-            
+
             let toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
             let nowLastLogin = new Date(toDayString).getTime().toString();
 
             sessionStorage.setItem("last_login", nowLastLogin);
 
-            if(userType == "Admin"){
+            if (userType == "Admin") {
               this.router.navigate(['admin'])
-            }else if(userType == "Scum Master"){
+            } else if (userType == "Scum Master") {
               this.router.navigate(['scrum'])
-            }else{
+            } else {
               this.router.navigate(['home'])
             }
 
-            
+
             this.isLogin = 1
 
           },
-          err => {
-            // alert("Conection Error!");
-            this.isConnectionError = true;
-            this.isLoading = false;
-            console.error(err);
-          });
-        }else{
+            err => {
+              // alert("Conection Error!");
+              this.isConnectionError = true;
+              this.isLoading = false;
+              console.error(err);
+            });
+        } else {
           this.isLogin = -1
         }
 

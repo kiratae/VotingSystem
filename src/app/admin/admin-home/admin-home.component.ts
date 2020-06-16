@@ -36,7 +36,7 @@ export class AdminHomeComponent implements OnInit {
     this.usersService.us_id = this.us_id = sessionStorage.getItem("us_id");;
     this.usersService.getByKey().subscribe(
       (res) => {
-        console.log(res['data'][0]);
+        console.log(res);
         let data = res['data'][0];
         
         this.username = data.us_username;

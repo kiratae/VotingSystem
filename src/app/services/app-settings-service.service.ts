@@ -9,7 +9,7 @@ export class AppSettingsServiceService {
 
   // apiURL: String = "http://10.80.39.252:3000"; // http://localhost:3000
   // apiURL: String = "http://localhost:3000"; // http://localhost:3000
-  apiURL: String = "https://bearhunt-vote-api.herokuapp.com";
+  apiURL: String = "https://bearhunt-api-prod.herokuapp.com";
 
   secretKey: String = "l3ear@Hunt;" // secret key
 

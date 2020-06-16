@@ -66,6 +66,7 @@ export class ClusterManagementComponent implements OnInit {
   }
 
   saveCluster(){
+    console.log(this);
     if(this.ct_img_preview != null && this.ct_img_name != null && this.ct_sequence != null && this.ct_name_th != null && this.isUploaded && this.ct_color.length == 7 && this.ct_color[0] == "#") {
 
       if(this.ct_id != null){
