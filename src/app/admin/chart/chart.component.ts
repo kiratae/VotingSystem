@@ -120,7 +120,7 @@ export class ChartComponent implements OnInit {
             }
           },
           title: {
-            text: 'OSSD#7',
+            text: 'OSSD#8',
             style: {
               fontFamily: "Prompt",
               fontSize: "40px",
@@ -204,7 +204,7 @@ export class ChartComponent implements OnInit {
             }
           },
           title: {
-            text: 'OSSD#7',
+            text: 'OSSD#8',
             style: {
               fontFamily: "Prompt",
               fontSize: "40px",
