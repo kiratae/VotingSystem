@@ -1,119 +1,117 @@
-<nav class="navbar sticky-top navbar-dark bg-primary">
+<nav class="navbar navbar-expand-md sticky-top navbar-dark bg-primary">
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <!-- <span></span> -->
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="navbar-brand pl-4">
-        <!-- <img src="https://via.placeholder.com/100x32" class="d-inline-block align-top"> -->
-        Admin Voting System
+    <div class="navbar-brand">
+        <div class="d-inline-block align-top"><i class="fas fa-tools fa-2x"></i></div>
+        <span class="d-md-inline-block d-none pl-2 pt-1">Admin Voting System</span>
     </div>
 
-    <!-- Collapse -->
     <div class="collapse navbar-collapse" id="navbarContent">
-
-        <!-- Navbar -->
-        <ul class="navbar-nav mr-auto pl-3">
-
-            <!-- Show username -->
-            <li class="nav-item text-right">
-                <div class="navbar-text py-1 px-2">
-                    <span>{{username}}&ensp;<i class="fas fa-user"></i></span>
-                </div>
-            </li>
-            <!-- End show username -->
-
+        <ul class="navbar-nav mr-auto">
             <!-- Home -->
             <li class="nav-item" [ngClass]="(viewMode=='main')?'active':''">
-                <a class="nav-link" (click)="changeTab('main')" data-toggle="collapse" data-target="#navbarContent">
-                    <i class="fas fa-home"></i>&ensp;หน้าหลัก
+                <a class="nav-link" role="button" (click)="changeTab('main')" data-toggle="collapse" data-target="#navbarContent">
+                    <i class="fas fa-home"></i><span class="d-md-none d-inline-block">&ensp;หน้าหลัก</span>
                 </a>
             </li>
             <!-- End home -->
 
             <!-- Score -->
-            <li class="nav-item navbar-text">
-                <i class="fas fa-chart-bar"></i>&ensp;คะแนนโหวต
+            <li class="nav-item dropdown" [ngClass]="(viewMode=='scoreView')?'active':''">
+                <a class="nav-link dropdown-toggle" role="button" id="score-man" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-chart-bar"></i>&ensp;คะแนนโหวต
+                </a>
+                <div class="dropdown-menu" aria-labelledby="score-man">
+                    <a class="dropdown-item" href="chart">
+                        <p class="mb-0">กราฟแสดงคะแนนโหวต</p>
+                        <p class="small text-muted mb-0">(Score Vote Bar chart)</p>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" role="button" (click)="changeTab('scoreView')">
+                        <p class="mb-0">รายการคะแนนโหวต</p>
+                        <p class="small text-muted mb-0">(Score Vote Lists)</p>
+                    </a>
+                </div>
             </li>
-            <ul class="navbar-nav mr-auto pl-3" style="font-size: 15px;">
-                <li class="nav-item ml-3">
-                    <a class="nav-link" href="chart">
-                        &ensp;กราฟแสดงคะแนนโหวต (Score Vote Bar chart)
-                    </a>
-                </li>
-                <li class="nav-item ml-3" [ngClass]="(viewMode=='scoreView')?'active':''">
-                    <a class="nav-link" (click)="changeTab('scoreView')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;รายการคะแนนโหวต (Score Vote Lists)
-                    </a>
-                </li>
-            </ul>
-            <!-- End core -->
+            <!-- End Score -->
+
 
             <!-- Cluster and system -->
-            <li class="nav-item navbar-text">
-                <i class="fas fa-users"></i>&ensp;มกุลและระบบ
+            <li class="nav-item dropdown" [ngClass]="(viewMode=='cluster' || viewMode=='system')?'active':''">
+                <a class="nav-link dropdown-toggle" role="button" id="ct-sys-man" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-users"></i>&ensp;มกุลและระบบ
+                </a>
+                <div class="dropdown-menu" aria-labelledby="ct-sys-man">
+                    <a class="dropdown-item" role="button" (click)="changeTab('cluster')">
+                        <p class="mb-0">การจัดการมกุล</p>
+                        <p class="small text-muted mb-0">(Cluster management)</p>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" role="button" (click)="changeTab('system')">
+                        <p class="mb-0">การจัดการระบบ</p>
+                        <p class="small text-muted mb-0">(System management)</p>
+                    </a>
+                </div>
             </li>
-            <ul class="navbar-nav mr-auto pl-3" style="font-size: 15px;">
-                <li class="nav-item ml-3" [ngClass]="(viewMode=='cluster')?'active':''">
-                    <a class="nav-link" (click)="changeTab('cluster')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;การจัดการมกุล (Cluster management)
-                    </a>
-                </li>
-                <li class="nav-item ml-3" [ngClass]="(viewMode=='system')?'active':''">
-                    <a class="nav-link" (click)="changeTab('system')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;การจัดการระบบ (System management)
-                    </a>
-                </li>
-            </ul>
-            <!-- End cluster and system -->
+            <!-- End Cluster and system -->
 
             <!-- User management -->
-            <li class="nav-item navbar-text">
-                <i class="fas fa-user"></i>&ensp;ผู้ใช้งาน
+            <li class="nav-item dropdown" [ngClass]="(viewMode=='userView' || viewMode=='user' || viewMode=='userType')?'active':''">
+                <a class="nav-link dropdown-toggle" role="button" id="ct-sys-man" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>&ensp;ผู้ใช้งาน
+                </a>
+                <div class="dropdown-menu" aria-labelledby="ct-sys-man">
+                    <a class="dropdown-item" role="button" (click)="changeTab('userView')">
+                        <p class="mb-0">แสดงผู้ใช้งานทั้งหมด</p>
+                        <p class="small text-muted mb-0">(Show all users)</p>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" role="button" (click)="changeTab('user')">
+                        <p class="mb-0">จัดการผู้ใช้งาน</p>
+                        <p class="small text-muted mb-0">(User management)</p>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" role="button" (click)="changeTab('userType')">
+                        <p class="mb-0">จัดการประเภทผู้ใช้งาน</p>
+                        <p class="small text-muted mb-0">(User type management)</p>
+                    </a>
+                </div>
             </li>
-            <ul class="navbar-nav mr-auto pl-3" style="font-size: 15px;">
-                <li class="nav-item" [ngClass]="(viewMode=='userView')?'active':''">
-                    <a class="nav-link ml-3" (click)="changeTab('userView')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;แสดงผู้ใช้งานทั้งหมด (Show all users)
-                    </a>
-                </li>
-                <li class="nav-item" [ngClass]="(viewMode=='user')?'active':''">
-                    <a class="nav-link ml-3" (click)="changeTab('user')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;จัดการผู้ใช้งาน (User management)
-                    </a>
-                </li>
-                <li class="nav-item" [ngClass]="(viewMode=='userType')?'active':''">
-                    <a class="nav-link ml-3" (click)="changeTab('userType')" data-toggle="collapse" data-target="#navbarContent">
-                        &ensp;จัดการประเภทผู้ใช้งาน (User type management)
-                    </a>
-                </li>
-            </ul>
-            <!-- End user management -->
+            <!-- End User management -->
 
             <!-- Logout -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+            <li class="nav-item d-block d-md-none">
+                <a class="nav-link" role="button" (click)="changeTab('main')" data-toggle="collapse" data-target="#navbarContent">
                     <i class="fas fa-sign-out-alt"></i>&ensp;ออกจากระบบ
                 </a>
             </li>
-            <!-- End logout -->
+            <!-- End Logout -->
 
         </ul>
-        <!-- End navbar -->
-
     </div>
-    <!-- End collapse -->
+
+    <div class="dropdown ml-auto d-none d-md-block">
+        <button class="btn btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i><span class="d-md-inline-block d-none">&ensp;{{username}}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;ออกจากระบบ</a>
+        </div>
+    </div>
 
 </nav>
 
-<div class="container-fliud mx-3">
+<div class="container">
 
     <div [ngSwitch]="viewMode">
         <div *ngSwitchCase="'main'">
 
             <div class="row mb-3 justify-content-center">
 
-                <div class="col-8">
+                <div class="col-12 col-md-8">
 
                     <!-- Voting time setting card -->
                     <div class="card mt-3">

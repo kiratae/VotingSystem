@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { ScoreService } from 'src/app/services/score.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-view',
@@ -18,11 +19,17 @@ export class UserViewComponent implements OnInit {
   edit_point;
 
   constructor(
+    private router: Router,
     private usersService: UsersService,
     public scoreService: ScoreService
   ) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
+    }
+
     this.fetchUser();
   }
 

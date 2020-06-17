@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SystemService } from 'src/app/services/system.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-system-management',
@@ -16,11 +17,17 @@ export class SystemManagementComponent implements OnInit {
   sys_name_en;
 
   constructor(
+    private router: Router,
     private systemService: SystemService,
     private appSettings: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
+    }
+
     this.fetch();
   }
 

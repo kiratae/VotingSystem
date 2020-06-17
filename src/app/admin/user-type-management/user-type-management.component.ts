@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserTypeService } from 'src/app/services/user-type.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-type-management',
@@ -16,11 +17,17 @@ export class UserTypeManagementComponent implements OnInit {
   ut_name_en;
 
   constructor(
+    private router: Router,
     private userTypeService: UserTypeService,
     private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
+    }
+
     this.fetch();
   }
 

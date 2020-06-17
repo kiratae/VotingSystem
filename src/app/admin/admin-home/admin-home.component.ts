@@ -29,8 +29,9 @@ export class AdminHomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (sessionStorage.getItem('us_id') != null && sessionStorage.getItem('user_type') != 'Admin') {
-      this.router.navigate(['']);
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
     }
 
     this.usersService.us_id = this.us_id = sessionStorage.getItem('us_id');

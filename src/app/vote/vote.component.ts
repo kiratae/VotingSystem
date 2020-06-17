@@ -52,9 +52,11 @@ export class VoteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.imgURL = this.appSetting.apiURL + '/images/cluster/';
-
+    if (sessionStorage.getItem('us_id') == null) {
+      this.router.navigate(['login']);
+      return;
+    }
+    
     this.fetchCluster();
     this.fetchScore();
 

@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
 
     if (sessionStorage.getItem('us_id') == null) {
       this.router.navigate(['login']);
+      return;
     } else {
       const lastLogin = parseInt(sessionStorage.getItem('last_login'));
       const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');

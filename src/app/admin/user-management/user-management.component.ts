@@ -39,6 +39,11 @@ export class UserManagementComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
+    }
+    
     this.userTypeService.getAll().subscribe((res) => {
       if(this.appSetting.isDebuging)
         console.log(res);

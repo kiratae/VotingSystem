@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClusterService } from 'src/app/services/cluster.service';
 import { SystemService } from 'src/app/services/system.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cluster-management',
@@ -31,13 +32,17 @@ export class ClusterManagementComponent implements OnInit {
   canUpload = false;
 
   constructor(
+    private router: Router,
     private clusterService: ClusterService,
     private systemService: SystemService,
     private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
-    this.imgURL = this.appSetting.apiURL+'/images/cluster/';
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
+    }
 
     this.fetchCluster();
     this.fetchSystem();

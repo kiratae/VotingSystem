@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScoreService } from 'src/app/services/score.service';
 import { ClusterService } from 'src/app/services/cluster.service';
 import { AppSettingsServiceService } from 'src/app/services/app-settings-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-score-view',
@@ -17,15 +18,20 @@ export class ScoreViewComponent implements OnInit {
   voteText;
 
   constructor(
+    private router: Router,
     private scoreService: ScoreService,
     private clusterService: ClusterService,
     private appSetting: AppSettingsServiceService
   ) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('us_id') == null || sessionStorage.getItem('user_type') != 'Admin') {
+      this.router.navigate(['login']);
+      return;
+    }
+
     this.fetchCluster();
     this.fetchScore();
-    this.imgURL = this.appSetting.apiURL + '/images/cluster/';
   }
 
   fetchScore() {
