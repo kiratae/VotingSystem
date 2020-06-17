@@ -1,51 +1,41 @@
-<nav class="navbar sticky-top navbar-dark bg-primary">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <!-- <span></span> -->
-        <i class="fas fa-bars"></i>
-    </button>
+<nav class="navbar navbar-expand sticky-top navbar-dark bg-primary mb-3 mb-sm-3 mb-md-5">
 
-    <div class="navbar-brand pl-4">
+    <div class="navbar-brand mr-auto">
         <!-- <img src="https://via.placeholder.com/100x32" class="d-inline-block align-top"> -->
-        {{ systemNameText }}
+        <div class="d-inline-block align-top"><i class="fas fa-poll fa-2x"></i></div>
+        <span class="d-md-inline-block d-none pl-2 pt-1">{{ systemNameText }}</span>
     </div>
 
-    <div class="navbar-text mr-1 py-1 px-2 border rounded">
-        <span>{{ hasScore }}&ensp;
-            <span *ngIf="hasScore > 1">{{ multiPointText }}</span>
-            <span *ngIf="hasScore <= 1">{{ pointText }}</span>
-        </span>
+
+    <div class="navbar-text px-2 mr-auto mr-sm-auto mr-md-3">
+        <h2 class="text-white align-middle mb-0">
+            {{ hasScore }}&ensp;<i class="fas fa-coins"></i>
+            <!-- <span *ngIf="hasScore > 1">{{ multiPointText }}</span>
+            <span *ngIf="hasScore <= 1">{{ pointText }}</span> -->
+        </h2>
     </div>
 
-    <div class="collapse navbar-collapse" id="navbarContent">
-        <div class="row">
-            <div class="col-6">
-                <ul class="navbar-nav mr-auto pl-3">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;{{ homeText }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;{{ logoutText }}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-6 text-right">
-                <div class="navbar-text py-1 px-2">
-                    <span>{{username}}&ensp;<i class="fas fa-user"></i></span>
-                </div>
-            </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i><span class="d-md-inline-block d-none">&ensp;{{username}}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;{{ logoutText }}</a>
         </div>
     </div>
 
 </nav>
 
 <div *ngIf="canVote == 1">
-    <app-vote (hasScoreOutput)="setHasScoreParent($event)"></app-vote>
+    <div class="container">
+        <app-vote (hasScoreOutput)="setHasScoreParent($event)"></app-vote>
+    </div>
 </div>
 <div *ngIf="canVote == 0">
 
     <div *ngIf="isEndVote == false" class="row my-5 py-5 mx-1 d-flex justify-content-center">
         <div class="col-md-8 col-lg-6 col-sm-10 col-12">
-    
+
             <div class="card border-primary">
                 <div class="card-body text-center text-primary">
                     <h1 class="mb-3"><i class="fas fa-hourglass-start"></i></h1>
@@ -60,9 +50,9 @@
 
     <div *ngIf="isEndVote == true" class="row my-5 py-5 mx-1 d-flex justify-content-center">
         <div class="col-md-8 col-lg-6 col-sm-10 col-12">
-    
+
             <div class="card border-danger">
-                <div  class="card-body text-center text-danger">
+                <div class="card-body text-center text-danger">
                     <h1 class="mb-3"><i class="fas fa-hourglass-end"></i></h1>
                     <h2>การโหวตได้สิ้นสุดลงแล้ว</h2>
                 </div>
@@ -70,7 +60,7 @@
 
         </div>
     </div>
-    
+
 </div>
 <div *ngIf="canVote == -1" style="position: fixed; top: calc(50% - 6rem); left: calc(50% - 0.5rem)">
 

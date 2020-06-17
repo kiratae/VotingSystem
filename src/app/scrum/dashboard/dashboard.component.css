@@ -1,4 +1,13 @@
-.dashboard-card:hover{
+.dashboard-card:hover {
     cursor: pointer;
-    background-color: #eee;
+    background-color: rgb(207, 214, 248);
+}
+
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.modal-body {
+    height: 600px;
+    overflow-y: auto;
 }

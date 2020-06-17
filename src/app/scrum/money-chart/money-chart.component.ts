@@ -20,10 +20,17 @@ export class MoneyChartComponent implements OnInit {
   rootPath;
 
   clusterMoneyData: any = [];
-  clusterData: any = [{name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
-  {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
-  {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
-  {name:"",color:"",data:[]}];
+  clusterData: any = [
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []},
+    {name: '', color: '', data: []}];
   Highcharts = Highcharts;
   chartOptions = {
     chart: {
@@ -33,9 +40,9 @@ export class MoneyChartComponent implements OnInit {
     title: {
       text: 'OSSD#7',
       style: {
-        fontFamily: "Prompt",
-        fontSize: "40px",
-        fontWeight: "600"
+        fontFamily: 'Prompt',
+        fontSize: '40px',
+        fontWeight: '600'
       }
     },
     time: {
@@ -45,17 +52,17 @@ export class MoneyChartComponent implements OnInit {
     yAxis: {
       min: 0,
       title: {
-          text: 'จำนวนเงิน (บาท)',
+          text: 'จำนวนเงิน ($E)',
           style: {
-            fontFamily: "Prompt",
-            fontSize: "28px",
-            fontWeight: "600"
+            fontFamily: 'Prompt',
+            fontSize: '24px',
+            fontWeight: '400'
           }
       },
       labels: {
         style: {
-          fontFamily: "Prompt",
-          fontSize: "24px"
+          fontFamily: 'Prompt',
+          fontSize: '24px'
         }
       }
     },
@@ -63,9 +70,9 @@ export class MoneyChartComponent implements OnInit {
       title: {
         text: 'เวลา',
         style: {
-          fontFamily: "Prompt",
-          fontSize: "28px",
-          fontWeight: "600"
+          fontFamily: 'Prompt',
+          fontSize: '24px',
+          fontWeight: '600'
         }
       },
       type: 'datetime',
@@ -73,18 +80,18 @@ export class MoneyChartComponent implements OnInit {
       labels: {
         format: '{value: %H:%M}',
         style: {
-          fontFamily: "Prompt",
-          fontSize: "24px",
-          fontWeight: "400"
+          fontFamily: 'Prompt',
+          fontSize: '24px',
+          fontWeight: '400'
         }
       },
     },
-    legend:{
+    legend: {
       enabled: true,
       itemStyle: {
-        fontFamily: "Prompt",
-        fontSize: "28px",
-        fontWeight: "600"
+        fontFamily: 'Prompt',
+        fontSize: '20px',
+        fontWeight: '600'
       },
       layout: 'vertical',
       align: 'right',
@@ -104,43 +111,43 @@ export class MoneyChartComponent implements OnInit {
       }
     },
     series: [{
-      name: "",
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
-    },{
-      name: "",
+    }, {
+      name: '',
       data: [],
       color: ''
     }]
@@ -167,53 +174,50 @@ export class MoneyChartComponent implements OnInit {
 
     this.resetData();
 
-    clearTimeout(this.timeouter)
+    clearTimeout(this.timeouter);
 
     this.logService.time = this.chartRefreshTime / 1000;
     this.logService.getByRangeTime().subscribe(
       res => {
-        let data = res['data'];
+        let data = res.data;
         // console.log(data);
-        console.log("Synced!");
-        
+        console.log('Synced!');
         data.forEach((e) => {
-          if(!this.clusterData[e.ct_sequence].name){
-            this.clusterData[e.ct_sequence].name = e.ct_name_th
+          if (!this.clusterData[e.ct_sequence].name){
+            this.clusterData[e.ct_sequence].name = e.ct_name_th;
           }
-          if(!this.clusterData[e.ct_sequence].color){
-            this.clusterData[e.ct_sequence].color = e.ct_color_code
+          if (!this.clusterData[e.ct_sequence].color){
+            this.clusterData[e.ct_sequence].color = e.ct_color_code;
           }
-          this.clusterData[e.ct_sequence].data.push({ x: (new Date()).getTime() - e.Hour * this.chartRefreshTime ,y: e.total_money })
-        })
+          this.clusterData[e.ct_sequence].data.push({ x: (new Date()).getTime() - e.Hour * this.chartRefreshTime , y: e.total_money });
+        });
         this.setChart();
         this.updateMoney();
       }, err => console.error(err)
-    )
+    );
   }
 
-  updateMoney(){
+  updateMoney() {
 
     this.logService.getByRangeTimeNow().subscribe(
       res => {
-        let data = res['data'];
-        
+        let data = res.data;
         data.forEach((e) => {
-          if(!this.clusterData[e.ct_sequence].name){
-            this.clusterData[e.ct_sequence].name = e.ct_name_th
+          if (!this.clusterData[e.ct_sequence].name){
+            this.clusterData[e.ct_sequence].name = e.ct_name_th;
           }
-          if(!this.clusterData[e.ct_sequence].color){
-            this.clusterData[e.ct_sequence].color = e.ct_color_code
+          if (!this.clusterData[e.ct_sequence].color){
+            this.clusterData[e.ct_sequence].color = e.ct_color_code;
           }
-          this.clusterData[e.ct_sequence].data.push({ x: (new Date()).getTime() - e.Hour * this.chartRefreshTime ,y: e.total_money })
+          this.clusterData[e.ct_sequence].data.push({ x: (new Date()).getTime() - e.Hour * this.chartRefreshTime , y: e.total_money });
 
           console.log(e.ct_sequence, this.clusterData[e.ct_sequence].data.length);
 
-          if(this.clusterData[e.ct_sequence].data.length > 50){
+          if (this.clusterData[e.ct_sequence].data.length > 50){
             this.clusterData[e.ct_sequence].data.splice(0, this.clusterData[e.ct_sequence].data.length - 50);
           }
-        })
+        });
 
-        
         this.setChart();
 
         this.timeouter = setTimeout(() => {
@@ -221,30 +225,29 @@ export class MoneyChartComponent implements OnInit {
         }, this.chartRefreshTime);
       },
       error => console.log(error)
-      
     );
 
   }
 
   resetData(){
-    this.clusterData = [{name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
-    {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
-    {name:"",color:"",data:[]},{name:"",color:"",data:[]},{name:"",color:"",data:[]},
-    {name:"",color:"",data:[]}];
+    this.clusterData = [{name: '', color: '', data: []}, {name: '', color: '', data: []}, {name: '', color: '', data: []},
+    {name: '', color: '', data: []}, {name: '', color: '', data: []}, {name: '', color: '', data: []},
+    {name: '', color: '', data: []}, {name: '', color: '', data: []}, {name: '', color: '', data: []},
+    {name: '', color: '', data: []}];
   }
 
-  setChart(){
+  setChart() {
     this.chartOptions = {
       chart: {
         type: 'line',
         marginRight: 130
       },
       title: {
-        text: 'OSSD#7',
+        text: 'OSSD#8',
         style: {
-          fontFamily: "Prompt",
-          fontSize: "40px",
-          fontWeight: "600"
+          fontFamily: 'Prompt',
+          fontSize: '40px',
+          fontWeight: '600'
         }
       },
       time: {
@@ -254,17 +257,17 @@ export class MoneyChartComponent implements OnInit {
       yAxis: {
         min: 0,
         title: {
-            text: 'จำนวนเงิน (บาท)',
+            text: 'จำนวนเงิน ($E)',
             style: {
-              fontFamily: "Prompt",
-              fontSize: "28px",
-              fontWeight: "600"
+              fontFamily: 'Prompt',
+              fontSize: '20px',
+              fontWeight: '600'
             }
         },
         labels: {
           style: {
-            fontFamily: "Prompt",
-            fontSize: "24px"
+            fontFamily: 'Prompt',
+            fontSize: '24px'
           }
         }
       },
@@ -272,9 +275,9 @@ export class MoneyChartComponent implements OnInit {
         title: {
           text: 'เวลา',
           style: {
-            fontFamily: "Prompt",
-            fontSize: "28px",
-            fontWeight: "600"
+            fontFamily: 'Prompt',
+            fontSize: '20px',
+            fontWeight: '600'
           }
         },
         type: 'datetime',
@@ -282,18 +285,18 @@ export class MoneyChartComponent implements OnInit {
         labels: {
           format: '{value: %H:%M}',
           style: {
-            fontFamily: "Prompt",
-            fontSize: "24px",
-            fontWeight: "400"
+            fontFamily: 'Prompt',
+            fontSize: '24px',
+            fontWeight: '400'
           }
         },
       },
-      legend:{
+      legend: {
         enabled: true,
         itemStyle: {
-          fontFamily: "Prompt",
-          fontSize: "28px",
-          fontWeight: "600"
+          fontFamily: 'Prompt',
+          fontSize: '24px',
+          fontWeight: '600'
         },
         layout: 'vertical',
         align: 'right',

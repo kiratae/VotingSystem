@@ -1,59 +1,86 @@
 <div class="row">
-  <div class="col-md-12 col-12">
+    <div class="col-md-12 col-12">
 
-      <div class="card mt-3">
-        <div class="card-header">
-          <h4>User Lists</h4>
-          <button class="btn btn-info float-left" (click)="fetchUser()"><i class="fas fa-sync"></i></button>
-        </div>
-        <div class="card-body">
-
-          <ul class="list-group">
-            <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
-              <span class="row">
-                <div class="col-md-2 text-center">{{ i+1 }}</div>
-                <div class="col-md-3">{{ user.us_username }}</div>
-                <div class="col-md-2 text-center">{{ user.ut_name_th }}</div>
-                <div class="col-md-2 text-center">{{ user.um_points }}</div>
-                <div class="col-md-3 text-center">
-                  <button (click)="edit(i)" data-toggle="modal" data-target="#modal_edit_point" class="btn btn-warning mr-1"><i class="fas fa-edit"></i></button>
-                  <button (click)="viewLogs(user.us_id, user.us_username)" data-toggle="modal" data-target="#modal_voted_logs" class="btn btn-info mr-1"><i class="fas fa-history"></i></button>
-                  <button (click)="delete(i, user.us_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
+        <div class="card mt-3">
+            <div class="card-header">
+                <div>
+                    <h4 class="float-left">ผู้ใช้งานทั้งหมด <span style="font-size: 20px">(User Lists)</span></h4>
+                    <button class="btn btn-info float-right" (click)="fetchUser()"><i class="fas fa-sync"></i></button>
                 </div>
-              </span>
-            </li>
-          </ul>
+            </div>
+            <div class="card-body">
 
+                <ul class="list-group">
+                    <li class="list-group-item font-weight-bold bg-primary text-white">
+                        <span class="row">
+                            <div class="col-md-1 text-center mb-1">
+                                ลำดับ
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                ชื่อ
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                ตำแหน่ง
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                คะแนนโหวต
+                            </div>
+                            <div class="col-md-5 text-center mb-1">
+                                การดำเนินการ
+                            </div>
+                        </span>
+                    </li>
+                    <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
+                        <span class="row">
+                            <div class="col-md-1 text-center">{{ i+1 }}</div>
+                            <div class="col-md-2">{{ user.us_username }}</div>
+                            <div class="col-md-2 text-center">{{ user.ut_name_th }}</div>
+                            <div class="col-md-2 text-center">{{ user.um_points }}</div>
+                            <div class="col-md-5 text-center">
+                                <button (click)="edit(i)" data-toggle="modal" disabled data-target="#modal_edit_point" class="btn btn-warning mr-1">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button (click)="viewLogs(user.us_id, user.us_username)" disabled data-toggle="modal" data-target="#modal_voted_logs" class="btn btn-info mr-1">
+                                    <i class="fas fa-history"></i>
+                                </button>
+                                <button (click)="delete(i, user.us_id)" class="btn btn-red">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </span>
+                    </li>
+                </ul>
+
+            </div>
         </div>
-      </div>
 
-  </div>
+    </div>
 </div>
 
 
 <div class="modal" tabindex="-1" role="dialog" id="modal_edit_point">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">edit_point ของ {{ selectedUser }}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title">edit_point ของ {{ selectedUser }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
-          </div>
-          <div class="modal-body">
-
-            <input type="hidden" [(ngModel)]="us_id">
-
-            <div class="form-group">
-              <label>คะแนนโหวต</label>
-              <input type="number" class="form-control" [(ngModel)]="edit_point">
             </div>
+            <div class="modal-body">
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-success" (click)="update()" data-dismiss="modal">Save</button>
-          </div>
+                <input type="hidden" [(ngModel)]="us_id">
+
+                <div class="form-group">
+                    <label>คะแนนโหวต</label>
+                    <input type="number" class="form-control" [(ngModel)]="edit_point">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" (click)="update()" data-dismiss="modal">Save</button>
+            </div>
         </div>
     </div>
 </div>
@@ -62,23 +89,23 @@
 <div class="modal" tabindex="-1" role="dialog" id="modal_voted_logs">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">voted_logs ของ {{ selectedUser }}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title">voted_logs ของ {{ selectedUser }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
-          </div>
-          <div class="modal-body">
+            </div>
+            <div class="modal-body">
 
-            <!-- <div class="row">
+                <!-- <div class="row">
               <div class="col-12">
                 <button class="btn btn-danger float-right mb-3" (click)="restoreAllVotePoint()"><i class="fas fa-trash-restore"></i>&ensp;Restore All</button>
               </div>
             </div> -->
 
-            <ul class="list-group">
-              <li *ngFor="let log of userLogsData; let i = index;" class="list-group-item">
-                  <span class="row">
+                <ul class="list-group">
+                    <li *ngFor="let log of userLogsData; let i = index;" class="list-group-item">
+                        <span class="row">
                     <div class="col-md-1">{{ i+1 }}</div>
                     <div class="col-md-2">{{ log.ct_name_th }}</div>
                     <div class="col-md-2">{{ log.voted_score }}</div>
@@ -87,10 +114,10 @@
                       <button (click)="restoreVotePoint(i)" class="btn btn-primary"><i class="fas fa-undo"></i></button>
                     </div>
                   </span>
-              </li>
-            </ul>
+                    </li>
+                </ul>
 
-          </div>
+            </div>
         </div>
     </div>
 </div>

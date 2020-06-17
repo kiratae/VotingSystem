@@ -1,31 +1,75 @@
+<style>
+    .card-body-cluster {
+        height: 100px !important;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-12 col-12">
-  
         <div class="card mt-3">
-          <div class="card-header">
-            <h4>Score Lists</h4>
-            <button class="btn btn-info float-left" (click)="fetchScore()"><i class="fas fa-sync"></i></button>
-          </div>
-          <div class="card-body">
 
-            <div class="row">
-              <div class="col-12">
-                <button class="btn btn-primary float-right mb-3" (click)="resetScore()"><i class="fas fa-trash-restore"></i>&ensp;Reset All</button>
-              </div>
+            <!-- Class header -->
+            <div class="card-header">
+                <h4 class="float-left">รายการคะแนน <span style="font-size: 20px">(Score Lists)</span></h4>
+                <button class="btn btn-info float-right mx-2" (click)="fetchScore()"><i class="fas fa-sync"></i></button>
+                <button class="btn btn-info float-right mb-3" disabled (click)="resetScore()"><i class="fas fa-trash-restore"></i>&ensp;Reset All</button>
             </div>
-  
-            <ul class="list-group">
-              <li *ngFor="let score of scoresData; let i = index;" class="list-group-item">
-                <span class="row">
-                  <div class="col-md-2">{{ i+1 }}</div>
-                  <div class="col-md-3">{{ score.ct_name_th }}</div>
-                  <div class="col-md-3">{{ score.sc_score }}</div>
-                </span>
-              </li>
-            </ul>
-  
-          </div>
+            <!-- End class header -->
+
+            <!-- Class body -->
+            <div class="card-body">
+
+                <!-- Card detail -->
+                <div class="row align-items-start justify-content-center">
+                    <div class="col-12 col-sm-12 col-md-6 mb-2" *ngFor="let score of scoresData; let cluster of clustersData; let i = index;" data-toggle="modal" data-target="#voteModal">
+                        <div class="card card-body-cluster">
+                            <div class="card-body">
+                                <div class="media" role="button">
+                                    <img src="{{ imgURL+cluster?.ct_img }}" class="mr-3" width="64px" height="64px">
+                                    <div class="media-body ml-2">
+                                        <h5 class="mt-0">{{ cluster.ct_name_th }}</h5>
+                                        <p class="mb-0">{{ cluster.sys_name_th }}</p>
+                                        <p class="mb-0">ได้คะแนน: {{ score.sc_score }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End card body -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End card detail -->
+
+                <!-- List group -->
+                <!-- <ul class="list-group">
+                    <li class="list-group-item font-weight-bold bg-primary text-white">
+                        <span class="row">
+                            <div class="col-md-1 text-center mb-1">
+                                ลำดับ
+                            </div>
+                            <div class="col-md-7 text-center mb-1">
+                                ชื่อมกุล
+                            </div>
+                            <div class="col-md-4 text-center mb-1">
+                                คะแนนโหวต
+                            </div>
+                        </span>
+                    </li>
+                    <li *ngFor="let score of scoresData; let i = index;" class="list-group-item">
+                        <span class="row">
+                            <div class="col-md-1 text-center">{{ i+1 }}</div>
+                            <div class="col-md-7 text-center">
+                                <img src="{{ imgURL+score?.ct_img }}" width="32px" height="32px">
+                                {{ score.ct_name_th }}
+                            </div>
+                            <div class="col-md-4 text-center">{{ score.sc_score }}</div>
+                        </span>
+                    </li>
+                </ul> -->
+                <!-- End list group -->
+
+            </div>
+            <!-- End class body -->
+
         </div>
-  
     </div>
-  </div>
+</div>

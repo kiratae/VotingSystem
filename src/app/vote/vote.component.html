@@ -1,3 +1,4 @@
+<!--
 <ul class="list-unstyled">
     <li class="media border-bottom p-2" *ngFor="let cluster of clustersData; let i = index;" (click)="clickToVote(i)" data-toggle="modal" data-target="#voteModal">
         <img src="{{ cluster?.ct_img }}" class="m-auto" width="64px" height="64px">
@@ -7,70 +8,90 @@
         </div>
     </li>
 </ul>
+-->
 
+<div class="row align-items-start justify-content-center">
+    <div class="col-12 col-sm-12 col-md-6 mb-3" *ngFor="let cluster of clustersData; let i = index;" (click)="clickToVote(i)" data-toggle="modal" data-target="#voteModal">
+        <div class="card">
+            <div class="card-body">
+                <div class="media" role="button">
+                    <img src="{{ cluster?.ct_img }}" class="mr-3" width="64px" height="64px">
+                    <div class="media-body ml-2">
+                        <h5 class="mt-0">{{ cluster.ct_name_th }}</h5>
+                        <p class="mb-0">{{ cluster.sys_name_th }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-md-inline-block d-none card-side" [style.background-color]="cluster.ct_color_code">
+                <i class="icon fas fa-vote-yea"></i>
+                <span class="text">{{ voteText }}</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="voteModal">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">{{ voteHeaderText }} {{ clusterNameToVote }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ voteHeaderText }} {{ clusterNameToVote }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
                 <span aria-hidden="true"><i class="fas fa-times"></i></span>
             </button>
-        </div>
-        <div class="modal-body">
-
-            <div class="row mx-md-0">
-                <div class="col-12" *ngIf="clusterToVote != null">
-                    <div class="text-center">
-                        <img src="{{ clusterToVote?.ct_img }}" class="m-auto" width="64px" height="64px">
-                    </div>
-                    <h4 class="text-center">{{ clusterToVote.ct_name_th }}</h4>
-                    <p class="text-center">{{ clusterToVote.sys_name_th }}</p>
-                    <hr>
-                </div>
             </div>
+            <div class="modal-body">
 
-            <div class="row mb-3 mx-md-0">
-                <div class="col-12 px-2 text-right">
-                    <span class="text-primary">คงเหลือ {{ remainScore }} คะแนน</span>
-                </div>
-            </div>
-
-            <div class="row mb-3 mx-md-0">
-                <div class="col-3">
-                    <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(1)" [disabled]="onePointBtn">+ 1</button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(2)" [disabled]="twoPointBtn">+ 2</button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(5)" [disabled]="fivePointBtn">+ 5</button>
-                </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(10)" [disabled]="tenPointBtn">+ 10</button>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend col-4  mx-0 px-0">
-                            <button class="btn btn-outline-danger btn-block" type="button" (click)="minusScore()" (mousedown)="minusScoreDown()" (mouseup)="cancelInterval()" (mouseleave)="cancelInterval()" [disabled]="hasScore == 0"><i class="fas fa-minus" style="font-size: 1.5rem;"></i></button>
+                <div class="row mx-md-0">
+                    <div class="col-12" *ngIf="clusterToVote != null">
+                        <div class="text-center">
+                            <img src="{{ clusterToVote?.ct_img }}" class="m-auto" width="64px" height="64px">
                         </div>
-                        <input type="number" class="form-control text-center" style="font-size: 2rem;" [(ngModel)]="voteScore" (keyup)="keyupScore($event)" (change)="keyupScore($event)" [disabled]="hasScore == 0">
-                        <div class="input-group-append col-4  mx-0 px-0">
-                            <button class="btn btn-outline-success btn-block" type="button" (click)="plusScore()" (mousedown)="plusScoreDown()" (mouseup)="cancelInterval()" (mouseleave)="cancelInterval()" [disabled]="hasScore == 0"><i class="fas fa-plus" style="font-size: 1.5rem;"></i></button>
-                        </div>
+                        <h4 class="text-center">{{ clusterToVote.ct_name_th }}</h4>
+                        <p class="text-center">{{ clusterToVote.sys_name_th }}</p>
+                        <hr>
                     </div>
                 </div>
 
-            </div>
+                <div class="row mb-3 mx-md-0">
+                    <div class="col-12 px-2 text-right">
+                        <span class="text-primary">คงเหลือ {{ remainScore }} คะแนน</span>
+                    </div>
+                </div>
 
-        </div>
-        <div class="modal-footer text-center">
-            <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="hasScore == 0 || voteScore == 0">{{ voteText }}</button>
-        </div>
+                <div class="row mb-3 mx-md-0">
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(1)" [disabled]="onePointBtn">+ 1</button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(2)" [disabled]="twoPointBtn">+ 2</button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(5)" [disabled]="fivePointBtn">+ 5</button>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-outline-info btn-block px-md-0" (click)="setScore(10)" [disabled]="tenPointBtn">+ 10</button>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend col-4  mx-0 px-0">
+                                <button class="btn btn-outline-danger btn-block" type="button" (click)="minusScore()" (mousedown)="minusScoreDown()" (mouseup)="cancelInterval()" (mouseleave)="cancelInterval()" [disabled]="hasScore == 0"><i class="fas fa-minus" style="font-size: 1.5rem;"></i></button>
+                            </div>
+                            <input type="number" class="form-control text-center" style="font-size: 2rem;" [(ngModel)]="voteScore" (keyup)="keyupScore($event)" (change)="keyupScore($event)" [disabled]="hasScore == 0">
+                            <div class="input-group-append col-4  mx-0 px-0">
+                                <button class="btn btn-outline-success btn-block" type="button" (click)="plusScore()" (mousedown)="plusScoreDown()" (mouseup)="cancelInterval()" (mouseleave)="cancelInterval()" [disabled]="hasScore == 0"><i class="fas fa-plus" style="font-size: 1.5rem;"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="hasScore == 0 || voteScore == 0">{{ voteText }}</button>
+            </div>
         </div>
     </div>
 </div>

@@ -3,32 +3,32 @@
         <!-- <span></span> -->
         <i class="fas fa-bars"></i>
     </button>
-
     <div class="navbar-brand pl-4">
-      Scrum x Gamification System
+        Scrum x Gamification System
     </div>
-
     <div class="collapse navbar-collapse" id="navbarContent">
         <div class="row">
             <div class="col-6">
                 <ul class="navbar-nav mr-auto pl-3">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;Home</a>
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i>&ensp;หน้าหลัก</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="achievement"><i class="fas fa-crown"></i>&ensp;Achievements</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="money_bar_chart"><i class="fas fa-chart-bar"></i>&ensp;กราฟแท่งแสดงรางวัล (Bar Chart)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="money_bar_chart"><i class="fas fa-chart-bar"></i>&ensp;Bar Chart</a>
+                        <a class="nav-link" href="money_line_chart"><i class="fas fa-chart-line"></i>&ensp;กราฟเส้นแสดงรางวัล (Line Chart)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="money_line_chart"><i class="fas fa-chart-line"></i>&ensp;Line Chart</a>
+                        <a class="nav-link" href="money_dashboard"><i class="fas fa-tachometer-alt"></i>&ensp;กระดานที่ใช้ในการสรุปข้อมูล (Dashboard)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="money_dashboard"><i class="fas fa-tachometer-alt"></i>&ensp;Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i>&ensp;Logout</a>
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt"></i>&ensp;ออกจากระบบ
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -39,129 +39,153 @@
             </div>
         </div>
     </div>
-
 </nav>
 
+<!-- Button add event to cluster -->
 <div class="row mt-3 px-3">
-
     <div class="col-4">
-        <button data-toggle="modal" data-target="#insert_log" class="btn btn-primary float-left"><i class="fas fa-plus"></i>&ensp;Add Event to Cluster</button>
+        <button data-toggle="modal" data-target="#insert_log" class="btn btn-primary float-left">
+            <i class="fas fa-plus"></i>&ensp;เพิ่มกิจกรรมให้มกุล
+        </button>
     </div>
-
 </div>
+<!-- End button add event to cluster -->
 
+<!-- Event management -->
 <div class="row mt-2 px-3">
+    <div class="col-12">
+        <!-- event-management card -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4 class="float-left">การจัดการกิจกรรม 🎪 </h4>
+                <button class="btn btn-info float-right mx-2" (click)="fetch()"><i class="fas fa-sync"></i></button>
+                <button data-toggle="modal" data-target="#insert_event" (click)="closeModal()" class="btn btn-primary float-right"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="card-body">
 
-  <div class="col-12">
+                <!-- Search INCOMPLETE!!! -->
+                <!-- <div class="input-group ">
+                    <div class="m-auto">
+                        <input type="text" class="form-control" placeholder="ค้นหากิจกรรม" [(ngModel)]="searchText.se_name">
+                    </div>
+                    <div class="m-auto">
+                        <input type="text" class="form-control" placeholder="ค้นหารายละเอียด" [(ngModel)]="searchText.se_details">
+                    </div>
+                    <div class="m-auto">
+                        <input type="text" class="form-control" placeholder="ค้นหา $E" [(ngModel)]="searchText.se_values">
+                    </div>
+                </div> -->
 
-    <!-- event-management card -->
-    <div class="card mt-3">
-      <div class="card-header">
-        <h4>Events Management</h4>
-        <button class="btn btn-info float-left" (click)="fetch()"><i class="fas fa-sync"></i></button>
-        <button data-toggle="modal" data-target="#insert_event" (click)="closeModal()" class="btn btn-primary float-right"><i class="fas fa-plus"></i></button>
-      </div>
-      <div class="card-body">
-
-        <ul class="list-group mb-1">
-          <li class="list-group-item">
-            <span class="row">
-              <div class="col-md-1 col-12 text-center"><strong>#</strong></div>
-              <div class="col-md-4 col-12 text-center"><strong>Name</strong></div>
-              <div class="col-md-4 col-12 text-center"><strong>Details</strong></div>
-              <div class="col-md-2 col-12 text-center"><strong>Values</strong></div>
-              <div class="col-md-1 col-12 text-center"><strong>Operation</strong></div>
-            </span>
-          </li>
-        </ul>
-        <ul class="list-group">
-          <li *ngFor="let event of eventData; let i = index;" class="list-group-item">
-            <span class="row">
-              <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
-              <div class="col-md-4 col-12">{{ event.se_name }}</div>
-              <div class="col-md-4 col-12">{{ event.se_details }}</div>
-              <div class="col-md-2 col-12 text-center">{{ event.se_values }}</div>
-              <div class="col-md-1 col-6 text-center">
-                <button (click)="edit(i)" data-toggle="modal" data-target="#insert_event" class="btn btn-warning"><i class="fas fa-pen"></i></button>
-              </div>
-            </span>
-          </li>
-        </ul>
-
-      </div>
+                <ul class="list-group mt-3">
+                    <li class="list-group-item font-weight-bold bg-primary text-white">
+                        <span class="row">
+                            <div class="col-md-1 col-12 text-center"><strong>ลำดับ</strong></div>
+                            <div class="col-md-4 col-12 text-center"><strong>ชื่อกิจกรรม</strong></div>
+                            <div class="col-md-3 col-12 text-center"><strong>รายละเอียด</strong></div>
+                            <div class="col-md-2 col-12 text-center"><strong>จำนวนเงิน ($E)</strong></div>
+                            <div class="col-md-2 col-12 text-center"><strong>การดำเนินการ</strong></div>
+                        </span>
+                    </li>
+                    <li *ngFor="let event of eventData | filterBy: searchText ; let i = index; " class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
+                            <div class="col-md-4 col-12">{{ event.se_name }}</div>
+                            <div class="col-md-3 col-12">{{ event.se_details }}</div>
+                            <div class="col-md-2 col-12 text-center">{{ event.se_values }}</div>
+                            <div class="col-md-2 col-6 text-center">
+                                <button (click)="edit(i)" data-toggle="modal" data-target="#insert_event" class="btn btn-warning">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-  </div>
-
 </div>
+<!-- End event management -->
 
+<!-- Add new event -->
 <div class="modal" tabindex="-1" role="dialog" id="insert_event">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">insert_event</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-
-            <input type="hidden" [(ngModel)]="se_id">
-
-            <div class="form-group">
-              <label>Name</label>
-              <input type="text" class="form-control" [(ngModel)]="se_name">
+            <div class="modal-header">
+                <h5 class="modal-title">เพิ่มกิจกรรมใหม่</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-              <label>Details</label>
-              <textarea class="form-control" [(ngModel)]="se_details"></textarea>
-            </div>
-            <div class="form-group">
-              <label>Value</label>
-              <input type="number" class="form-control" [(ngModel)]="se_values">
-            </div>
+            <div class="modal-body">
 
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancel</button>
-              <button type="button" class="btn btn-success" (click)="save()" data-dismiss="modal">Save</button>
-          </div>
+                <input type="hidden" [(ngModel)]="se_id">
+                <div class="form-group">
+                    <label>ชื่อกิจกรรม</label>
+                    <input type="text" class="form-control" [(ngModel)]="se_name">
+                </div>
+                <div class="form-group">
+                    <label>รายละเอียดกิจกรรม</label>
+                    <textarea class="form-control" [(ngModel)]="se_details"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>เงินรางวัล ($E)</label>
+                    <input type="number" class="form-control" [(ngModel)]="se_values">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="pull-left btn btn-secondary" data-dismiss="modal" (click)="closeModal()">ยกเลิก</button>
+                <button type="button" class="btn btn-success" (click)="save()" data-dismiss="modal">บันทึก</button>
+            </div>
         </div>
     </div>
 </div>
+<!-- End add new event -->
 
+<!-- Add event to cluster -->
 <div class="modal" tabindex="-1" role="dialog" id="insert_log">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">insert_event</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title">เพิ่มกิจกรรม</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
-          </div>
-          <div class="modal-body">
-
-            <div class="form-group">
-              <label>Event</label>
-              <select class="form-control" [(ngModel)]="sl_se_id">
-                <option *ngFor="let event of eventData; let i = index;" [value]="event.se_id">{{ event.se_name }} / {{ event.se_values }}</option>
-              </select>
             </div>
-            <div *ngFor="let cluster of clusterData; let i = index;" class="form-check">
-              <input class="form-check-input" [(ngModel)]="sl_ct_id[i]" type="checkbox" value="{{ cluster.ct_id }}"  id="checkbox_{{ cluster.ct_id }}">
-              <label class="form-check-label" for="checkbox_{{ cluster.ct_id }}">
-                {{ cluster.ct_name_th }}
-              </label>
-            </div>
-            <button class="btn btn-light" (click)="checkAll()">{{ checkedAllBtn==1?'Deselect All':'Select All' }}</button>
+            <div class="modal-body">
 
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal_log()">Cancel</button>
-              <button type="button" class="btn btn-success" (click)="save_log()" data-dismiss="modal">Save</button>
-          </div>
+                <!-- Selection search -->
+                <div *ngFor="let cluster of clusterData; let i = index;" class="form-check ml-3">
+                    <input class="form-check-input" [(ngModel)]="sl_ct_id[i]" type="checkbox" value="{{ cluster.ct_id }}" id="checkbox_{{ cluster.ct_id }}">
+                    <label class="form-check-label" for="checkbox_{{ cluster.ct_id }}">
+                        {{ cluster.ct_name_th }}
+                    </label>
+                </div>
+                <!-- End selection search -->
+
+                <!-- Event Selection -->
+                <div class="form-group">
+                    <label>กิจกรรม</label>
+                    <select class="form-control" data-live-search="true" [(ngModel)]="sl_se_id">
+                        <option *ngFor="let event of eventData; let i = index;" [value]="event.se_id">
+                            {{ event.se_name }} / {{ event.se_values }}
+                        </option>
+                    </select>
+                </div>
+                <!-- End event Selection -->
+
+                <div class="mt-3">
+                    <button class="btn btn-info" (click)="checkAll()">{{ checkedAllBtn==1?'Deselect All':'Select All' }}</button>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="float-left btn btn-secondary" data-dismiss="modal" (click)="closeModal_log()">ยกเลิก</button>
+                <button type="button" class="float-right btn btn-success" (click)="save_log()" data-dismiss="modal">บันทึก</button>
+            </div>
         </div>
     </div>
 </div>
+<!-- End add event to cluster -->
 
 <modal-logout></modal-logout>

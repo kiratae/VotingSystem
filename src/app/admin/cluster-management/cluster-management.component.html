@@ -1,98 +1,145 @@
 <div class="row mb-3">
 
-  <div class="col-12">
+    <div class="col-12">
 
-    <!-- user-management card -->
-    <div class="card mt-3">
-      <div class="card-header">
-        <h4>Cluster Management</h4>
-        <button class="btn btn-info float-left" (click)="fetchCluster()"><i class="fas fa-sync"></i></button>
-        <button data-toggle="modal" data-target="#insert_cluster" class="btn btn-primary float-right"><i class="fas fa-plus"></i></button>
-      </div>
-      <div class="card-body">
+        <!-- User-management card -->
+        <div class="card mt-3">
 
-        <ul class="list-group">
-          <li *ngFor="let cluster of clustersData; let i = index;" class="list-group-item">
-            <span class="row">
-              <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
-              <div class="col-md-2 col-12 text-center mb-1">
-                <img src="{{ cluster?.ct_img }}" width="64px" height="64px">
-              </div>
-              <div class="col-md-3 col-12 text-center">{{ cluster.ct_name_th }} ({{ cluster.ct_name_en }})</div>
-              <div class="col-md-2 col-12 text-center">{{ cluster.sys_name_th }} ({{ cluster.sys_name_en }})</div>
-              <div class="col-md-2 col-12 text-center mb-1" [style.color]="cluster.ct_color_code">{{ cluster.ct_color_code }}</div>
-              <div class="col-md-1 col-6 text-center">
-                  <button (click)="editCluster(i, color_showing)" data-toggle="modal" data-target="#insert_cluster" class="btn btn-warning"><i class="fas fa-pen"></i></button>
+            <!-- Card header -->
+            <div class="card-header">
+                <div>
+                    <h4 class="float-left"> จัดการมกุล <span style="font-size: 20px">(Cluster Management)</span></h4>
+                    <button class="btn btn-info float-right mx-2" (click)="fetchCluster()"><i class="fas fa-sync"></i></button>
+                    <button data-toggle="modal" data-target="#insert_cluster" class="btn btn-primary float-right">
+                        <i class="fas fa-plus"></i>
+                    </button>
                 </div>
-              <div class="col-md-1 col-6 text-center">
-                <button (click)="deleteCluster(i, cluster.ct_id)" class="btn btn-danger"><i class="fas fa-times"></i></button>
-              </div>
+            </div>
+            <!-- End card header -->
+
+            <!-- Card body -->
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item font-weight-bold bg-primary text-white">
+                        <span class="row">
+                            <div class="col-md-1 col-12 text-center mb-1">
+                                ลำดับ
+                            </div>
+                            <div class="col-md-2 col-12 text-center mb-1">
+                                โลโก้
+                            </div>
+                            <div class="col-md-2 col-12 text-center mb-1">
+                                ชื่อมกุล
+                            </div>
+                            <div class="col-md-3 col-12 text-center mb-1">
+                                ชื่อระบบ
+                            </div>
+                            <div class="col-md-2 col-12 text-center mb-1">
+                                รหัสสี (ฐาน 16)
+                            </div>
+                            <div class="col-md-1 col-12 text-center mb-1">
+                                แก้ไข
+                            </div>
+                            <div class="col-md-1 col-12 text-center mb-1">
+                                ลบ
+                            </div>
+                        </span>
+                    </li>
+                    <li *ngFor="let cluster of clustersData; let i = index;" class="list-group-item">
+                        <span class="row">
+                            <div class="col-md-1 col-12 text-center mb-1">{{ i+1 }}</div>
+
+                            <div class="col-md-2 col-12 text-center mb-1">
+                                <img src="{{ cluster?.ct_img }}" width="64px" height="64px">
+                            </div>
+
+                            <div class="col-md-2 col-12 text-center">{{ cluster.ct_name_th }} <br> ({{ cluster.ct_name_en }})</div>
+                            
+                            <div class="col-md-3 col-12 text-center">
+                                {{ cluster.sys_name_th }} <br> 
+                                <span class="text-gray">{{ cluster.sys_name_en }}</span>
+            </div>
+
+            <div class="col-md-2 col-12 text-center mb-1" [style.color]="cluster.ct_color_code">{{ cluster.ct_color_code }}</div>
+
+            <div class="col-md-1 col-6 text-center">
+                <button (click)="editCluster(i, color_showing)" data-toggle="modal" data-target="#insert_cluster" class="btn btn-warning"><i class="fas fa-pen"></i></button>
+            </div>
+
+            <div class="col-md-1 col-6 text-center">
+                <button (click)="deleteCluster(i, cluster.ct_id)" class="btn btn-red"><i class="fas fa-times"></i></button>
+            </div>
             </span>
-          </li>
-        </ul>
+            </li>
+            </ul>
 
-      </div>
+        </div>
+        <!-- End card header -->
+
     </div>
-
-  </div>
+    <!-- End user-management card -->
 
 </div>
 
+</div>
+
+<!-- List of cluster -->
 <div class="modal" tabindex="-1" role="dialog" id="insert_cluster">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">insert_cluster</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title">เพิ่มมกุล</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
-          </div>
-          <div class="modal-body">
+            </div>
+            <div class="modal-body">
 
-            <input type="hidden" [(ngModel)]="ct_id">
+                <input type="hidden" [(ngModel)]="ct_id">
 
-            <div class="form-group">
-              <label>Cluster index (start at 0)</label>
-              <input type="number" class="form-control" [(ngModel)]="ct_sequence">
+                <div class="form-group">
+                    <label>Cluster index (start at 0) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" [(ngModel)]="ct_sequence">
+                </div>
+                <div class="form-group">
+                    <label>Name TH <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="ct_name_th">
+                </div>
+                <div class="form-group">
+                    <label>Name EN <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="ct_name_en">
+                </div>
+                <div class="form-group">
+                    <label>System <span class="text-danger">*</span></label>
+                    <select class="form-control" [(ngModel)]="sm_sys_id">
+                        <option *ngFor="let system of systemsData; let i = index;" value="{{ system.sys_id }}" [selected]="i == 0">{{ system.sys_name_th }} {{ system.sys_name_en }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Logo Image <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="ct_img_url">
+                    <div *ngIf="ct_img_url != null">
+                      <img src="{{ ct_img_url }}" width="128px" height="128px">
+                    </div>
+                    <!-- <div *ngIf="ct_img_preview == null">
+                      <input type="file" class="form-control-file" id="imgUpload" (change)="fileChangeListener($event.target.files)">
+                    </div>
+                    <button class="btn btn-success" (click)="uploadImage()" [disabled]="canUpload == false">Upload Image</button>
+                    <button class="btn btn-danger" (click)="deleteImage()" [disabled]="isUploaded == false">Remove Image</button> -->
+                  </div>
+                <div class="input-group mb-3">
+                    <label>Color <span class="text-danger">*</span></label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" #color_showing style="color: #ffffff;"><i class="fas fa-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Color Hex Code" [(ngModel)]="ct_color" (keyup)="show(color_showing)">
+                </div>
             </div>
-            <div class="form-group">
-              <label>Name TH</label>
-              <input type="text" class="form-control" [(ngModel)]="ct_name_th">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancel</button>
+                <button type="button" class="btn btn-success" (click)="saveCluster()" data-dismiss="modal">Save</button>
             </div>
-            <div class="form-group">
-              <label>Name EN</label>
-              <input type="text" class="form-control" [(ngModel)]="ct_name_en">
-            </div>
-            <div class="form-group">
-              <label>System</label>
-              <select class="form-control" [(ngModel)]="sm_sys_id">
-                <option *ngFor="let system of systemsData; let i = index;" value="{{ system.sys_id }}" [selected]="i == 0">{{ system.sys_name_th }} {{ system.sys_name_en }}</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Logo Image</label>
-              <input type="text" class="form-control" [(ngModel)]="ct_img_url">
-              <div *ngIf="ct_img_url != null">
-                <img src="{{ ct_img_url }}" width="128px" height="128px">
-              </div>
-              <!-- <div *ngIf="ct_img_preview == null">
-                <input type="file" class="form-control-file" id="imgUpload" (change)="fileChangeListener($event.target.files)">
-              </div>
-              <button class="btn btn-success" (click)="uploadImage()" [disabled]="canUpload == false">Upload Image</button>
-              <button class="btn btn-danger" (click)="deleteImage()" [disabled]="isUploaded == false">Remove Image</button> -->
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" #color_showing style="color: #ffffff;"><i class="fas fa-circle"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="Color Hex Code" [(ngModel)]="ct_color" (keyup)="show(color_showing)">
-            </div>
-
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Cancel</button>
-              <button type="button" class="btn btn-success" (click)="saveCluster()" data-dismiss="modal">Save</button>
-          </div>
         </div>
     </div>
 </div>
+<!-- End list of cluster -->

@@ -26,17 +26,17 @@ export class UsersService {
   ) {}
 
   login(): Observable<any>{
-    let data = { "us_username": this.us_username, "us_password": this.us_password };
-    return this.http.post(this.appSetting.apiURL+'/users/login', data);
+    let data = { 'us_username': this.us_username, 'us_password': this.us_password };
+    return this.http.post(this.appSetting.apiURL + '/users/login', data);
   }
 
   loginCompleted(): Observable<any>{
-    let data = { "us_id": this.us_id };
+    let data = { 'us_id': this.us_id };
     return this.http.put(this.appSetting.apiURL+'/users/logged_in', data);
   }
 
   insert(): Observable<any>{
-    let data = { "us_username": this.us_username, "us_password": this.us_password, "us_ut_id": this.us_ut_id, "um_points": this.um_points };
+    let data = { 'us_username': this.us_username, 'us_password': this.us_password, 'us_ut_id': this.us_ut_id, 'um_points': this.um_points };
     return this.http.post(this.appSetting.apiURL+'/users', data);
   }
 

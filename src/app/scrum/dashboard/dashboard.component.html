@@ -1,75 +1,81 @@
 <div class="container-fliud mx-3">
-  <div class="row">
-      <div class="col-4 text-left">
-        <h3 class="px-3 pt-3">{{ boardName }}</h3>
-      </div>
-      <div class="col-8 text-right">
-          <button class="btn btn-light" (click)="fetch_leaderboard()"><i class="fas fa-crown"></i></button>
-          <button class="btn btn-light" (click)="fetch_dashboard()"><i class="fas fa-layer-group"></i></button>
-          <button class="btn btn-light" (click)="sync()"><i class="fas fa-sync"></i></button>
-          <a href="scrum" class="btn btn-light"><i class="fas fa-chevron-left"></i></a>
-      </div>
-    </div>
-    
-    <div class="row mt-2 mx-1">
-    
-        <div *ngFor="let cluster of clusterData; let i = index;" class="col-md-6 col-lg-6 mb-3">
-          <div class="card dashboard-card" data-target="#scrumHistoryModal" data-toggle="modal" (click)="viewHistory(i, cluster.ct_id)" [style.border-color]="cluster.ct_color_code" style="border: 2px solid;">
-            <div class="card-body">
-    
-              <div class="row">
-                <div class="col-lg-2 col-md-3 col-12 text-center mb-3">
-                    <img src="{{ imgURL+cluster?.ct_img }}" class="m-auto" width="64px" height="64px">
-                </div>
-                <div class="row col-lg-10 col-md-9 col-12">
-                  <div class="col-lg-7 col-md-12 col-12">
-                    <h3 class="text-md-left text-center mt-1">{{ cluster.ct_name_th }}<span *ngIf="cluster.rank == 0 || cluster.rank == 1 || cluster.rank == 2 || cluster.rank == 9" style="font-size: 3rem;">&ensp;{{ rank[cluster.rank] }}</span></h3>
-                  </div>
-                  <div class="col-lg-5 col-md-12 col-12">
-                      <h3 class="text-md-right text-center pt-3">{{ numberWithCommas(cluster.total_money) }} บาท</h3>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </div>
+
+    <div class="row">
+        <div class="col-5 text-left">
+            <h3 class="px-3 pt-3">{{ boardName }} 💲
+                <span style="font-size: 15px"> {{ nowDate }} เวลา {{ nowTime }} น.</span>
+            </h3>
         </div>
-      
+        <div class="col-7 text-right">
+            <button class="btn btn-light" (click)="select_leaderboard()"><i class="fas fa-crown"></i></button>
+            <button class="btn btn-light" (click)="select_dashboard()"><i class="fas fa-layer-group"></i></button>
+            <button class="btn btn-light" (click)="sync()"><i class="fas fa-sync"></i></button>
+            <a href="scrum" class="btn btn-light"><i class="fas fa-chevron-left"></i></a>
+        </div>
+    </div>
+
+    <div class="row mt-2 mx-1">
+        <!-- Show all cluster -->
+        <div *ngFor="let cluster of clusterData; let i = index;" class="col-md-6 col-lg-6 mb-3">
+            <!-- Card -->
+            <div class="card dashboard-card" data-target="#scrumHistoryModal" data-toggle="modal" (click)="viewHistory(i, cluster.ct_id)" [style.border-color]="cluster.ct_color_code" style="border: 2px solid;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-12 text-center mb-2">
+                            <img src="{{ imgURL+cluster?.ct_img }}" class="m-auto" width="64px" height="64px">
+                        </div>
+                        <div class="row col-lg-10 col-md-9 col-12">
+                            <div class="col-lg-7 col-md-12 col-12">
+                                <h3 class="text-md-left text-center mt-1">{{ cluster.ct_name_th }}
+                                    <span *ngIf="cluster.rank == 0 || cluster.rank == 1 || cluster.rank == 2 || cluster.rank == 9" style="font-size: 3rem;">
+                                        &ensp;{{ rank[cluster.rank] }}
+                                    </span>
+                                </h3>
+                            </div>
+                            <div class="col-lg-5 col-md-12 col-12">
+                                <h3 class="text-md-right text-center pt-3">{{ numberWithCommas(cluster.total_money) }} $E</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End card -->
+        </div>
+        <!-- End show all cluster -->
     </div>
 </div>
 
-
+<!-- Score dashboard -->
 <div class="modal fade" tabindex="-1" role="dialog" id="scrumHistoryModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-      <div class="modal-header">
-          <h5 class="modal-title">ประวัติรายการของ {{ selectedCluster }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <div class="modal-body">
-        
-        <ul class="list-group mb-1">
-          <li class="list-group-item">
-            <span class="row">
-              <div class="col-md-4 col-12 text-center"><strong>Event</strong></div>
-              <div class="col-md-3 col-12 text-center"><strong>Values (Bath)</strong></div>
-              <div class="col-md-5 col-12 text-center"><strong>Date Time</strong></div>
-            </span>
-          </li>
-        </ul>
-        <ul class="list-group">
-          <li *ngFor="let event of eventHistoryData; let i = index;" class="list-group-item">
-            <span class="row">
-              <div class="col-md-4 col-12">{{ event.se_name }}</div>
-              <div class="col-md-3 col-12 text-center" [ngClass]="(event.se_values > 0)?'text-success':'text-danger'">{{ event.se_values }}</div>
-              <div class="col-md-5 col-12 text-center">{{ convertDate(event.sl_time_stamp) }}</div>
-            </span>
-          </li>
-        </ul>
-
-      </div>
-      </div>
-  </div>
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ประวัติรายการของ {{ selectedCluster }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Body -->
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="row">
+                            <div class="col-md-4 col-12 text-center"><strong>กิจกรรม</strong></div>
+                            <div class="col-md-3 col-12 text-center"><strong>รางวัล ($E)</strong></div>
+                            <div class="col-md-5 col-12 text-center"><strong>วัน เวลา</strong></div>
+                        </span>
+                    </li>
+                    <li *ngFor="let event of eventHistoryData; let i = index;" class="list-group-item">
+                        <span class="row">
+                            <div class="col-md-4 col-12">{{ event.se_name }}</div>
+                            <div class="col-md-3 col-12 text-center" [ngClass]="(event.se_values > 0)?'text-success':'text-danger'">{{ event.se_values }}</div>
+                            <div class="col-md-5 col-12 text-center">{{ convertDate(event.sl_time_stamp) }}</div>
+                       </span>
+                    </li>
+                </ul>
+            </div>
+            <!-- End body -->
+        </div>
+    </div>
 </div>
+<!-- End score dashboard -->

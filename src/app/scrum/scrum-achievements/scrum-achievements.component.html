@@ -1,29 +1,29 @@
 <div class="container-fliud mx-3">
-  <div class="row">
-      <div class="col-4 text-left">
-        <h3 class="px-3 pt-3">Achievments</h3>
-      </div>
-      <div class="col-8 text-right">
-          <button class="btn btn-light" (click)="sync()"><i class="fas fa-sync"></i></button>
-          <a href="scrum" class="btn btn-light"><i class="fas fa-chevron-left"></i></a>
-      </div>
-    </div>
-    
-    <div class="row mt-2 mx-1">
-    
-        <div *ngFor="let cluster of clusterData; let i = index;" class="col-md-6 col-lg-6 mb-3">
-          <div class="card dashboard-card" [style.border-color]="cluster.ct_color_code" style="border: 2px solid;">
-            <div class="card-body">
-    
-              <div class="row">
-                <div class="col-12 text-center mb-3">
-                  {{ cluster.ct_name_th }}
-                </div>
-              </div>
-              
-            </div>
-          </div>
+    <div class="row">
+        <div class="col-4 text-left">
+            <h3 class="px-3 pt-3">Achievments</h3>
         </div>
-      
+        <div class="col-8 text-right">
+            <button class="btn btn-light" (click)="sync()"><i class="fas fa-sync"></i></button>
+            <a href="scrum" class="btn btn-light"><i class="fas fa-chevron-left"></i></a>
+        </div>
+    </div>
+
+    <div class="row mt-2 mx-1">
+
+        <div *ngFor="let cluster of clusterData; let i = index;" class="col-md-6 col-lg-6 mb-3">
+            <div class="card dashboard-card" [style.border-color]="cluster.ct_color_code" style="border: 2px solid;">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-12 text-center mb-3">
+                            {{ cluster.ct_name_th }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

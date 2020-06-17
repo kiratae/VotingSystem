@@ -25,27 +25,28 @@ export class UserViewComponent implements OnInit {
   ngOnInit() {
     this.fetchUser();
   }
-  
-  fetchUser(){
+
+  fetchUser() {
     this.usersService.getAll().subscribe((res) => {
-      this.usersData = res['data'];
-    })
+      this.usersData = res.data;
+      console.log(this.usersData);
+    });
   }
 
-  viewLogs(us_id, us_name = ""){
+  viewLogs(us_id, us_name = '') {
     console.log(us_id);
     this.selectedUser = us_name;
 
     this.usersService.us_id = us_id;
     this.usersService.getLogs().subscribe(
       res => {
-        console.log(res['data']);
-        this.userLogsData = res['data'];
+        console.log(res.data);
+        this.userLogsData = res.data;
       }, err => console.log(err)
     );
   }
 
-  edit(index){
+  edit(index) {
     const data = this.usersData[index];
     this.selectedUser = data.us_username;
     console.log(data);
@@ -53,7 +54,7 @@ export class UserViewComponent implements OnInit {
     this.edit_point = data.um_points;
   }
 
-  update(){
+  update() {
     this.scoreService.us_id = this.us_id;
     this.scoreService.sc_score = this.edit_point;
     this.scoreService.updateUserPoint().subscribe(
@@ -63,9 +64,9 @@ export class UserViewComponent implements OnInit {
     );
   }
 
-  delete(index, us_id){
-    var dialog = confirm(`It will delete user "${this.usersData[index].us_username}" from database.\nAre you sure?`);
-    if (dialog == true) {
+  delete(index, us_id) {
+    const dialog = confirm(`It will delete user "${this.usersData[index].us_username}" from database.\nAre you sure?`);
+    if (dialog === true) {
       this.usersService.us_id = us_id;
       this.usersService.delete().subscribe(
         res => {
@@ -78,13 +79,13 @@ export class UserViewComponent implements OnInit {
     }
   }
 
-  convertDate(dateTime){
-    let date = new Date(dateTime);
+  convertDate(dateTime) {
+    const date = new Date(dateTime);
     return date.toUTCString();
   }
 
-  restoreVotePoint(index){
-    let data = this.userLogsData[index];
+  restoreVotePoint(index) {
+    const data = this.userLogsData[index];
     console.log(data);
     this.scoreService.us_id = data.vl_us_id;
     this.scoreService.sc_id = data.sc_id;
@@ -93,13 +94,13 @@ export class UserViewComponent implements OnInit {
 
     this.scoreService.restore_step1().subscribe(
       res => {
-        if(res['status'] == true){
+        if (res.status == true) {
           this.scoreService.restore_step2().subscribe(
             res => {
-              if(res['status'] == true){
+              if (res.status == true) {
                 this.scoreService.restore_step3().subscribe(
                   res => {
-                    if(res['status'] == true){
+                    if (res.status == true) {
                       this.viewLogs(data.vl_us_id);
                       this.fetchUser();
                     }

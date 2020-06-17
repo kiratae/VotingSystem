@@ -15,7 +15,7 @@ export class AppSettingsServiceService {
 
   isDebuging: boolean = false; // use to open/close console log
 
-  lang = "TH"; // lang to use have "EN" is English , "TH" is Thai
+  lang = 'TH'; // lang to use have "EN" is English , "TH" is Thai
 
   chartRefreshTime = 5000; // miliseconds
 
@@ -28,7 +28,7 @@ export class AppSettingsServiceService {
   * get thai string values from json file
   */
   public getTH(): Observable<any> {
-    return this.http.get("./assets/lang/th.json");
+    return this.http.get('./assets/lang/th.json');
   }
 
   /*
@@ -36,15 +36,15 @@ export class AppSettingsServiceService {
   * get english string values from json file
   */
   public getEN(): Observable<any> {
-    return this.http.get("./assets/lang/en.json");
+    return this.http.get('./assets/lang/en.json');
   }
 
   /*
   * getTimeSync
   * get server time
   */
-  getTimeSync() {
-    return this.http.get(this.apiURL + "/timesync");
+  getTimeSync(){
+    return this.http.get(this.apiURL + '/timesync');
   }
 
 }

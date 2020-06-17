@@ -1,0 +1,37 @@
+
+.card .card-side {
+    position: absolute;
+    right: 0;
+    width: 5em;
+    height: 100%;
+    /* background-color: var(--primary); */
+    border-radius: 0;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    transition: width .3s ease;
+}
+
+.card .card-side .text {
+    opacity: 0;
+    font-size: 0.1em;
+    transition: all .3s ease;
+}
+
+.card .card-side .icon {
+    color: white;
+    padding-top: 1em;
+    padding-left: .7em;
+    font-size: 2em;
+}
+
+.card .card-side:hover {
+    cursor: pointer;
+    width: 10em;
+}
+
+.card .card-side:hover .text {
+    color: white;
+    padding-left: .25em;
+    font-size: 2em;
+    opacity: 100;
+}

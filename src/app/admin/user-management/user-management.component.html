@@ -1,128 +1,160 @@
 <div class="row">
 
-  <div class="col-12">
+    <div class="col-12">
 
-    <!-- user-management card -->
-    <div class="card mt-3">
-      <div class="card-header"><h4>User Management</h4></div>
-      <div class="card-body">
+        <!-- user-management card -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4 class="float-left">จัดการผู้ใช้งาน <span style="font-size: 20px">(User Management)</span></h4>
+            </div>
+            <div class="card-body">
 
-        <div class="row">
+                <div class="row">
 
-          <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12">
 
-              <div class="card mb-3">
-                <div class="card-header">manaul add user</div>
-                <div class="card-body">
+                        <div class="card mb-3">
+                            <div class="card-header">เพิ่มผู้ใช้งาน</div>
+                            <div class="card-body">
 
-                  <div class="form-group">
-                    <label class="control-label">Username</label>
-                    <input class="form-control" type="text" [(ngModel)]="manUsername">
-                  </div>
+                                <div class="form-group">
+                                    <label class="control-label">ผู้ใช้งาน</label>
+                                    <input class="form-control" type="text" [(ngModel)]="manUsername">
+                                </div>
 
-                  <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input class="form-control" type="text" [(ngModel)]="manPassword">
-                  </div>
+                                <div class="form-group">
+                                    <label class="control-label">รหัสผ่าน</label>
+                                    <input class="form-control" type="text" [(ngModel)]="manPassword">
+                                </div>
 
-                  <div class="form-group">
-                    <label class="control-label">User Type</label>
-                    <select #selectUserType name="selectUserType" [(ngModel)]="manUserTypeId" class="form-control" (change)="selectUserType1ChangeListner(selectUserType.value)">
-                      <option value="{{ type.ut_id }}" *ngFor="let type of userTypesData; let i = index;" [selected] = "i==3">{{ type.ut_name_th }} ({{ type.ut_name_en }})</option>
-                    </select>
-                  </div>
+                                <div class="form-group">
+                                    <label class="control-label">ประเภทผู้ใช้งาน</label>
+                                    <select #selectUserType name="selectUserType" [(ngModel)]="manUserTypeId" class="form-control" (change)="selectUserType1ChangeListner(selectUserType.value)">
+                                        <option value="{{ type.ut_id }}" *ngFor="let type of userTypesData; let i = index;" [selected] = "i==3">{{ type.ut_name_th }} ({{ type.ut_name_en }})</option>
+                                    </select>
+                                </div>
 
-                  <div class="form-group">
-                    <label class="control-label">Vote point to assign</label>
-                    <input type="number" class="form-control" [(ngModel)]="manVotePoints">
-                  </div>                  
+                                <div class="form-group">
+                                    <label class="control-label">กำหนดคะแนนโหวต</label>
+                                    <input type="number" class="form-control" [(ngModel)]="manVotePoints">
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <button (click)="manToListButton()" class="btn btn-primary float-right"><i class="fas fa-plus"></i>&ensp;เพิ่มในรายการ</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 col-12">
+
+                        <div class="card">
+
+                            <div class="card-header">อัพโหลดไฟล์ผู้ใช้งาน</div>
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label>ไฟล์ CSV</label>
+                                    <input type="file" class="form-control-file" id="csvUpload" (change)="fileChangeListener($event.target.files)">
+                                    <p>
+                                        <small class="text-danger">
+                                            ***ต้องเป็นไฟล์ csv เท่านั้น และมี column ชื่อ username เท่านั้น
+                                        </small>
+                                    </p>
+                                </div>
+                                <h5 class="card-title">เลือกประเภทผู้ใช้งาน</h5>
+
+                                <div class="form-group">
+                                    <label class="control-label">ประเภทผู้ใช้งาน</label>
+                                    <select #formFileSelectUserType name="formFileSelectUserType" [(ngModel)]="userTypeIdFromFile" class="form-control" (change)="selectUserType2ChangeListner(formFileSelectUserType.value)">
+                                            <option value="{{ type.ut_id }}" *ngFor="let type of userTypesData; let i = index;" [selected]="type.ut_id == 4">{{ type.ut_name_th }} ({{ type.ut_name_en }})</option>
+                                        </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">ความยาวรหัสผ่าน (Password Length)</label>
+                                    <input type="number" class="form-control" [(ngModel)]="passwordLength">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">กำหนดตะแนนโหวต</label>
+                                    <input type="number" class="form-control" [(ngModel)]="votePointsFromFile">
+                                </div>
+
+                            </div>
+                            <!-- End card body -->
+
+                            <!-- Card footer -->
+                            <div class="card-footer">
+                                <button (click)="fileToListsButton()" class="btn btn-primary float-right" [disabled]="canAddToLists">
+                                    <i class="fas fa-plus"></i>&ensp;Add to Lists
+                                </button>
+                            </div>
+                            <!-- End card footer -->
+
+                        </div>
+
+                    </div>
 
                 </div>
-                <div class="card-footer">
-                  <button (click)="manToListButton()" class="btn btn-primary float-right"><i class="fas fa-plus"></i>&ensp;Add to Lists</button>
-                </div>
-              </div>
-
-          </div>
-
-          <div class="col-md-6 col-12">
-
-            <div class="card">
-              <div class="card-header">file upload add user</div>
-              <div class="card-body">
-
-                <div class="form-group mb-3">
-                    <label>CSV File</label>
-                    <input type="file" class="form-control-file" id="csvUpload" (change)="fileChangeListener($event.target.files)">
-                    <p><small class="text-danger">
-                        ***ต้องเป็นไฟล์ csv เท่านั้น และมี column ชื่อ username เท่านั้น
-                    </small></p>
-                </div>
-    
-                <h5 class="card-title">Select User Type</h5>
-
-                <div class="form-group">
-                  <label class="control-label">User Type</label>
-                  <select #formFileSelectUserType name="formFileSelectUserType" [(ngModel)]="userTypeIdFromFile" class="form-control" (change)="selectUserType2ChangeListner(formFileSelectUserType.value)">
-                    <option value="{{ type.ut_id }}" *ngFor="let type of userTypesData; let i = index;" [selected]="type.ut_id == 4">{{ type.ut_name_th }} ({{ type.ut_name_en }})</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label">Password Length</label>
-                  <input type="number" class="form-control" [(ngModel)]="passwordLength">
-                </div>
-
-                <div class="form-group">
-                  <label class="control-label">Vote point to assign</label>
-                  <input type="number" class="form-control" [(ngModel)]="votePointsFromFile">
-                </div>
-
-              </div>
-              <div class="card-footer">
-                <button (click)="fileToListsButton()" class="btn btn-primary float-right" [disabled]="canAddToLists"><i class="fas fa-plus"></i>&ensp;Add to Lists</button>
-              </div>
 
             </div>
-
-          </div>
-          
         </div>
+        <!-- end user-management card -->
 
-      </div>
     </div>
-    <!-- end user-management card -->
 
-  </div>
+    <div class="col-12 mb-3">
 
-  <div class="col-12 mb-3">
+        <div class="card mt-3">
+            <div class="card-header">Users to save<button (click)="deleteAllUser()" class="btn btn-danger float-right"><i class="fas fa-trash"></i></button></div>
+            <div class="card-body">
 
-      <div class="card mt-3">
-        <div class="card-header">Users to save<button (click)="deleteAllUser()" class="btn btn-danger float-right"><i class="fas fa-trash"></i></button></div>
-        <div class="card-body">
+                <ol class="list-group">
+                    <li class="list-group-item font-weight-bold bg-primary text-white">
+                        <span class="row">
+                            <div class="col-md-2 text-center mb-1">
+                                ลำดับ
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                ชื่อ
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                รหัสผ่าน
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                ตำแหน่ง
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                คะแนนโหวต
+                            </div>
+                            <div class="col-md-2 text-center mb-1">
+                                การดำเนินการ
+                            </div>
+                        </span>
+                    </li>
+                    <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
+                        <span class="row">
+                        <div class="col-md-2 text-center">{{ i+1 }}</div>
+                        <div class="col-md-2 text-center">{{ user.username }}</div>
+                        <div class="col-md-2 text-center">{{ user.password }}</div>
+                        <div class="col-md-2 text-center">{{ user.user_type }}</div>
+                        <div class="col-md-2 text-center">{{ user.vote_points }}</div>
+                        <div class="col-md-2 text-center">
+                            <button (click)="deleteUser(i)" class="btn btn-red"><i class="fas fa-times"></i></button>
+                        </div>
+                    </span>
+                    </li>
+                </ol>
 
-          <ol class="list-group">
-            <li *ngFor="let user of usersData; let i = index;" class="list-group-item">
-              <span class="row">
-                <div class="col-md-2 text-center">{{ i+1 }}</div>
-                <div class="col-md-2">{{ user.username }}</div>
-                <div class="col-md-2">{{ user.password }}</div>
-                <div class="col-md-2 text-center">{{ user.user_type }}</div>
-                <div class="col-md-2 text-center">{{ user.vote_points }}</div>
-                <div class="col-md-2 text-center">
-                  <button (click)="deleteUser(i)" class="btn btn-danger"><i class="fas fa-times"></i></button>
-                </div>
-              </span>
-            </li>
-          </ol>
-
+            </div>
+            <div class="card-footer">
+                <button (click)="downloadButton()" class="btn btn-primary float-left"><i class="fas fa-file-csv"></i>&ensp;Download CSV</button>
+                <button (click)="saveButton()" class="btn btn-success float-right"><i class="fas fa-save"></i>&ensp;Save To Database</button>
+            </div>
         </div>
-        <div class="card-footer">
-          <button (click)="downloadButton()" class="btn btn-primary float-left"><i class="fas fa-file-csv"></i>&ensp;Download CSV</button>
-          <button (click)="saveButton()" class="btn btn-success float-right"><i class="fas fa-save"></i>&ensp;Save To Database</button>
-        </div>
-      </div>
 
-  </div>
+    </div>
 
 </div>
