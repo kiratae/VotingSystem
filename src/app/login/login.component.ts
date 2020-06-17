@@ -134,8 +134,15 @@ export class LoginComponent implements OnInit {
 
     this.usersService.login().subscribe(
       (res: any) => {
-        //console.log(res);
+        console.log(res);
         // return;
+
+        // exit function if hot have any return data!
+        if(res.data.length == 0){
+          this.isLogin = -1;
+          return;
+        }
+
         this.isLoading = false;
         const can_login = false;
         const loginData = res.data[0];
@@ -147,7 +154,7 @@ export class LoginComponent implements OnInit {
           console.log('login data', loginData);
         }
 
-        if (loginData.can_login === 'true') {
+        if (loginData.can_login == true) {
 
           this.usersService.us_id = loginData.us_id;
           this.usersService.loginCompleted().subscribe((res) => {
