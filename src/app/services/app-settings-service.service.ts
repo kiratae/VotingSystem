@@ -8,10 +8,10 @@ import { Observable } from 'rxjs';
 export class AppSettingsServiceService{
 
   // apiURL: String = "http://10.80.39.252:3000"; // http://localhost:3000
-  apiURL: String = 'http://localhost:3000'; // http://localhost:3000
-  secretKey: String = 'l3ear@Hunt;' // secret key
+  apiURL = 'http://localhost:3000'; // http://localhost:3000
+  secretKey = 'l3ear@Hunt;'; // secret key
 
-  isDebuging: boolean = false; // use to open/close console log
+  isDebuging = false; // use to open/close console log
 
   lang = 'TH'; // lang to use have "EN" is English , "TH" is Thai
 
