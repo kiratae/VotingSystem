@@ -51,7 +51,8 @@ export class ClusterManagementComponent implements OnInit {
   fetchCluster(){
     this.clusterService.getAll().subscribe(
       (res) => {
-        this.clustersData = res['data'];
+        console.log(res.data)
+        this.clustersData = res.data;
       },
       (error) => {
         console.error(error);
@@ -62,7 +63,7 @@ export class ClusterManagementComponent implements OnInit {
   fetchSystem(){
     this.systemService.getAll().subscribe(
       (res) => {
-        this.systemsData = res['data'];
+        this.systemsData = res.data;
         this.sm_sys_id = this.systemsData[0].sys_id;
       },
       (error) => {
@@ -94,7 +95,6 @@ export class ClusterManagementComponent implements OnInit {
           },
           error => console.error(error)
         );
-        return;
       }
 
       this.clusterService.ct_sequence = this.ct_sequence;

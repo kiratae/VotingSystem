@@ -43,17 +43,17 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if(sessionStorage.getItem('us_id') != null){
+    if (sessionStorage.getItem('us_id') != null) {
       const lastLogin = parseInt(sessionStorage.getItem('last_login'));
       const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
       const now = new Date(toDayString).getTime();
-      if (now - lastLogin < this.appSetting.canStillLoginTime){
+      if (now - lastLogin < this.appSetting.canStillLoginTime) {
         const userType = sessionStorage.getItem('user_type');
-        if(userType === 'Admin'){
+        if (userType === 'Admin') {
           this.router.navigate(['admin']);
-        } else if(userType === 'Scum Master') {
+        } else if (userType === 'Scum Master') {
           this.router.navigate(['scrum']);
-        } else{
+        } else {
           this.router.navigate(['home']);
         }
       }
@@ -64,10 +64,10 @@ export class LoginComponent implements OnInit {
         username: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required)
       });
-      
+
     }
 
-    switch(this.appSetting.lang) {
+    switch (this.appSetting.lang) {
       case 'EN':
         this.appSetting.getEN().subscribe(
           res => {
@@ -76,12 +76,12 @@ export class LoginComponent implements OnInit {
         );
         break;
       case 'TH':
-      this.appSetting.getTH().subscribe(
-        res => {
-          this.setText(res.login_section);
-        }, error => console.error(error)
-      );
-      break;
+        this.appSetting.getTH().subscribe(
+          res => {
+            this.setText(res.login_section);
+          }, error => console.error(error)
+        );
+        break;
     }
 
   }
@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
     let username = this.loginForm.get('username').value;
     let password = this.loginForm.get('password').value;
 
-    if(this.oldInputUsername === username && this.oldInputPassoword === password){
+    if (this.oldInputUsername === username && this.oldInputPassoword === password) {
       this.isSubmitted = true;
       return;
     }
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     this.isLogin = 0;
-    if(this.loginForm.invalid) {
+    if (this.loginForm.invalid) {
       this.isLogin = 0;
       return;
     }
@@ -139,14 +139,13 @@ export class LoginComponent implements OnInit {
         // return;
 
         // exit function if hot have any return data!
-        if(res.data.length == 0){
+        if (res.status == 1) {
           this.isLogin = -1;
           return;
         }
 
         this.isLoading = false;
-        const can_login = false;
-        const loginData = res.data[0];
+        const loginData = res.user;
 
         //console.log(res.data[0]);
         //console.log('----------------------------------------')
@@ -155,42 +154,38 @@ export class LoginComponent implements OnInit {
           console.log('login data', loginData);
         }
 
-        if (loginData.can_login == true) {
+        this.usersService.us_id = loginData.us_id;
+        this.usersService.loginCompleted().subscribe((res) => {
 
-          this.usersService.us_id = loginData.us_id;
-          this.usersService.loginCompleted().subscribe((res) => {
+          const userType = loginData.ut_name_en;
+          const userID = loginData.us_id;
 
-            const userType = loginData.ut_name_en;
-            const userID = loginData.us_id;
+          sessionStorage.setItem('us_id', userID);
+          sessionStorage.setItem('user_type', userType);
 
-            sessionStorage.setItem('us_id', userID);
-            sessionStorage.setItem('user_type', userType);
+          const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
+          const nowLastLogin = new Date(toDayString).getTime().toString();
 
-            const toDayString = this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', '+0700');
-            const nowLastLogin = new Date(toDayString).getTime().toString();
+          sessionStorage.setItem('last_login', nowLastLogin);
 
-            sessionStorage.setItem('last_login', nowLastLogin);
+          if (userType === 'Admin') {
+            this.router.navigate(['admin']);
+          } else if (userType === 'Scum Master') {
+            this.router.navigate(['scrum']);
+          } else {
+            this.router.navigate(['home']);
+          }
 
-            if (userType === 'Admin'){
-              this.router.navigate(['admin']);
-            } else if (userType === 'Scum Master') {
-              this.router.navigate(['scrum']);
-            } else {
-              this.router.navigate(['home']);
-            }
+          this.isLogin = 1;
 
-            this.isLogin = 1;
-
-          },
+        },
           err => {
             // alert("Conection Error!");
             this.isConnectionError = true;
             this.isLoading = false;
             console.error(err);
           });
-        } else {
-          this.isLogin = -1;
-        }
+
 
       },
       err => {
