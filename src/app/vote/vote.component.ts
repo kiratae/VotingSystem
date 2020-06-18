@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClusterService } from 'src/app/services/cluster.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -87,6 +87,11 @@ export class VoteComponent implements OnInit {
 
   }
 
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.hideModal()
+  }
+
   getTime() {
     const nowDate = new Date();
     this.nowDate = this.dateToStringOutput(nowDate);
@@ -155,7 +160,7 @@ export class VoteComponent implements OnInit {
     );
   }
 
-  hideModel(){
+  hideModal(){
     this.voteScore = 0;
     this.updateRemainScore();
     this.closeModal.nativeElement.click();  
@@ -199,7 +204,7 @@ export class VoteComponent implements OnInit {
   vote() {
     if (this.voteScore <= 0 || this.voteScore > this.hasScore) {
       this.notifier.notify('error', `ค่า ${this.voteScore} ไม่ถูกต้องสำหรับคะแนน !`);
-      this.hideModel()
+      this.hideModal()
       return;
     }
 

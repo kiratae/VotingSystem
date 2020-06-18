@@ -30,12 +30,12 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="voteModal">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" id="voteModal">
+    <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ voteHeaderText }} {{ clusterNameToVote }}</h5>
-                <button #closeModal type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModel()">
+                <button #closeModal type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModal()">
                     <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
             </div>
