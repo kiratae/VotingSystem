@@ -220,7 +220,7 @@ export class VoteComponent implements OnInit {
         this.updateRemainScore();
       } else if (res.status == 0) {
         // ok save the vote
-        this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวด ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
+        this.notifier.notify( 'success', `สำเร็จ! คุณได้โหวต ${this.voteScore} คะแนน ให้กับ ${this.clusterNameToVote} แล้ว` );
         this.fetchScore();
         this.clusterToVote = null;
         this.voteScore = 0;
