@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClusterService } from 'src/app/services/cluster.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -12,6 +12,8 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./vote.component.css']
 })
 export class VoteComponent implements OnInit {
+
+  @ViewChild('closeModal') private closeModal: ElementRef;
 
   voteScore = 0;
   clustersData = [];
@@ -33,6 +35,8 @@ export class VoteComponent implements OnInit {
   voteText;
   pointText;
   multiPointText;
+
+  isVoting = false;
 
   @Output() hasScoreOutput = new EventEmitter<any>();
 
@@ -151,6 +155,12 @@ export class VoteComponent implements OnInit {
     );
   }
 
+  hideModel(){
+    this.voteScore = 0;
+    this.updateRemainScore();
+    this.closeModal.nativeElement.click();  
+  }
+
   setText(langData) {
     this.voteHeaderText = langData.vote_header;
     this.voteText = langData.vote;
@@ -171,11 +181,6 @@ export class VoteComponent implements OnInit {
     this.clusterNameToVote = this.clusterToVote.ct_name_th;
   }
 
-  closeModal() {
-    this.voteScore = 0;
-    this.updateRemainScore();
-  }
-
   keyupScore(event) {
     if (event.keyCode != 69) {
       if (this.voteScore <= 0 || this.voteScore == null) {
@@ -194,11 +199,11 @@ export class VoteComponent implements OnInit {
   vote() {
     if (this.voteScore <= 0 || this.voteScore > this.hasScore) {
       this.notifier.notify('error', `ค่า ${this.voteScore} ไม่ถูกต้องสำหรับคะแนน !`);
-      this.fetchScore();
-      this.voteScore = 0;
-      this.updateRemainScore();
+      this.hideModel()
       return;
     }
+
+    this.isVoting = true
 
     this.scoreService.sc_ct_id = this.clusterToVote.ct_id;
     this.scoreService.sc_score = this.voteScore;
@@ -206,10 +211,11 @@ export class VoteComponent implements OnInit {
 
     this.scoreService.createLog().subscribe(res => {
       // console.log(res);
+      this.isVoting = false
+
       if (res.status == 1) {
         // something error here! may be score is out!
         this.notifier.notify('error', `คะแนนของคุณไม่พอที่จะทำการโหวต !`);
-        this.fetchScore();
         this.voteScore = 0;
         this.updateRemainScore();
       } else if (res.status == 0) {
@@ -219,13 +225,14 @@ export class VoteComponent implements OnInit {
         this.clusterToVote = null;
         this.voteScore = 0;
         this.updateRemainScore();
+        this.closeModal.nativeElement.click();
       } else {
         // may be network or server error
         this.notifier.notify('error', `เกิดข้อผิดพลาด โหวตไม่สำเร็จ !`);
-        this.fetchScore();
         this.voteScore = 0;
         this.updateRemainScore();
       }
+      
     });
 
   }

@@ -62,9 +62,12 @@
     </div>
 
 </div>
-<div *ngIf="canVote == -1" style="position: fixed; top: calc(50% - 6rem); left: calc(50% - 0.5rem)">
+<div *ngIf="canVote == -1" style="position: fixed; top: calc(50% - 3rem); left: calc(50% - 3rem)">
 
-    <div class="loader">Loading...</div>
+    <div class="spinner-border text-primary" style="width: 6rem; height: 6rem; border-width: 0.5rem;" role="status">
+        <span class="sr-only">กำลังโหลด...</span>
+    </div>
+    <!-- <div class="loader">Loading...</div> -->
 
 </div>
 

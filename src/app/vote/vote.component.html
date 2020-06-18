@@ -12,9 +12,9 @@
 
 <div class="row align-items-start justify-content-center">
     <div class="col-12 col-sm-12 col-md-6 mb-3" *ngFor="let cluster of clustersData; let i = index;" (click)="clickToVote(i)" data-toggle="modal" data-target="#voteModal">
-        <div class="card">
+        <div class="card" role="button">
             <div class="card-body">
-                <div class="media" role="button">
+                <div class="media">
                     <img src="{{ cluster?.ct_img }}" class="mr-3" width="64px" height="64px">
                     <div class="media-body ml-2">
                         <h5 class="mt-0">{{ cluster.ct_name_th }}</h5>
@@ -35,9 +35,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ voteHeaderText }} {{ clusterNameToVote }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-                <span aria-hidden="true"><i class="fas fa-times"></i></span>
-            </button>
+                <button #closeModal type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hideModel()">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
             </div>
             <div class="modal-body">
 
@@ -90,7 +90,10 @@
 
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" data-dismiss="modal" [disabled]="hasScore == 0 || voteScore == 0">{{ voteText }}</button>
+                <button type="button" class="btn btn-success btn-block btn-lg" (click)="vote()" [disabled]="hasScore == 0 || voteScore == 0">
+                    <span *ngIf="isVoting" class="spinner-border mr-2" role="status" aria-hidden="true"></span>
+                    <span *ngIf="isVoting">กำลัง</span>{{ voteText }}
+                </button>
             </div>
         </div>
     </div>
