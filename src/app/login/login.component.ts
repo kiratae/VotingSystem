@@ -40,7 +40,12 @@ export class LoginComponent implements OnInit {
     private usersService: UsersService,
     private appSetting: AppSettingsServiceService,
     private datepipe: DatePipe
-  ) { }
+  ) {
+    this.loginForm = this.formBuilder.group({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+  }
 
   ngOnInit() {
     if (sessionStorage.getItem('us_id') != null) {
@@ -59,11 +64,6 @@ export class LoginComponent implements OnInit {
       }
     } else {
       // this.router.navigate(['login'])
-
-      this.loginForm = this.formBuilder.group({
-        username: new FormControl('', Validators.required),
-        password: new FormControl('', Validators.required)
-      });
 
     }
 
@@ -135,7 +135,9 @@ export class LoginComponent implements OnInit {
 
     this.usersService.login().subscribe(
       (res: any) => {
-        console.log(res);
+
+        this.isLoading = false;
+        // console.log(res);
         // return;
 
         // exit function if hot have any return data!
@@ -144,7 +146,6 @@ export class LoginComponent implements OnInit {
           return;
         }
 
-        this.isLoading = false;
         const loginData = res.user;
 
         //console.log(res.data[0]);
