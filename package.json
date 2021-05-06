@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.1",
     "font-awesome": "^4.7.0",
-    "highcharts": "^7.1.1",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.4.0",
     "jquery": "^3.4.0",
     "material": "^0.4.3",
